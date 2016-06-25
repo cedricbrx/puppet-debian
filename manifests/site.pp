@@ -279,6 +279,9 @@ class remove {
 	package {"gnome-packagekit":
 		ensure => purged,
 	}
+	package {"gnome-sound-recorder":
+		ensure => purged,
+	}
 }
 
 class cronpuppet {
