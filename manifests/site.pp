@@ -234,6 +234,18 @@ class remove {
 	package {"gnome-klotski":
 		ensure => purged,
 	}
+	package {"five-or-more":
+		ensure => purged,
+	}
+	package {"tali":
+		ensure => purged,
+	}
+	package {"xboard":
+		ensure => purged,
+	}
+	package {"bijiben":
+		ensure => purged,
+	}
 }
 
 class cronpuppet {
