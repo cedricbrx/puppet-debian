@@ -183,6 +183,24 @@ class remove {
 	package {["exim4-base","exim4-config"]:
 		ensure => purged,
 	}
+	package {"goobox":
+		ensure => purged,
+	}
+	package {"gnome-tetravex":
+		ensure => purged,
+	}
+	package {"four-in-a-row":
+		ensure => purged,
+	}
+	package {"gnome-chess":
+		ensure => purged,
+	}
+	package {"gnome-mahjongg":
+		ensure => purged,
+	}
+	package {"synaptic":
+		ensure => purged,
+	}
 }
 
 class cronpuppet {
