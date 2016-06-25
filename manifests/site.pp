@@ -2,7 +2,7 @@ node default {
     include cronpuppet
     include install
     include remove
-    #include repository
+    include repository
     #include libreoffice
     #include firefox
     #include icedove
@@ -127,6 +127,9 @@ class install {
 		ensure => installed,
 	}
 	package {"shotwell":
+		ensure => installed,	
+	}
+	package {"dukto":
 		ensure => installed,	
 	}
 	package {"youtube-dl":
