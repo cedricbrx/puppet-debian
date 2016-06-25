@@ -129,7 +129,7 @@ class install {
 	package {"shotwell":
 		ensure => installed,	
 	}
-	package {"dukto":
+	package {"browser-plugin-freshplayer-pepperflash":
 		ensure => installed,	
 	}
 	package {"youtube-dl":
