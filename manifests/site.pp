@@ -2,10 +2,10 @@ node default {
     include cronpuppet
     include install
     include remove
-    include repository
-    include libreoffice
-    include firefox
-    include icedove
+    #include repository
+    #include libreoffice
+    #include firefox
+    #include icedove
 }
 
 class config {
