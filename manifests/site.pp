@@ -270,6 +270,9 @@ class remove {
 	package {"gnome-dictionary":
 		ensure => purged,
 	}
+	package {"eog":
+		ensure => purged,
+	}
 }
 
 class cronpuppet {
