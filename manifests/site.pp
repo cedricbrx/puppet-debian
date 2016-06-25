@@ -201,6 +201,18 @@ class remove {
 	package {"synaptic":
 		ensure => purged,
 	}
+	package {"swell-foop":
+		ensure => purged,
+	}
+	package {"quadrapassel":
+		ensure => purged,
+	}
+	package {"lightsoff":
+		ensure => purged,
+	}
+	package {"iagno":
+		ensure => purged,
+	}
 }
 
 class cronpuppet {
