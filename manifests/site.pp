@@ -213,6 +213,27 @@ class remove {
 	package {"iagno":
 		ensure => purged,
 	}
+	package {"hitori":
+		ensure => purged,
+	}
+	package {"gnome-taquin":
+		ensure => purged,
+	}
+	package {"gnome-sudoku":
+		ensure => purged,
+	}
+	package {"gnome-robots":
+		ensure => purged,
+	}
+	package {"gnome-nibbles":
+		ensure => purged,
+	}
+	package {"gnome-mines":
+		ensure => purged,
+	}
+	package {"gnome-klotski":
+		ensure => purged,
+	}
 }
 
 class cronpuppet {
