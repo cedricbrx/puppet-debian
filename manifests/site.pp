@@ -276,6 +276,9 @@ class remove {
 	package {"eog":
 		ensure => purged,
 	}
+	package {"gnome-packagekit":
+		ensure => purged,
+	}
 }
 
 class cronpuppet {
