@@ -240,10 +240,13 @@ class remove {
 	package {"tali":
 		ensure => purged,
 	}
-	package {"xboard":
+	package {["xboard","fairymax","hoichess"]:
 		ensure => purged,
 	}
 	package {"bijiben":
+		ensure => purged,
+	}
+	package {"tracker":
 		ensure => purged,
 	}
 }
