@@ -267,6 +267,9 @@ class remove {
 	package {"rhythmbox-data":
 		ensure => purged,
 	}
+	package {"gnome-dictionary":
+		ensure => purged,
+	}
 }
 
 class cronpuppet {
