@@ -249,6 +249,24 @@ class remove {
 	package {"tracker":
 		ensure => purged,
 	}
+	package {"empathy-common":
+		ensure => purged,
+	}
+	package {"gnome-maps":
+		ensure => purged,
+	}
+	package {"mpv":
+		ensure => purged,
+	}
+	package {"polari":
+		ensure => purged,
+	}
+	package {"gnome-nettool":
+		ensure => purged,
+	}
+	package {"rhythmbox-data":
+		ensure => purged,
+	}
 }
 
 class cronpuppet {
