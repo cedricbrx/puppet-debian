@@ -3,7 +3,7 @@ node default {
     include install
     include remove
     include repository
-    #include libreoffice
+    include libreoffice
     #include firefox
     #include icedove
 }
