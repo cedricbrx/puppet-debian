@@ -135,6 +135,9 @@ class install {
 	package {"youtube-dl":
 		ensure => installed,		
 	}
+	package {"libreoffice-gtk3":
+        	ensure => installed,
+	}
 	package {"ttf-mscorefonts-installer":
 		responsefile => "/var/cache/debconf/mscorefonts.seeds",
 		ensure       => installed,
