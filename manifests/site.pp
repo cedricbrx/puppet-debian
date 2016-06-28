@@ -156,17 +156,20 @@ class install {
 	package { $network_packagename:
 		ensure => installed,
 	}
-	#case $wireless_vendor {
-	#	'realtek': {
-	#		$wireless_packagename = 'firmware-realtek'
-	#	}
-	#	'intel': {
-	#		$wireless_packagename = 'firmware-iwlwifi'
-	#	}
-	#}
-	#package { $wireless_packagename:
-	#	ensure => installed,
-	#}
+	case $::wireless_vendor {
+		realtek: {
+			$wireless_packagename = 'firmware-realtek'
+		}
+		intel: {
+			$wireless_packagename = 'firmware-iwlwifi'
+		}
+		default: {
+			$wireless_packagename = ''
+		}	
+	}
+	package { $wireless_packagename:
+		ensure => installed,
+	}
 }
 
 class remove {
