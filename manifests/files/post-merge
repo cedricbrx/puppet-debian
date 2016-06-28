@@ -1,7 +1,8 @@
 #!/bin/bash -e
 
 ## Copy facter to facter directory
-cp /etc/puppet/manifests/files/usr/lib/ruby/vendor_ruby/facter/network_vendor.rb /usr/lib/ruby/vendor_ruby/facter/network_vendor
+cp /etc/puppet/manifests/files/usr/lib/ruby/vendor_ruby/facter/wireless_vendor.rb /usr/lib/ruby/vendor_ruby/facter/wireless_vendor.rb
+cp /etc/puppet/manifests/files/usr/lib/ruby/vendor_ruby/facter/network_vendor.rb /usr/lib/ruby/vendor_ruby/facter/network_vendor.rb
 
 ## Run Puppet locally using puppet apply
 /usr/bin/puppet apply /etc/puppet/manifests/site.pp
