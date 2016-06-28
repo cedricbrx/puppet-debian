@@ -147,10 +147,10 @@ class install {
 	}
 	case $::network_vendor {
 		realtek: {
-			$network_packagename = 'firmware-realtek',
+			$network_packagename = 'firmware-realtek'
 		}
 		default: {
-			$network_packagename = 'firmware-realtek1',
+			$network_packagename = 'firmware-realtek1'
 		}
 	}
 	package { $network_packagename:
