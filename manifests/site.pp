@@ -146,11 +146,22 @@ class install {
 	#	ensure => installed,
 	#}
 	#case $network_vendor {
-	#	'Realtek': {
+	#	'realtek': {
 	#		$network_packagename = 'firmware-realtek'
 	#	}
 	#}
 	#package { $network_packagename:
+	#	ensure => installed,
+	#}
+	#case $wireless_vendor {
+	#	'realtek': {
+	#		$wireless_packagename = 'firmware-realtek'
+	#	}
+	#	'intel': {
+	#		$wireless_packagename = 'firmware-iwlwifi'
+	#	}
+	#}
+	#package { $wireless_packagename:
 	#	ensure => installed,
 	#}
 }
