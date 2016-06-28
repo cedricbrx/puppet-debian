@@ -142,9 +142,9 @@ class install {
 		responsefile => "/var/cache/debconf/mscorefonts.seeds",
 		ensure       => installed,
 	}
-	package {"plymouth-x11":
-		ensure => installed,
-	}
+	#package {"plymouth-x11":
+	#	ensure => installed,
+	#}
 	case $::network_vendor {
 		realtek: {
 			$network_packagename = 'firmware-realtek'
