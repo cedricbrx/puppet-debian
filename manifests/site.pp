@@ -145,9 +145,12 @@ class install {
 	package {"plymouth-x11":
 		ensure => installed,
 	}
-	$network_packagename = $::network_vendor {
-		realtek => 'firmware-realtek',
-		default => 'nothing',
+	case $::network_vendor {
+		realtek: {
+			$network_packagename = 'firmware-realtek',
+		}
+		default: {
+			$network_packagename = 'firmware-realtek1',
 		}
 	}
 	package { $network_packagename:
