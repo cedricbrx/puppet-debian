@@ -142,28 +142,28 @@ class install {
 		responsefile => "/var/cache/debconf/mscorefonts.seeds",
 		ensure       => installed,
 	}
-	#package {"plymouth-x11":
-	#	ensure => installed,
-	#}
-	#case $network_vendor {
-	#	'realtek': {
-	#		$network_packagename = 'firmware-realtek'
-	#	}
-	#}
-	#package { $network_packagename:
-	#	ensure => installed,
-	#}
-	case $wireless_vendor {
-		'realtek': {
-			$wireless_packagename = 'firmware-realtek'
-		}
-		'intel': {
-			$wireless_packagename = 'firmware-iwlwifi'
-		}
-	}
-	package { $wireless_packagename:
+	package {"plymouth-x11":
 		ensure => installed,
 	}
+	case $network_vendor {
+		'realtek': {
+			$network_packagename = 'firmware-realtek'
+		}
+	}
+	package { $network_packagename:
+		ensure => installed,
+	}
+	#case $wireless_vendor {
+	#	'realtek': {
+	#		$wireless_packagename = 'firmware-realtek'
+	#	}
+	#	'intel': {
+	#		$wireless_packagename = 'firmware-iwlwifi'
+	#	}
+	#}
+	#package { $wireless_packagename:
+	#	ensure => installed,
+	#}
 }
 
 class remove {
