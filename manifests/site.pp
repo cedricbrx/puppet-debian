@@ -150,7 +150,7 @@ class install {
 			$network_packagename = 'firmware-realtek'
 		}
 		default: {
-			$network_packagename = 'firmware-realtek1'
+			$network_packagename = ''
 		}
 	}
 	package { $network_packagename:
