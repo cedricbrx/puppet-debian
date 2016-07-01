@@ -2,6 +2,6 @@
 Comment=
 Terminal=false
 Name=brandenbourger
-Exec=firefox 'https://brandenbourger.quickconnect.to/videos'
+Exec=xdg-open 'https://brandenbourger.quickconnect.to/videos'
 Type=Application
 Icon=/usr/share/icons/hicolor/64x64/apps/synology_videos.png
