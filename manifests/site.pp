@@ -176,7 +176,7 @@ class install {
 			$network_packagename = ''
 		}
 	}
-	package { $network_packagename:
+	package { "$network_packagename":
 		ensure => installed,
 	}
 	case $::wireless_vendor {
@@ -190,7 +190,7 @@ class install {
 			$wireless_packagename = ''
 		}	
 	}
-	package { $wireless_packagename:
+	package { "$wireless_packagename":
 		ensure => installed,
 	}
 }
