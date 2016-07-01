@@ -84,7 +84,7 @@ class libreoffice {
 	}
 }
 
-class {
+class synology {
 	file {"/usr/share/icons/hicolor/64x64/apps/":
 		ensure  => directory,
 		source  => "/etc/puppet/manifests/files/usr/share/icons/hicolor/64x64/apps",
