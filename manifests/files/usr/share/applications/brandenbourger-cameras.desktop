@@ -1,7 +1,7 @@
 [Desktop Entry]
 Comment=
 Terminal=false
-Name=brandenbourger
+Name=Photo Brandenbourger
 Exec=xdg-open 'https://brandenbourger.quickconnect.to/cameras'
 Type=Application
 Icon=/usr/share/icons/hicolor/64x64/apps/synology_cameras.png
