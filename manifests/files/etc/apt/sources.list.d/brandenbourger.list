@@ -1,2 +1,1 @@
-deb http://dl.dropbox.com/u/6537292/archive/ jessie main
-
+deb https://dl.dropboxusercontent.com/u/6537292/archive/ stretch main
