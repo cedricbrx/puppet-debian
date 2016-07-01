@@ -114,6 +114,9 @@ class install {
 	package {"lshw":
 		ensure => installed,
 	}
+	package {"mlocate":
+		ensure => installed,
+	}
 	package {"firmware-linux-nonfree":
 		ensure => installed,
 	}
