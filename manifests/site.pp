@@ -181,7 +181,7 @@ class install {
 			$firmware_packages = "'firmware-realtek','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree'"
 		}
 		elsif $wireless_vendor == 'intel' {
-			$firmware_packages = "'firmware-iwlwifi','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree'"
+			$firmware_packages = '"firmware-iwlwifi","firmware-linux-free","firmware-misc-nonfree","firmware-linux-nonfree"'
 		}
 	}
 	package {[$firmware_packages]:
