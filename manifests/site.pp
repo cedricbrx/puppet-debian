@@ -172,6 +172,9 @@ class install {
 		realtek: {
 			$network_packagename = 'firmware-realtek'
 		}
+		intel:  {
+			$network_packagename = 'firmware-iwlwifi'
+		}
 	}
 	package { $network_packagename:
 		ensure => installed,
