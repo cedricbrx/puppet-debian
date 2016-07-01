@@ -181,7 +181,7 @@ class install {
 			$firmware_packages = ['firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']
 		}
 	}
-	package {[$firmware_packages]:
+	package {$firmware_packages:
 		ensure => installed,
 	}
 }
