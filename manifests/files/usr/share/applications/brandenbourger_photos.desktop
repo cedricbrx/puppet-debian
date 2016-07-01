@@ -2,6 +2,6 @@
 Comment=
 Terminal=false
 Name=brandenbourger
-Exec=firefox 'https://brandenbourger.quickconnect.to/photos'
+Exec=xdg-open 'https://brandenbourger.quickconnect.to/photos'
 Type=Application
 Icon=/usr/share/icons/hicolor/64x64/apps/synology_photos.png
