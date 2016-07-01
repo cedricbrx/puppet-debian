@@ -184,7 +184,9 @@ class install {
 			$firmware_packages = "['firmware-iwlwifi','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']"
 		}
 	}
-
+	package {$firmware_packages:
+		ensure => installed,
+	}
 }
 
 class remove {
