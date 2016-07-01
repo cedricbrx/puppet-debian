@@ -168,14 +168,14 @@ class install {
 	#package {"plymouth-x11":
 	#	ensure => installed,
 	#}
-	case $::network_vendor {
-		realtek: {
-			$network_packagename = 'firmware-realtek'
-		}
-		intel:  {
-			$network_packagename = 'firmware-iwlwifi'
-		}
-	}
+	#case $::network_vendor {
+	#	realtek: {
+	#		$network_packagename = 'firmware-realtek'
+	#	}
+	#	intel:  {
+	#		$network_packagename = 'firmware-iwlwifi'
+	#	}
+	#}
 	package { $network_packagename:
 		ensure => installed,
 	}
