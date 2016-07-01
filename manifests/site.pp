@@ -83,6 +83,25 @@ class libreoffice {
 	}
 }
 
+class {
+	file {"/usr/share/icons/hicolor/64x64/apps/":
+		ensure  => directory,
+		source  => "/etc/puppet/manifests/files/usr/share/icons/hicolor/64x64/apps",
+		owner   => root,
+		group   => root,
+		mode    => '644',
+		recurse => 'true',
+	}
+	file {"/usr/share/applications/":
+		ensure  => directory,
+		source  => "/etc/puppet/manifests/files/usr/share/applications",
+		owner   => root,
+		group   => root,
+		mode    => '644',
+		recurse => 'true',
+	}
+}
+
 class install {
 	package {"aptitude":
         	ensure => installed,
