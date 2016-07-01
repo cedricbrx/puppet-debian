@@ -137,15 +137,6 @@ class install {
 	package {"mlocate":
 		ensure => installed,
 	}
-	#package {"firmware-linux-nonfree":
-	#	ensure => installed,
-	#}
-	#package {"firmware-linux-free":
-	#	ensure => installed,
-	#}
-	#package {"firmware-misc-nonfree":
-	#	ensure => installed,
-	#}
 	package {"vim":
 		ensure => installed,
 	}
@@ -170,18 +161,24 @@ class install {
 	#}
 	if $network_vendor == 'realtek' {
 		if $wireless_vendor == 'realtek' {
-			$firmware_packages = "'firmware-realtek','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree'"
+			$firmware_packages = ['firmware-realtek','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']
 		}
 		elsif $wireless_vendor == 'intel' {
-			$firmware_packages = "'firmware-iwlwifi','firmware-realtek','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree'"
+			$firmware_packages = ['firmware-iwlwifi','firmware-realtek','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']
+		}
+		else {
+			$firmware_packages = ['firmware-realtek','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']
 		}
 	}	
 	elsif $network_vendor == 'intel' {
 		if $wireless_vendor == 'realtek' {
-			$firmware_packages = "'firmware-realtek','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree'"
+			$firmware_packages = ['firmware-realtek','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']
 		}
 		elsif $wireless_vendor == 'intel' {
-			$firmware_packages = '"firmware-iwlwifi","firmware-linux-free","firmware-misc-nonfree","firmware-linux-nonfree"'
+			$firmware_packages = ['firmware-iwlwifi','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']
+		}
+		else {
+			$firmware_packages = ['firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']
 		}
 	}
 	package {[$firmware_packages]:
