@@ -172,11 +172,8 @@ class install {
 		realtek: {
 			$network_packagename = 'firmware-realtek'
 		}
-		default: {
-			$network_packagename = ''
-		}
 	}
-	package { "$network_packagename":
+	package { $network_packagename:
 		ensure => installed,
 	}
 	case $::wireless_vendor {
@@ -186,11 +183,8 @@ class install {
 		intel: {
 			$wireless_packagename = 'firmware-iwlwifi'
 		}
-		default: {
-			$wireless_packagename = ''
-		}	
 	}
-	package { "$wireless_packagename":
+	package { $wireless_packagename:
 		ensure => installed,
 	}
 }
