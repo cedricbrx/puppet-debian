@@ -1,7 +1,7 @@
 [Desktop Entry]
 Comment=
 Terminal=false
-Name=brandenbourger
+Name=Videos Brandenbourger
 Exec=xdg-open 'https://brandenbourger.quickconnect.to/videos'
 Type=Application
 Icon=/usr/share/icons/hicolor/64x64/apps/synology_videos.png
