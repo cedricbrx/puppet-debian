@@ -137,15 +137,15 @@ class install {
 	package {"mlocate":
 		ensure => installed,
 	}
-	package {"firmware-linux-nonfree":
-		ensure => installed,
-	}
-	package {"firmware-linux-free":
-		ensure => installed,
-	}
-	package {"firmware-misc-nonfree":
-		ensure => installed,
-	}
+	#package {"firmware-linux-nonfree":
+	#	ensure => installed,
+	#}
+	#package {"firmware-linux-free":
+	#	ensure => installed,
+	#}
+	#package {"firmware-misc-nonfree":
+	#	ensure => installed,
+	#}
 	package {"vim":
 		ensure => installed,
 	}
@@ -168,28 +168,23 @@ class install {
 	#package {"plymouth-x11":
 	#	ensure => installed,
 	#}
-	#case $::network_vendor {
-	#	realtek: {
-	#		$network_packagename = 'firmware-realtek'
-	#	}
-	#	intel:  {
-	#		$network_packagename = 'firmware-iwlwifi'
-	#	}
-	#}
-	#package { $network_packagename:
-	#	ensure => installed,
-	#}
-	case $::wireless_vendor {
-		realtek: {
-			$wireless_packagename = 'firmware-realtek'
+	if $network_vendor == 'realtek' {
+		if $wireless_vendor == 'realtek' {
+			$firmware_packages = "['firmware-realtek','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']"
 		}
-		intel: {
-			$wireless_packagename = 'firmware-iwlwifi'
+		elsif $wireless_vendor == 'intel' {
+			$firmware_packages = "['firmware-iwlwifi','firmware-realtek','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']"
+		}
+	}	
+	elsif $network_vendor == 'intel' {
+		if $wireless_vendor == 'realtek' {
+			$firmware_packages = "['firmware-realtek',firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']"	
+		}
+		elsif $wireless_vendor == 'intel' {
+			$firmware_packages = "['firmware-iwlwifi','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']"
 		}
 	}
-	package { $wireless_packagename:
-		ensure => installed,
-	}
+
 }
 
 class remove {
