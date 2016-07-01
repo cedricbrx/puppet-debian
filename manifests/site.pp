@@ -160,10 +160,7 @@ class install {
 	#	ensure => installed,
 	#}
 	if $network_vendor == 'realtek' {
-		if $wireless_vendor == 'realtek' {
-			$firmware_packages = ['firmware-realtek','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']
-		}
-		elsif $wireless_vendor == 'intel' {
+		if $wireless_vendor == 'intel' {
 			$firmware_packages = ['firmware-iwlwifi','firmware-realtek','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']
 		}
 		else {
