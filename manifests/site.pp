@@ -176,9 +176,9 @@ class install {
 	#		$network_packagename = 'firmware-iwlwifi'
 	#	}
 	#}
-	package { $network_packagename:
-		ensure => installed,
-	}
+	#package { $network_packagename:
+	#	ensure => installed,
+	#}
 	case $::wireless_vendor {
 		realtek: {
 			$wireless_packagename = 'firmware-realtek'
