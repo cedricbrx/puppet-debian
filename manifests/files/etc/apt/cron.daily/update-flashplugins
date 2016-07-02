@@ -1,0 +1,12 @@
+#!/bin/sh
+
+NAAPI_FLASH="update-flashplugin-nonfree"
+PEPPER_FLASH="update-pepperflashplugin-nonfree"
+
+if type "$NAAPI_FLASH" 1>/dev/null ; then
+  "$NAAPI_FLASH" --install --quiet
+fi
+
+if type "$PEPPER_FLASH" 1>/dev/null ; then
+  "$PEPPER_FLASH" --install --quiet
+fi
