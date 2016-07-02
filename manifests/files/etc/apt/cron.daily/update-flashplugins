@@ -1,12 +1,10 @@
 #!/bin/sh
 
-NAAPI_FLASH="update-flashplugin-nonfree"
-PEPPER_FLASH="update-pepperflashplugin-nonfree"
+test -x /usr/sbin/update-pepperflashplugin-nonfree && update-pepperflashplugin-nonfree --status | grep -o ": [[:digit:]]*.[[:digit:]]*.[[:digit:]]*.[[:digit:]]*" | {
+  read installed
+  read available
 
-if type "$NAAPI_FLASH" 1>/dev/null ; then
-  "$NAAPI_FLASH" --install --quiet
-fi
-
-if type "$PEPPER_FLASH" 1>/dev/null ; then
-  "$PEPPER_FLASH" --install --quiet
-fi
+  if [ "$installed" \< "$available" ] ; then
+    /usr/sbin/update-pepperflashplugin-nonfree --install --quiet && echo "$(date) Updating pepperflash successful" >> /var/log/pepperupdate.log || echo "$(date) Updating pepperflash failed" >> /var/log/pepperupdate.log
+  fi
+}
