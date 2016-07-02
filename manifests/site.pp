@@ -11,32 +11,32 @@ node default {
 
 class config {
 	file {"/etc/papersize":
-		owner => root,
-		group => root,
-		mode => '644',
+		owner   => root,
+		group   => root,
+		mode    => '644',
 		content => "a4\n",
 	}
 	file {"/etc/cron.daily/update-flashplugins":
 		owner => root,
 		group => root,
-		mode => '744',
+		mode  => '744',
 	}
 }
 
 class firefox {
 	file {"/etc/firefox-esr/firefox_brandenbourger.js":
-		owner => root,
-		group => root,
-		mode => '644',
+		owner  => root,
+		group  => root,
+		mode   => '644',
 		source => "/etc/puppet/manifests/files/etc/firefox-esr/firefox_brandenbourger.js",
 	}
 }
 
 class icedove {
 	file {"/etc/icedove/pref/icedove_brandenbourger.js":
-		owner => root,
-		group => root,
-		mode => '644',
+		owner  => root,
+		group  => root,
+		mode   => '644',
 		source => "/etc/puppet/manifests/files/etc/icedove/pref/icedove_brandenbourger.js",
 	}
 }
@@ -44,7 +44,7 @@ class icedove {
 class plymouth {
 	exec {"set_default_theme":
 		command => "/usr/sbin/plymouth-set-default-theme -R joy",
-		onlyif => "/usr/sbin/plymouth-set-default-theme | /bin/grep -v joy",
+		onlyif  => "/usr/sbin/plymouth-set-default-theme | /bin/grep -v joy",
 		require => Package['plymouth'],
 	}
 	exec {"modify_grub":
@@ -82,9 +82,9 @@ class repository {
 
 class libreoffice {
 	file {"/usr/lib/libreoffice/share/registry/brandenbourger.xcd":
-		owner => root,
-		group => root,
-		mode => '644',
+		owner  => root,
+		group  => root,
+		mode   => '644',
 		source => "/etc/puppet/manifests/files/usr/lib/libreoffice/share/registry/brandenbourger.xcd",
 	}
 }
