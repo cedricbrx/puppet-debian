@@ -16,6 +16,11 @@ class config {
 		mode => '644',
 		content => "a4\n",
 	}
+	file {"/etc/cron.daily/update-flashplugins":
+		owner => root,
+		group => root,
+		mode => '744',
+	}
 }
 
 class firefox {
