@@ -17,9 +17,10 @@ class config {
 		content => "a4\n",
 	}
 	file {"/etc/cron.daily/update-flashplugins":
-		owner => root,
-		group => root,
-		mode  => '744',
+		owner  => root,
+		group  => root,
+		mode   => '744',
+		source => "/etc/puppet/manifests/files/etc/cron.daily/update-flashplugins",
 	}
 }
 
