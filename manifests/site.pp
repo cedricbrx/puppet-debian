@@ -238,6 +238,9 @@ class remove {
 	package {"gnome-mahjongg":
 		ensure => purged,
 	}
+	package {"gnome-shell-extension-weather":
+		ensure => purged,
+	}
 	package {"synaptic":
 		ensure => purged,
 	}
