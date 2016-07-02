@@ -1,0 +1,14 @@
+lockPref("network.proxy.type", 5);
+lockPref("browser.startup.homepage", "about:home");
+lockPref("browser.startup.page", 1);
+lockPref("browser.download.manager.showWhenStarting", true);
+lockPref("browser.download.manager.closeWhenDone", false);
+lockPref("browser.download.manger.retention", 1);
+lockPref("browser.shell.checkDefaultBrowser", false);
+lockPref("browser.rights.3.shown", true);
+lockPref("signon.rememberSignons", false);
+lockPref("signon.prefillForms", false);
+lockPref("plugin.default_plugin_disabled", false);
+lockPref("plugins.hide_infobar_for_missing_plugin", true);
+lockPref("plugins.hide_infobar_for_outdated_plugin", true);
+lockPref("xpinstall.enabled", false);
