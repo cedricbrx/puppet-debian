@@ -5,7 +5,7 @@ node default {
     include repository
     include libreoffice
     include synology
-    #include firefox
+    include firefox
     #include icedove
 }
 
