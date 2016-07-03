@@ -141,6 +141,9 @@ class install {
 	package {"lshw":
 		ensure => installed,
 	}
+	package {"pdfstudio":
+		ensure => installed,
+	}
 	package {"mlocate":
 		ensure => installed,
 	}
