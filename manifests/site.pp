@@ -23,6 +23,13 @@ class config {
 		mode   => '755',
 		source => "/etc/puppet/manifests/files/etc/cron.daily/update-flashplugins",
 	}
+	file {"/usr/share/applications/pdfstudio11.desktop":
+		owner   => root,
+		group   => root,
+		mode    => '755',
+		source  => "/opt/pdfstudio11/pdfstudio11.desktop",
+		require => Package ["pdfstudio"],
+	}
 }
 
 class firefox {
