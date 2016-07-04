@@ -28,7 +28,7 @@ class config {
 		group   => root,
 		mode    => '755',
 		source  => "/opt/pdfstudio11/pdfstudio11.desktop",
-		require => Package ["pdfstudio"],
+		require => Package ['pdfstudio'],
 	}
 }
 
