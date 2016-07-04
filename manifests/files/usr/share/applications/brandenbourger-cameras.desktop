@@ -2,6 +2,6 @@
 Comment=
 Terminal=false
 Name=Cameras Brandenbourger
-Exec=xdg-open 'https://brandenbourger.quickconnect.to/cameras'
+Exec=xdg-open 'https://brandenbourger.quickconnect.to/camera'
 Type=Application
 Icon=/usr/share/icons/hicolor/64x64/apps/synology_cameras.png
