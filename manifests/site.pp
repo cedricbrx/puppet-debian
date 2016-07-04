@@ -10,6 +10,12 @@ node default {
     #include icedove
 }
 
+exec { "apt-update":
+    command => "/usr/bin/apt-get update"
+}
+
+Exec["apt-update"] -> Package <| |>
+
 class config {
 	file {"/etc/papersize":
 		owner   => root,
