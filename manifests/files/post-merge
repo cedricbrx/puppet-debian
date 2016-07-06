@@ -7,6 +7,9 @@ cp /etc/puppet/manifests/files/usr/lib/ruby/vendor_ruby/facter/network_vendor.rb
 ## Run Puppet locally using puppet apply
 /usr/bin/puppet apply /etc/puppet/manifests/site.pp
 
+## Run dconf to lock gnome preferences
+#dconf update
+
 ## Log status of the Puppet run
 if [ $? -eq 0 ]
 then
