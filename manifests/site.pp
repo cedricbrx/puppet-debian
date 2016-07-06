@@ -36,6 +36,23 @@ class config {
 		source  => "/opt/pdfstudio11/pdfstudio11.desktop",
 		require => Package['pdfstudio'],
 	}
+	file {"/etc/dconf/profile":
+		owner  => root,
+		group  => root,
+		ensure => directory,
+	}
+	file {"/etc/dconf/db/system.d":
+		owner  => root,
+		group  => root,
+		ensure => directory,
+	}
+	file {"/etc/dconf/profile/user":
+		owner   => root,
+		group   => root,
+		mode    => '644',
+		source  => "/etc/puppet/manifests/files/etc/dconf/profile/user",
+		require => File["/etc/dconf/profile/user"],
+	}
 }
 
 class firefox {
