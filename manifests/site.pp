@@ -41,7 +41,7 @@ class config {
 		group  => root,
 		ensure => directory,
 	}
-	file {"/etc/dconf/db/system.d":
+	file {"/etc/dconf/db/site.d":
 		owner  => root,
 		group  => root,
 		ensure => directory,
