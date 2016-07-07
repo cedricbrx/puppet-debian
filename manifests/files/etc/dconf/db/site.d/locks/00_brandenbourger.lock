@@ -6,3 +6,6 @@
 
 /org/gnome/desktop/interface/enable-animations
 /org/gnome/desktop/interface/clock-show-date
+
+/org/gnome/desktop/wm/preferences/num-workspaces
+/org/gnome/shell/overrides/dynamic-workspaces
