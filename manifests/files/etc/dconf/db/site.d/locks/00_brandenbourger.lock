@@ -9,3 +9,5 @@
 
 /org/gnome/desktop/wm/preferences/num-workspaces
 /org/gnome/shell/overrides/dynamic-workspaces
+
+/org/gnome/shell/calendar/show-weekdate
