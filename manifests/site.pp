@@ -36,15 +36,28 @@ class config {
 		source  => "/opt/pdfstudio11/pdfstudio11.desktop",
 		require => Package['pdfstudio'],
 	}
-	file {"/etc/dconf/profile":
+	file {"/etc/dconf":
 		owner  => root,
 		group  => root,
 		ensure => directory,
+	}
+	file {"/etc/dconf/profile":
+		owner   => root,
+		group   => root,
+		ensure  => directory,
+		require => File["/etc/dconf"],
+	}
+	file {"/etc/dconf/db":
+		owner   => root,
+		group   => root,
+		ensure  => directory,
+		require => File["/etc/dconf"],
 	}
 	file {"/etc/dconf/db/site.d":
 		owner  => root,
 		group  => root,
 		ensure => directory,
+		require => File["/etc/dconf/db"],
 	}
 	file {"/etc/dconf/profile/user":
 		owner   => root,
