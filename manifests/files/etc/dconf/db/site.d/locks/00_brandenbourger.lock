@@ -11,3 +11,6 @@
 /org/gnome/shell/overrides/dynamic-workspaces
 
 /org/gnome/shell/calendar/show-weekdate
+
+/org/gnome/shell/enabled-extensions
+/org/gnome/shell/favorite-apps
