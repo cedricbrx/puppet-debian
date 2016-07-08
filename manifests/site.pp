@@ -58,6 +58,7 @@ class config {
 		group   => root,
 		ensure  => directory,
 		recurse => true,
+		source  => "/etc/puppet/manifests/files/etc/dconf/db/site.d/",
 		require => File["/etc/dconf/db"],
 	}
 	file {"/etc/dconf/profile/user":
