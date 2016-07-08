@@ -54,9 +54,10 @@ class config {
 		require => File["/etc/dconf"],
 	}
 	file {"/etc/dconf/db/site.d":
-		owner  => root,
-		group  => root,
-		ensure => directory,
+		owner   => root,
+		group   => root,
+		ensure  => directory,
+		recurse => true,
 		require => File["/etc/dconf/db"],
 	}
 	file {"/etc/dconf/profile/user":
