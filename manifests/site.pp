@@ -64,7 +64,7 @@ class config {
 		group   => root,
 		mode    => '644',
 		source  => "/etc/puppet/manifests/files/etc/dconf/profile/user",
-		require => File["/etc/dconf/profile/user"],
+		require => File["/etc/dconf/profile"],
 	}
 }
 
