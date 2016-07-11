@@ -6,12 +6,13 @@ cp /etc/puppet/manifests/files/usr/lib/ruby/vendor_ruby/facter/network_vendor.rb
 
 ## Run Puppet locally using puppet apply
 /usr/bin/puppet apply /etc/puppet/manifests/site.pp
+PUPPET_EXIT=$?
 
 ## Run dconf to lock gnome preferences
-#dconf update
+dconf update
 
 ## Log status of the Puppet run
-if [ $? -eq 0 ]
+if [ $PUPPET_EXIT -eq 0 ]
 then
     /usr/bin/logger -i "Puppet has run successfully" -t "puppet-run"
     exit 0
