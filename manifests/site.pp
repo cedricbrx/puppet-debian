@@ -186,6 +186,9 @@ class install {
 	package {"lshw":
 		ensure => installed,
 	}
+	package {"dconf-editor":
+		ensure => installed,
+	}
 	package {"pdfstudio":
 		ensure => installed,
 	}
