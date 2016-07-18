@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test -x /usr/sbin/update-pepperflashplugin-nonfree && update-pepperflashplugin-nonfree --status | grep -o ": [[:digit:]]*.[[:digit:]]*.[[:digit:]]*.[[:digit:]]*" | {
+test -x /usr/sbin/update-pepperflashplugin-nonfree && /usr/sbin/update-pepperflashplugin-nonfree --status | grep -o ": [[:digit:]]*.[[:digit:]]*.[[:digit:]]*.[[:digit:]]*" | {
   read installed
   read available
 
