@@ -29,13 +29,6 @@ class config {
 		mode   => '755',
 		source => "/etc/puppet/manifests/files/etc/cron.daily/update-flashplugins",
 	}
-	file {"/usr/share/applications/pdfstudio11.desktop":
-		owner   => root,
-		group   => root,
-		mode    => '755',
-		source  => "/opt/pdfstudio11/pdfstudio11.desktop",
-		require => Package['pdfstudio'],
-	}
 	file {"/etc/dconf":
 		owner  => root,
 		group  => root,
@@ -67,6 +60,22 @@ class config {
 		mode    => '644',
 		source  => "/etc/puppet/manifests/files/etc/dconf/profile/user",
 		require => File["/etc/dconf/profile"],
+	}
+}
+
+class pdfstudio{
+	file {"/usr/share/applications/pdfstudio11.desktop":
+		owner   => root,
+		group   => root,
+		mode    => '755',
+		source  => "/opt/pdfstudio11/pdfstudio11.desktop",
+		require => Package['pdfstudio'],
+	}
+	file {"":
+		owner   => root,
+		group   => root,
+		mode    => '755',
+		require => Package['pdfstudio'],
 	}
 }
 
