@@ -1,1 +1,5 @@
 #!/bin/bash
+
+mkdir -p /opt/pdfstudio/lib/tess/tessdata/
+cd /opt/pdfstudio/lib/tess/tessdata/
+
