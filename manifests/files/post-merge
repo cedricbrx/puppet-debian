@@ -1,8 +1,8 @@
 #!/bin/bash -e
 
 ## Copy facter to facter directory
-cp /etc/puppet/manifests/files/usr/lib/ruby/vendor_ruby/facter/wireless_vendor.rb /usr/lib/ruby/vendor_ruby/facter/wireless_vendor.rb
-cp /etc/puppet/manifests/files/usr/lib/ruby/vendor_ruby/facter/network_vendor.rb /usr/lib/ruby/vendor_ruby/facter/network_vendor.rb
+cp -u /etc/puppet/manifests/files/usr/lib/ruby/vendor_ruby/facter/wireless_vendor.rb /usr/lib/ruby/vendor_ruby/facter/wireless_vendor.rb
+cp -u /etc/puppet/manifests/files/usr/lib/ruby/vendor_ruby/facter/network_vendor.rb /usr/lib/ruby/vendor_ruby/facter/network_vendor.rb
 
 #install package apt-transport-https
 puppet apply -e 'Package { "apt-transport-https": ensure => installed }'
