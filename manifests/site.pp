@@ -16,6 +16,16 @@ exec { "apt-update":
 
 Exec["apt-update"] -> Package <| |>
 
+case $::hostname {
+	mars05: {
+		$main_user='anne04'
+	}
+	default: {
+		$main_user='brand10'
+	}
+}
+
+
 class config {
 	file {"/etc/papersize":
 		owner   => root,
@@ -70,17 +80,6 @@ class pdfstudio{
 		mode    => '755',
 		source  => "/opt/pdfstudio11/pdfstudio11.desktop",
 		require => Package['pdfstudio'],
-	}
-	file {"$userfolder/.pdfstudio/tess":
-		owner   => root,
-		group   => root,
-		mode    => '755',
-		require => Package['pdfstudio'],
-	}
-	file {"/opt/pdfstudio11/lib/tess/tessdata/":
-		owner   => root,
-		group   => root,
-		mode    => '755',
 	}
 }
 
