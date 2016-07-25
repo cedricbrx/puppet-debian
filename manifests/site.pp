@@ -108,11 +108,20 @@ class plymouth {
 		onlyif  => "/usr/sbin/plymouth-set-default-theme | /bin/grep -v joy",
 		require => Package['plymouth-x11'],
 	}
-	exec {"modify_grub":
+	exec {"modify-update_grub":
 		command => "/bin/sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=\"quiet\"/GRUB_CMDLINE_LINUX_DEFAULT=\"quiet splash\"/g' /etc/default/grub; /usr/sbin/update-grub",
 		onlyif  => "/bin/grep -v splash /etc/default/grub",
 		require => Exec["set_default_theme"],
 	}
+	#if $graphic_chipset == 'gk106' {
+	#	file {"/etc/initramfs-tools/hooks/nvidia/":
+	#		owner   => root,
+	#		group   => root,
+	#		mode    => '755',
+	#		source  => "/etc/puppet/manifests/files/etc/initramfs-tools/hooks/nvidia/",
+	#		before  => Exec["set_default_theme"],
+	#	}
+	#}
 }
 
 class repository {
