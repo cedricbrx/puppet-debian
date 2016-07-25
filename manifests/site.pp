@@ -236,6 +236,7 @@ class install {
 	package {"ttf-mscorefonts-installer":
 		responsefile => "/var/cache/debconf/mscorefonts.seeds",
 		ensure       => installed,
+		require      => "/var/cache/debconf/mscorefonts.seeds",
 	}
 	package {"plymouth-x11":
 		ensure => installed,
@@ -261,6 +262,15 @@ class install {
 	}
 	package {$firmware_packages:
 		ensure => installed,
+	}
+	if $network_r8168 {
+		package {"dkms":
+			ensure => installed,
+		}
+		package {"dkms-r8168":
+			ensure => installed,
+			source => "/etc/puppet/manifests/files/r8168-dkms_8.042.00-1_all.deb"
+		}
 	}
 }
 
