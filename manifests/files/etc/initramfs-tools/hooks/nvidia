@@ -1,0 +1,23 @@
+#!/bin/sh
+
+PREREQ=""
+
+prereqs()
+{
+    echo "$PREREQ"
+}
+
+case $1 in
+prereqs)
+    prereqs
+    exit 0
+    ;;
+esac
+
+. /usr/share/initramfs-tools/hook-functions
+
+if test "$verbose" != "n"; then
+    cpverbosity="-v"
+fi
+
+cp -pr $cpverbosity "/lib/firmware/nvidia" "${DESTDIR}/lib/firmware/"
