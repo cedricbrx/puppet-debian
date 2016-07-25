@@ -7,6 +7,7 @@ node default {
     include synology
     include firefox
     include config
+    include plymouth
     #include icedove
 }
 
