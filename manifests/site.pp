@@ -105,7 +105,7 @@ class plymouth {
 	exec {"set_default_theme":
 		command => "/usr/sbin/plymouth-set-default-theme -R joy",
 		onlyif  => "/usr/sbin/plymouth-set-default-theme | /bin/grep -v joy",
-		require => Package['plymouth'],
+		require => Package['plymouth-x11'],
 	}
 	exec {"modify_grub":
 		command => "/bin/sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=\"quiet\"/GRUB_CMDLINE_LINUX_DEFAULT=\"quiet splash\"/g' /etc/default/grub; /usr/sbin/update-grub",
@@ -227,9 +227,9 @@ class install {
 		responsefile => "/var/cache/debconf/mscorefonts.seeds",
 		ensure       => installed,
 	}
-	#package {"plymouth-x11":
-	#	ensure => installed,
-	#}
+	package {"plymouth-x11":
+		ensure => installed,
+	}
 	if $network_vendor == 'realtek' {
 		if $wireless_vendor == 'intel' {
 			$firmware_packages = ['firmware-iwlwifi','firmware-realtek','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']
