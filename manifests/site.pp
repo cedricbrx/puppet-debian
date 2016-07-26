@@ -113,15 +113,15 @@ class plymouth {
 		onlyif  => "/bin/grep -v splash /etc/default/grub",
 		require => Exec["set_default_theme"],
 	}
-	#if $graphic_chipset == 'gk106' {
-	#	file {"/etc/initramfs-tools/hooks/nvidia/":
-	#		owner   => root,
-	#		group   => root,
-	#		mode    => '755',
-	#		source  => "/etc/puppet/manifests/files/etc/initramfs-tools/hooks/nvidia/",
-	#		before  => Exec["set_default_theme"],
-	#	}
-	#}
+	if $graphic_chipset == 'gk106' {
+		file {"/etc/initramfs-tools/hooks/nvidia/":
+			owner   => root,
+			group   => root,
+			mode    => '755',
+			source  => "/etc/puppet/manifests/files/etc/initramfs-tools/hooks/nvidia/",
+			before  => Exec["set_default_theme"],
+		}
+	}
 }
 
 class repository {
