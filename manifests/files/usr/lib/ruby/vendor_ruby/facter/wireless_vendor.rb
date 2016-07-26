@@ -1,4 +1,4 @@
-# Fact: network
+# Fact: wireless_vendor
 
 Facter.add(:wireless_vendor) do
   confine :kernel => [ :linux, :"gnu/kfreebsd" ]
