@@ -268,8 +268,9 @@ class install {
 			ensure => installed,
 		}
 		package {"dkms-r8168":
-			ensure => installed,
-			source => "/etc/puppet/manifests/files/r8168-dkms_8.042.00-1_all.deb"
+			ensure  => installed,
+			source  => "/etc/puppet/manifests/files/r8168-dkms_8.042.00-1_all.deb",
+			require => Package["dkms"],
 		}
 	}
 }
