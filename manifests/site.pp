@@ -179,6 +179,7 @@ class synology {
 }
 
 class install {
+	require repository
 	package {"aptitude":
         	ensure => installed,
 	}
