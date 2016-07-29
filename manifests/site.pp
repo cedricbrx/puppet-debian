@@ -276,11 +276,15 @@ class install {
 	}
 }
 
-class remove {
+class gnome-dependencies {
 	exec {"/bin/bash /etc/puppet/manifests/files/gnome-dependencies":
 		require => Package['aptitude'],
 		onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep gnome-core`'
 	}
+}
+
+class remove {
+	require gnome-dependencies
 	package {"inkscape":
 		ensure => purged,
 	}
