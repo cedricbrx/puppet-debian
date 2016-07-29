@@ -3,3 +3,9 @@
 mkdir -p /opt/pdfstudio/lib/tess/tessdata/
 cd /opt/pdfstudio/lib/tess/tessdata/
 
+wget http://download.pdfstudio
+
+for LANGUAGE_FILE in de fr en es do
+  grep
+done
+
