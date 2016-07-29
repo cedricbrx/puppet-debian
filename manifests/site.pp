@@ -8,6 +8,7 @@ node default {
     include firefox
     include config
     include plymouth
+    include gnome-dependencies
     #include icedove
 }
 
