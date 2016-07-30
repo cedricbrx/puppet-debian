@@ -91,6 +91,9 @@ class pdfstudio {
 			unless  => "/usr/bin/find /opt/pdfstudio11/lib/tess/tessdata/tesseract-ocr/tessdata -iname $languages.traineddata",
 		}
 	}
+	file {"/opt/pdfstudio11/lib/tess/tessdata/tesseract-ocr/tessdata/languages11.xml":
+		source => "http://download.qoppa.com/pdfstudio/ocr/languages11.xml"
+	}
 }
 
 class firefox {
