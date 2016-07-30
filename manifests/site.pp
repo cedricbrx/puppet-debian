@@ -285,7 +285,7 @@ class gnome_dependencies {
 }
 
 class remove {
-	require gnome-dependencies
+	require gnome_dependencies
 	package {"inkscape":
 		ensure => purged,
 	}
