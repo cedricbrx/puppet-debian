@@ -238,7 +238,7 @@ class install {
 	package {"ttf-mscorefonts-installer":
 		responsefile => "/var/cache/debconf/mscorefonts.seeds",
 		ensure       => installed,
-		require      => "/var/cache/debconf/mscorefonts.seeds",
+		require      => File["/var/cache/debconf/mscorefonts.seeds"],
 	}
 	package {"plymouth-x11":
 		ensure => installed,
