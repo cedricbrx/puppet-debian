@@ -9,6 +9,7 @@ node default {
     include config
     include plymouth
     include gnome_dependencies
+    include pdfstudio
     #include icedove
 }
 
@@ -75,7 +76,7 @@ class config {
 	}
 }
 
-class pdfstudio{
+class pdfstudio {
 	file {"/usr/share/applications/pdfstudio11.desktop":
 		owner   => root,
 		group   => root,
