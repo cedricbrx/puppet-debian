@@ -111,7 +111,7 @@ class plymouth {
 	}
 	exec {"modify-update_grub":
 		command => "/bin/sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=\"quiet\"/GRUB_CMDLINE_LINUX_DEFAULT=\"quiet splash\"/g' /etc/default/grub; /usr/sbin/update-grub",
-		onlyif  => "/bin/grep -v splash /etc/default/grub",
+		unless  => "/bin/grep splash /etc/default/grub",
 		require => Exec["set_default_theme"],
 	}
 	if $graphic_chipset == 'gk106' {
