@@ -85,7 +85,7 @@ class pdfstudio {
 		require => Package['pdfstudio'],
 	}
 	$languages = ["deu", "fra", "eng", "spa"]
-	$languages.each |String $binary| {
+	$languages.each |String $languages| {
 		exec {"/usr/bin/wget -qO- http://download.qoppa.com/ocr/tess302/tesseract-ocr-3.02.$languages.tar.gz | /bin/tar xvz -C /opt/pdfstudio11/lib/tess/tessdata":
 			require => Package['pdfstudio'],
 		}
