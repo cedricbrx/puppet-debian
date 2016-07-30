@@ -8,7 +8,7 @@ node default {
     include firefox
     include config
     include plymouth
-    include gnome-dependencies
+    include gnome_dependencies
     #include icedove
 }
 
@@ -277,7 +277,7 @@ class install {
 	}
 }
 
-class gnome-dependencies {
+class gnome_dependencies {
 	exec {"/bin/bash /etc/puppet/manifests/files/gnome-dependencies":
 		require => Package['aptitude'],
 		onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep gnome-core`'
