@@ -270,9 +270,6 @@ class install {
 		elsif $wireless_vendor == 'intel' {
 			$firmware_packages = ['firmware-iwlwifi','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']
 		}
-		else {
-			$firmware_packages = ['firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']
-		}
 	}
 	else {
 		$firmware_packages = ['firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']
