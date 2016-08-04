@@ -14,7 +14,7 @@ node default {
 }
 
 exec { "apt-update":
-	require repository,
+	require repository
 	command => "/usr/bin/apt-get update",
 }
 
