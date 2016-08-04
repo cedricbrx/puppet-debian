@@ -14,7 +14,8 @@ node default {
 }
 
 exec { "apt-update":
-	command => "/usr/bin/apt-get update"
+	require repository,
+	command => "/usr/bin/apt-get update",
 }
 
 Exec["apt-update"] -> Package <| |>
