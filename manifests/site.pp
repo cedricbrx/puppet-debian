@@ -255,6 +255,9 @@ class install {
 	package {"plymouth-x11":
 		ensure => installed,
 	}
+	package {"curl":
+		ensure => installed,
+	}
 	if $network_vendor == 'realtek' {
 		if $wireless_vendor == 'intel' {
 			$firmware_packages = ['firmware-iwlwifi','firmware-realtek','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']
