@@ -102,7 +102,7 @@ class pdfstudio {
 		source  => "/etc/puppet/manifests/files/opt/pdfstudio11/pdfstudio.key",
 		require => Package['pdfstudio'],
 	}
-	file{"/home/$installed_user/.pdfstudio11/tess/tessdata:"
+	file{"/home/$installed_user/.pdfstudio11/tess/tessdata":
 		owner   => root,
 		group   => root,
 		mode    => '644',
