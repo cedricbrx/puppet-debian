@@ -21,8 +21,6 @@ class apt{
 	}
 }
 
-#Exec["apt-update"] -> Package <| |>
-
 case $::hostname {
 	mars05: {
 		$main_user='anne04'
@@ -141,7 +139,6 @@ class plymouth {
 }
 
 class repository {
-	
 	file {"/etc/apt/trusted.gpg.d/":
 		path    => "/etc/apt/trusted.gpg.d",
 		ensure  => directory,
@@ -150,6 +147,12 @@ class repository {
 		mode    => '644',
 		source  => "/etc/puppet/manifests/files/etc/apt/trusted.gpg.d",
 		recurse => true,
+	}
+	file {	"/etc/apt/sources.list":
+		owner   => root,
+		group   => root,
+		mode    => '644',
+		source  => "/etc/puppet/manifests/files/etc/apt/sources.list",
 	}
 	file {"/etc/apt/sources.list.d/":
 		ensure  => directory,
