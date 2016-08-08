@@ -45,37 +45,38 @@ class config {
 		source => "/etc/puppet/manifests/files/etc/cron.daily/update-flashplugins",
 	}
 	file {"/etc/dconf":
-		owner  => root,
-		group  => root,
-		ensure => directory,
-	}
-	file {"/etc/dconf/profile":
-		owner   => root,
-		group   => root,
-		ensure  => directory,
-		require => File["/etc/dconf"],
-	}
-	file {"/etc/dconf/db":
-		owner   => root,
-		group   => root,
-		ensure  => directory,
-		require => File["/etc/dconf"],
-	}
-	file {"/etc/dconf/db/site.d":
 		owner   => root,
 		group   => root,
 		ensure  => directory,
 		recurse => true,
-		source  => "/etc/puppet/manifests/files/etc/dconf/db/site.d/",
-		require => File["/etc/dconf/db"],
 	}
-	file {"/etc/dconf/profile/user":
-		owner   => root,
-		group   => root,
-		mode    => '644',
-		source  => "/etc/puppet/manifests/files/etc/dconf/profile/user",
-		require => File["/etc/dconf/profile"],
-	}
+#	file {"/etc/dconf/profile":
+#		owner   => root,
+#		group   => root,
+#		ensure  => directory,
+#		require => File["/etc/dconf"],
+#	}
+#	file {"/etc/dconf/db":
+#		owner   => root,
+#		group   => root,
+#		ensure  => directory,
+#		require => File["/etc/dconf"],
+#	}
+#	file {"/etc/dconf/db/site.d":
+#		owner   => root,
+#		group   => root,
+#		ensure  => directory,
+#		recurse => true,
+#		source  => "/etc/puppet/manifests/files/etc/dconf/db/site.d/",
+#		require => File["/etc/dconf/db"],
+#	}
+#	file {"/etc/dconf/profile/user":
+#		owner   => root,
+#		group   => root,
+#		mode    => '644',
+#		source  => "/etc/puppet/manifests/files/etc/dconf/profile/user",
+#		require => File["/etc/dconf/profile"],
+#	}
 }
 
 class pdfstudio {
