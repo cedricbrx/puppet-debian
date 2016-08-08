@@ -303,17 +303,17 @@ class install {
 }
 
 class gnome_dependencies {
-	exec {"/bin/bash /etc/puppet/manifests/files/gnome-dependencies":
-		require => Package['aptitude'],
-		onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep gnome-core`'
-	}
-	#$gd = ["gnome", "gnome-core", "gnome-desktop-environment"]
-	#$gd.each |String $gd| {
-	#	exec {"/usr/bin/aptitude unmarkauto '?reverse-depends($gd) | ?reverse-recommends($gd)'":
-	#		require => Package['aptitude'],
-	#		onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep $gd`'
-	#	}
+	#exec {"/bin/bash /etc/puppet/manifests/files/gnome-dependencies":
+	#	require => Package['aptitude'],
+	#	onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep gnome-core`'
 	#}
+	$gd = ["gnome", "gnome-core", "gnome-desktop-environment"]
+	$gd.each |String $gd| {
+		exec {"/usr/bin/aptitude unmarkauto '?reverse-depends($gd) | ?reverse-recommends($gd)'":
+			require => Package['aptitude'],
+			onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep $gd`'
+		}
+	}
 }
 
 class remove {
