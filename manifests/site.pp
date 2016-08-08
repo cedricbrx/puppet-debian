@@ -95,7 +95,7 @@ class pdfstudio {
 			unless  => "/usr/bin/find /opt/pdfstudio11/lib/tess/tesseract-ocr/tessdata -iname $languages.traineddata",
 		}
 	}
-	file {"opt/pdfstudio11/.pdfstudio":
+	file {"/opt/pdfstudio11/.pdfstudio":
 		owner   => root,
 		group   => root,
 		mode    => '644',
