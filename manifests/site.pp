@@ -92,7 +92,7 @@ class pdfstudio {
 	$languages.each |String $languages| {
 		exec {"/usr/bin/curl http://download.qoppa.com/ocr/tess302/tesseract-ocr-3.02.$languages.tar.gz | /bin/tar xvz -C /opt/pdfstudio11/lib/tess":
 			require => Package['pdfstudio','curl'],
-			unless  => "/usr/bin/find /opt/pdfstudio11/lib/tess/tesseract-ocr/tessdata -iname $languages.traineddata",
+			unless  => "/usr/bin/test -e /opt/pdfstudio11/lib/tess/tesseract-ocr/tessdata/$languages.traineddata",
 		}
 	}
 	file {"/opt/pdfstudio11/.pdfstudio":
