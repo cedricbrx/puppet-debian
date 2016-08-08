@@ -5,9 +5,10 @@ node default {
 
 class facter {
   file {"/usr/lib/ruby/vendor_ruby/facter/":
-    owner => root,
-    mode => '644',
+    owner   => root,
+    mode    => '644',
     recurse => true,
+    source  => "/etc/puppet/manifests/files/usr/lib/ruby/vendor_ruby/facter/",
   }
 }
 
