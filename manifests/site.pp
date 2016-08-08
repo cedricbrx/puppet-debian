@@ -49,6 +49,7 @@ class config {
 		group   => root,
 		ensure  => directory,
 		recurse => true,
+		source  => "/etc/puppet/manifests/files/etc/dconf/",
 	}
 #	file {"/etc/dconf/profile":
 #		owner   => root,
