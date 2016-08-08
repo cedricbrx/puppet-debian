@@ -102,7 +102,7 @@ class pdfstudio {
 		source  => "/etc/puppet/manifests/files/opt/pdfstudio11/pdfstudio.key",
 		require => Package['pdfstudio'],
 	}
-	file {"/opt/pdfstudio11/lib/tess/tessdata/tesseract-ocr/tessdata/languages11.xml":
+	file {"/opt/pdfstudio11/lib/tess/tesseract-ocr/tessdata/languages11.xml":
 		source => "http://download.qoppa.com/pdfstudio/ocr/languages11.xml",
 		require => Package['pdfstudio'],
 	}
