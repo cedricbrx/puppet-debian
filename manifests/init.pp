@@ -1,6 +1,6 @@
 node default {
   include facter
-  include apt-transport
+  include apt_transport
 }
 
 class facter {
@@ -11,7 +11,7 @@ class facter {
   }
 }
 
-class apt-transport {
+class apt_transport {
   Package {"apt-transport-https":
     ensure => installed,
   }
