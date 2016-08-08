@@ -21,14 +21,14 @@ class apt{
 	}
 }
 
-case $::hostname {
-	mars05: {
-		$main_user='anne04'
-	}
-	default: {
-		$main_user='brand10'
-	}
-}
+#case $::hostname {
+#	mars05: {
+#		$main_user='anne04'
+#	}
+#	default: {
+#		$main_user='brand10'
+#	}
+#}
 
 
 class config {
