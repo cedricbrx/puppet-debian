@@ -99,7 +99,7 @@ class pdfstudio {
 		owner   => root,
 		group   => root,
 		mode    => '644',
-		source  => "/etc/puppet/manifests/files/opt/pdfstudio/pdfstudio.key",
+		source  => "/etc/puppet/manifests/files/opt/pdfstudio11/pdfstudio.key",
 		require => Package['pdfstudio'],
 	}
 	file {"/opt/pdfstudio11/lib/tess/tesseract-ocr/tessdata/languages11.xml":
