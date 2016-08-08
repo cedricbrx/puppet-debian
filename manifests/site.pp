@@ -90,13 +90,14 @@ class pdfstudio {
 	}
 	$languages = ["deu", "fra", "eng", "spa"]
 	$languages.each |String $languages| {
-		exec {"/usr/bin/wget -qO- http://download.qoppa.com/ocr/tess302/tesseract-ocr-3.02.$languages.tar.gz | /bin/tar xvz -C /opt/pdfstudio11/lib/tess/tessdata":
+		exec {"/usr/bin/curl http://download.qoppa.com/ocr/tess302/tesseract-ocr-3.02.$languages.tar.gz | /bin/tar xvz -C /opt/pdfstudio11/lib/tess/tessdata":
 			require => Package['pdfstudio'],
 			unless  => "/usr/bin/find /opt/pdfstudio11/lib/tess/tessdata/tesseract-ocr/tessdata -iname $languages.traineddata",
 		}
 	}
 	file {"/opt/pdfstudio11/lib/tess/tessdata/tesseract-ocr/tessdata/languages11.xml":
 		source => "http://download.qoppa.com/pdfstudio/ocr/languages11.xml"
+		require => Package['pdfstudio'],
 	}
 }
 
