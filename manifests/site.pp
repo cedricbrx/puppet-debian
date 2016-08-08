@@ -1,4 +1,5 @@
-node default {
+node default { 
+    include apt
     include cronpuppet
     include install
     include remove
@@ -13,12 +14,14 @@ node default {
     #include icedove
 }
 
-exec { "apt-update":
+class apt{
 	require repository
-	command => "/usr/bin/apt-get update",
+	exec { "apt-update":
+		command => "/usr/bin/apt-get update",
+	}
 }
 
-Exec["apt-update"] -> Package <| |>
+#Exec["apt-update"] -> Package <| |>
 
 case $::hostname {
 	mars05: {
@@ -138,6 +141,7 @@ class plymouth {
 }
 
 class repository {
+	
 	file {"/etc/apt/trusted.gpg.d/":
 		path    => "/etc/apt/trusted.gpg.d",
 		ensure  => directory,
