@@ -14,10 +14,16 @@ node default {
     #include icedove
 }
 
-class apt{
+class apt {
 	require repository
 	exec { "apt-update":
 		command => "/usr/bin/apt-get update",
+	}
+	file {"/etc/apt/apt.conf.d/99brandenbourger":
+		owner  => root,
+		group  => root,
+		mode   => '644',
+		source => "/etc/puppet/manifests/files/etc/apt/apt.conf.d/99brandenbourger",
 	}
 }
 
@@ -216,7 +222,7 @@ class synology {
 }
 
 class install {
-	require repository
+	require apt
 	package {"aptitude":
         	ensure => installed,
 	}
