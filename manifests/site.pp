@@ -6,7 +6,7 @@ node default {
     include repository
     include libreoffice
     include synology
-    include firefox
+    #include firefox
     include config
     include plymouth
     include gnome_dependencies
@@ -26,16 +26,6 @@ class apt {
 		source => "/etc/puppet/manifests/files/etc/apt/apt.conf.d/99brandenbourger",
 	}
 }
-
-#case $::hostname {
-#	mars05: {
-#		$main_user='anne04'
-#	}
-#	default: {
-#		$main_user='brand10'
-#	}
-#}
-
 
 class config {
 	file {"/etc/papersize":
@@ -57,33 +47,6 @@ class config {
 		recurse => true,
 		source  => "/etc/puppet/manifests/files/etc/dconf/",
 	}
-#	file {"/etc/dconf/profile":
-#		owner   => root,
-#		group   => root,
-#		ensure  => directory,
-#		require => File["/etc/dconf"],
-#	}
-#	file {"/etc/dconf/db":
-#		owner   => root,
-#		group   => root,
-#		ensure  => directory,
-#		require => File["/etc/dconf"],
-#	}
-#	file {"/etc/dconf/db/site.d":
-#		owner   => root,
-#		group   => root,
-#		ensure  => directory,
-#		recurse => true,
-#		source  => "/etc/puppet/manifests/files/etc/dconf/db/site.d/",
-#		require => File["/etc/dconf/db"],
-#	}
-#	file {"/etc/dconf/profile/user":
-#		owner   => root,
-#		group   => root,
-#		mode    => '644',
-#		source  => "/etc/puppet/manifests/files/etc/dconf/profile/user",
-#		require => File["/etc/dconf/profile"],
-#	}
 }
 
 class pdfstudio {
@@ -135,14 +98,35 @@ class firefox {
 		mode   => '644',
 		source => "/etc/puppet/manifests/files/etc/firefox-esr/firefox_brandenbourger.js",
 	}
+	file {"/usr/lib/firefox-esr/firefox_brandenbourger.cfg":
+		owner  => root,
+		group  => root,
+		mode   => '644',
+		source => "/etc/puppet/manifests/files/usr/lib/firefox-esr/firefox_brandenbourger.cfg",
+	}
 }
 
 class icedove {
 	file {"/etc/icedove/pref/icedove_brandenbourger.js":
-		owner  => root,
-		group  => root,
-		mode   => '644',
-		source => "/etc/puppet/manifests/files/etc/icedove/pref/icedove_brandenbourger.js",
+		owner   => root,
+		group   => root,
+		mode    => '644',
+		source  => "/etc/puppet/manifests/files/etc/icedove/pref/icedove_brandenbourger.js",
+		require => Package["icedove"],
+	}
+	file {"/usr/lib/icedove/icedove_brandenbourger.cfg":
+		owner   => root,
+		group   => root,
+		mode    => '644',
+		source  => "/etc/puppet/manifests/files/usr/lib/icedove/pref/icedove_brandenbourger.cfg",
+		require => Package["icedove"],
+	}
+	file {"/usr/lib/icedove/extensions/{3550f703-e582-4d05-9a08-453d09bdfdc6}/provide_for_google_calendar-3.1-sm+tb.xpi":
+		owner   => root,
+		group   => root,
+		mode    => '644',
+		source  => https://addons.mozilla.org/thunderbird/downloads/latest/provider-for-google-calendar/addon-4631-latest.xpi",
+		require => Package["icedove"],
 	}
 }
 
@@ -331,10 +315,6 @@ class install {
 }
 
 class gnome_dependencies {
-	#exec {"/bin/bash /etc/puppet/manifests/files/gnome-dependencies":
-	#	require => Package['aptitude'],
-	#	onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep gnome-core`'
-	#}
 	$gd = ["gnome", "gnome-core", "gnome-desktop-environment"]
 	$gd.each |String $gd| {
 		exec {"/usr/bin/aptitude unmarkauto '?reverse-depends($gd) | ?reverse-recommends($gd)'":
