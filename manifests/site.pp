@@ -6,12 +6,12 @@ node default {
     include repository
     include libreoffice
     include synology
-    include firefox
+    #include firefox
     include config
     include plymouth
     include gnome_dependencies
     include pdfstudio
-    include icedove
+    #include icedove
 }
 
 class apt {
