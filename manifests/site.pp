@@ -123,7 +123,7 @@ class pdfstudio {
 		target  => "/opt/pdfstudio11/lib/tess/tesseract-ocr/tessdata/",
 	}
 	file {"/opt/pdfstudio11/lib/tess/tesseract-ocr/tessdata/languages11.xml":
-		source => "http://download.qoppa.com/pdfstudio/ocr/languages11.xml",
+		source  => "http://download.qoppa.com/pdfstudio/ocr/languages11.xml",
 		require => Package['pdfstudio'],
 	}
 }
