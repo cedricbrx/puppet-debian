@@ -125,7 +125,7 @@ class icedove {
 		owner   => root,
 		group   => root,
 		mode    => '644',
-		source  => https://addons.mozilla.org/thunderbird/downloads/latest/provider-for-google-calendar/addon-4631-latest.xpi",
+		source  => "https://addons.mozilla.org/thunderbird/downloads/latest/provider-for-google-calendar/addon-4631-latest.xpi",
 		require => Package["icedove"],
 	}
 }
