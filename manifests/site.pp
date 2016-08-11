@@ -108,12 +108,19 @@ class pdfstudio {
 		source  => "/etc/puppet/manifests/files/opt/pdfstudio11/pdfstudio.key",
 		require => Package['pdfstudio'],
 	}
+	file { ["/home/$installed_user/.pdfstudio11/", "/home/$installed_user/.pdfstudio11/tess/"]:
+		owner  => $installed_user,
+		group  => $installed_user,
+		mode   => '755',
+		ensure => directory,
+	}
 	file{"/home/$installed_user/.pdfstudio11/tess/tessdata":
-		owner   => root,
-		group   => root,
+		owner   => $installed_user,
+		group   => $installed_user,
 		mode    => '644',
-		ensure => link,
-		target => "/opt/pdfstudio11/lib/tess/tesseract-ocr/tessdata/",
+		ensure  => link,
+		require => File["/home/$installed_user/.pdfstudio11/", "/home/$installed_user/.pdfstudio11/tess/"],
+		target  => "/opt/pdfstudio11/lib/tess/tesseract-ocr/tessdata/",
 	}
 	file {"/opt/pdfstudio11/lib/tess/tesseract-ocr/tessdata/languages11.xml":
 		source => "http://download.qoppa.com/pdfstudio/ocr/languages11.xml",
