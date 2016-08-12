@@ -1,5 +1,0 @@
-#!/bin/bash
-
-aptitude unmarkauto '?reverse-depends(gnome) | ?reverse-recommends(gnome)'
-aptitude unmarkauto '?reverse-depends(gnome-core) | ?reverse-recommends(gnome-core)'
-aptitude unmarkauto '?reverse-depends(gnome-desktop-environment) | ?reverse-recommends(gnome-desktop-environment)'
