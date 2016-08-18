@@ -268,6 +268,9 @@ class install {
 	package {"libreoffice-gtk3":
         	ensure => installed,
 	}
+	package {"hfsprogs":
+		ensure => installed,
+	}
 	package {"ttf-mscorefonts-installer":
 		responsefile => "/var/cache/debconf/mscorefonts.seeds",
 		ensure       => installed,
