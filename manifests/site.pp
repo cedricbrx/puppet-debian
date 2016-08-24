@@ -416,6 +416,12 @@ class remove {
 	package {"five-or-more":
 		ensure => purged,
 	}
+	package {"vinagre":
+		ensure => purged,
+	}
+	package {"vino":
+		ensure => purged,
+	}
 	package {"tali":
 		ensure => purged,
 	}
