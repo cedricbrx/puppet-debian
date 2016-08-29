@@ -173,7 +173,7 @@ class repository {
 		owner   => root,
 		group   => root,
 		mode    => '644',
-		pruge   => true,
+		purge   => true,
 		source  => "/etc/puppet/manifests/files/etc/apt/sources.list.d",
 		recurse => true,
 	}
