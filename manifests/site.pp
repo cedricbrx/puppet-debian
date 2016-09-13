@@ -53,7 +53,7 @@ class pdfstudio {
 	file {"/usr/share/applications/pdfstudio11.desktop":
 		owner   => root,
 		group   => root,
-		mode    => '755',
+		mode    => '644',
 		source  => "/opt/pdfstudio11/pdfstudio11.desktop",
 		require => Package['pdfstudio'],
 	}
