@@ -26,7 +26,8 @@ class apt {
 		source => "/etc/puppet/manifests/files/etc/apt/apt.conf.d/99brandenbourger",
 	}
 	exec {"correct_hunspell_dependency":
-		command => "/bin/grep thunderbird /var/lib/dpkg/status | /bin/grep Conflicts | /bin/sed -i 's/thunderbird/thunderbird (<< 2.0.0.3-2)/g'"
+		command => "/bin/grep thunderbird /var/lib/dpkg/status | /bin/grep Conflicts | /bin/sed -i 's/thunderbird/thunderbird (<< 2.0.0.3-2)/g'",
+		unless => "/bin/grep thunderbird /var/lib/dpkg/status | /bin/grep Conflicts | grep 'thunderbird (<< 2.0.0.3-2)'"
 	}
 }
 
