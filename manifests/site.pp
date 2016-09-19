@@ -279,7 +279,7 @@ class install {
 		require      => File["/var/cache/debconf/mscorefonts.seeds"],
 	}
 	package {"plymouth-x11":
-		ensure => installe,
+		ensure => installed,
 	}
 	package {"curl":
 		ensure => installed,
