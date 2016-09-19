@@ -11,7 +11,7 @@ node default {
     include plymouth
     include gnome_dependencies
     include pdfstudio
-    #include icedove
+    #include thunderbird
 }
 
 class apt {
@@ -106,7 +106,7 @@ class firefox {
 	}
 }
 
-class icedove {
+class thunderbird {
 	file {"/etc/icedove/pref/icedove_brandenbourger.js":
 		owner   => root,
 		group   => root,
@@ -121,12 +121,16 @@ class icedove {
 		source  => "/etc/puppet/manifests/files/usr/lib/icedove/icedove_brandenbourger.cfg",
 		require => Package["icedove"],
 	}
-	file {"/usr/lib/icedove/extensions/{3550f703-e582-4d05-9a08-453d09bdfdc6}/provide_for_google_calendar-3.1-sm+tb.xpi":
+	file {"/usr/lib/thunderbird/extensions/{3550f703-e582-4d05-9a08-453d09bdfdc6}/provide_for_google_calendar-3.1-sm+tb.xpi":
 		owner   => root,
 		group   => root,
 		mode    => '644',
 		source  => "https://addons.mozilla.org/thunderbird/downloads/latest/provider-for-google-calendar/addon-4631-latest.xpi",
-		require => Package["icedove"],
+		require => Exec["download_and_extract_thunderbird"],
+	}
+	exec {"install_thunderbird":
+		command => "/usr/bin/curl https://ftp.mozilla.org/pub/thunderbird/releases/45.3.0/linux-x86_64/en-US/thunderbird-45.3.0.tar.bz2 | /bin/tar -xj -C /usr/lib/",
+		onlyif  => "/usr/bin/test -e /usr/lib/thunderbird",
 	}
 }
 
@@ -278,7 +282,7 @@ class install {
 		require      => File["/var/cache/debconf/mscorefonts.seeds"],
 	}
 	package {"plymouth-x11":
-		ensure => installed,
+		ensure => installe,
 	}
 	package {"curl":
 		ensure => installed,
@@ -463,6 +467,9 @@ class remove {
 		ensure => purged,
 	}
 	package {"gnome-sound-recorder":
+		ensure => purged,
+	}
+	package {"icedove":
 		ensure => purged,
 	}
 }
