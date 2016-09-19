@@ -25,6 +25,9 @@ class apt {
 		mode   => '644',
 		source => "/etc/puppet/manifests/files/etc/apt/apt.conf.d/99brandenbourger",
 	}
+	exec {"correct_hunspell_dependency":
+		command => "/bin/grep thunderbird /var/lib/dpkg/status | /bin/grep Conflicts | /bin/sed -i 's/thunderbird/thunderbird (<< 2.0.0.3-2)/g'"
+	}
 }
 
 class config {
@@ -128,10 +131,6 @@ class thunderbird {
 		source  => "https://addons.mozilla.org/thunderbird/downloads/latest/provider-for-google-calendar/addon-4631-latest.xpi",
 		require => Exec["download_and_extract_thunderbird"],
 	}
-	exec {"install_thunderbird":
-		command => "/usr/bin/curl https://ftp.mozilla.org/pub/thunderbird/releases/45.3.0/linux-x86_64/en-US/thunderbird-45.3.0.tar.bz2 | /bin/tar -xj -C /usr/lib/",
-		onlyif  => "/usr/bin/test -e /usr/lib/thunderbird",
-	}
 }
 
 class plymouth {
@@ -225,7 +224,7 @@ class install {
 	package {"git":
         	ensure => installed,
 	}
-	package {"icedove":
+	package {"thunderbird-mozilla-build":
         	ensure => installed,
 	}
 	package {"pyrenamer":
