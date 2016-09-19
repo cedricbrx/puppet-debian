@@ -25,10 +25,6 @@ class apt {
 		mode   => '644',
 		source => "/etc/puppet/manifests/files/etc/apt/apt.conf.d/99brandenbourger",
 	}
-	exec {"correct_hunspell_dependency":
-		command => "/bin/grep thunderbird /var/lib/dpkg/status | /bin/grep Conflicts | /bin/sed -i 's/thunderbird/thunderbird (<< 2.0.0.3-2)/g'",
-		unless => "/bin/grep thunderbird /var/lib/dpkg/status | /bin/grep Conflicts | grep 'thunderbird (<< 2.0.0.3-2)'"
-	}
 }
 
 class config {
@@ -227,6 +223,7 @@ class install {
 	}
 	package {"thunderbird-mozilla-build":
         	ensure => installed,
+        	require => Package["hunspell-en-us"]
 	}
 	package {"pyrenamer":
 		ensure => installed,
@@ -471,6 +468,9 @@ class remove {
 	}
 	package {"icedove":
 		ensure => purged,
+	}
+	package {"hunspell-en-us":
+		ensure => pureged,
 	}
 }
 
