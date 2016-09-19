@@ -470,7 +470,7 @@ class remove {
 		ensure => purged,
 	}
 	package {"hunspell-en-us":
-		ensure => pureged,
+		ensure => purged,
 	}
 }
 
