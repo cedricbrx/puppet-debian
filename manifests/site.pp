@@ -263,9 +263,6 @@ class install {
 	package {"shotwell":
 		ensure => installed,	
 	}
-	package {"browser-plugin-freshplayer-pepperflash":
-		ensure => installed,	
-	}
 	package {"youtube-dl":
 		ensure => installed,		
 	}
@@ -473,6 +470,9 @@ class remove {
 	}
 	package {"hunspell-en-us":
 		ensure => purged,
+	}
+	package {"browser-plugin-freshplayer-pepperflash":
+		ensure => purged,	
 	}
 }
 
