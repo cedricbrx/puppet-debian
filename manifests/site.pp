@@ -35,10 +35,12 @@ class config {
 		content => "a4\n",
 	}
 	file {"/etc/cron.daily/update-flashplugins":
+		ensure => absent,
+	}
+	file {"/usr/lib/mozilla/plugins":
 		owner  => root,
 		group  => root,
-		mode   => '755',
-		source => "/etc/puppet/manifests/files/etc/cron.daily/update-flashplugins",
+		source => "https://fpdownload.macromedia.com/pub/labs/flashruntimes/flashplayer/linux64/libflashplayer.so",
 	}
 	file {"/etc/dconf":
 		owner   => root,
