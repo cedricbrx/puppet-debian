@@ -112,21 +112,21 @@ class thunderbird {
 		group   => root,
 		mode    => '644',
 		source  => "/etc/puppet/manifests/files/etc/icedove/icedove_brandenbourger.js",
-		require => Package["icedove"],
+		require => Package["thunderbird-mozilla-build"],
 	}
 	file {"/usr/lib/icedove/icedove_brandenbourger.cfg":
 		owner   => root,
 		group   => root,
 		mode    => '644',
 		source  => "/etc/puppet/manifests/files/usr/lib/icedove/icedove_brandenbourger.cfg",
-		require => Package["icedove"],
+		require => Package["thunderbird-mozilla-build"],
 	}
 	file {"/usr/lib/thunderbird/extensions/{3550f703-e582-4d05-9a08-453d09bdfdc6}/provide_for_google_calendar-3.1-sm+tb.xpi":
 		owner   => root,
 		group   => root,
 		mode    => '644',
 		source  => "https://addons.mozilla.org/thunderbird/downloads/latest/provider-for-google-calendar/addon-4631-latest.xpi",
-		require => Exec["download_and_extract_thunderbird"],
+		require => Package["thunderbird-mozilla-build"],
 	}
 }
 
