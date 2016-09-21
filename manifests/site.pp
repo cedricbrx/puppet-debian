@@ -272,6 +272,10 @@ class install {
 	package {"hfsprogs":
 		ensure => installed,
 	}
+	package{"unattended-upgrades":
+		ensure  => installed,
+		require => File["/etc/apt/apt.conf.d/99brandenbourger"],
+	}
 	package {"ttf-mscorefonts-installer":
 		responsefile => "/var/cache/debconf/mscorefonts.seeds",
 		ensure       => installed,
