@@ -34,9 +34,6 @@ class config {
 		mode    => '644',
 		content => "a4\n",
 	}
-	file {"/etc/cron.daily/update-flashplugins":
-		ensure => absent,
-	}
 	file {"/usr/lib/mozilla/plugins":
 		owner  => root,
 		group  => root,
