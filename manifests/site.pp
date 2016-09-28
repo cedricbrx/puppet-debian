@@ -106,26 +106,26 @@ class firefox {
 }
 
 class thunderbird {
-	file {"/etc/icedove/pref/icedove_brandenbourger.js":
+	file {"/etc/thunderbird/thunderbird_brandenbourger.js":
 		owner   => root,
 		group   => root,
 		mode    => '644',
-		source  => "/etc/puppet/manifests/files/etc/icedove/icedove_brandenbourger.js",
-		require => Package["thunderbird-mozilla-build"],
+		source  => "/etc/puppet/manifests/files/etc/thunderbird/thunderbird_brandenbourger.js",
+		require => Package["thunderbird"],
 	}
-	file {"/usr/lib/icedove/icedove_brandenbourger.cfg":
+	file {"/usr/lib/thunderbird/thunderbird_brandenbourger.cfg":
 		owner   => root,
 		group   => root,
 		mode    => '644',
-		source  => "/etc/puppet/manifests/files/usr/lib/icedove/icedove_brandenbourger.cfg",
-		require => Package["thunderbird-mozilla-build"],
+		source  => "/etc/puppet/manifests/files/usr/lib/thunderbird/thunderbird_brandenbourger.cfg",
+		require => Package["thunderbird"],
 	}
 	file {"/usr/lib/thunderbird/extensions/{3550f703-e582-4d05-9a08-453d09bdfdc6}/provide_for_google_calendar-3.1-sm+tb.xpi":
 		owner   => root,
 		group   => root,
 		mode    => '644',
 		source  => "https://addons.mozilla.org/thunderbird/downloads/latest/provider-for-google-calendar/addon-4631-latest.xpi",
-		require => Package["thunderbird-mozilla-build"],
+		require => Package["thunderbird"],
 	}
 }
 
@@ -220,7 +220,7 @@ class install {
 	package {"git":
         	ensure => installed,
 	}
-	package {"thunderbird-mozilla-build":
+	package {"thunderbird":
         	ensure => installed,
         	require => Package["hunspell-en-us"]
 	}
