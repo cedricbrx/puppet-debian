@@ -104,10 +104,11 @@ class firefox {
 		source => "/etc/puppet/manifests/files/usr/lib/firefox-esr/firefox_brandenbourger.cfg",
 	}
 	file {"/usr/lib/firefox-esr/defaults/pref/firefox_brandenbourger.js":
-		ensure => link,
-		owner  => root,
-		group  => root,
-		target => "/etc/firefox-esr/firefox_brandenbourger.js",
+		ensure  => link,
+		owner   => root,
+		group   => root,
+		target  => "/etc/firefox-esr/firefox_brandenbourger.js",
+		require => File["/etc/firefox-esr/firefox_brandenbourger.js"],
 	}
 }
 
@@ -127,10 +128,11 @@ class thunderbird {
 		require => Package["thunderbird"],
 	}
 	file {"/usr/lib/thunderbird/defaults/pref/thunderbird_brandenbourger.js":
-		ensure => link,
-		owner  => root,
-		group  => root,
-		target => "/etc/thunderbird/thunderbird_brandenbourger.js",
+		ensure  => link,
+		owner   => root,
+		group   => root,
+		target  => "/etc/thunderbird/thunderbird_brandenbourger.js",
+		require => File["/etc/thunderbird/thunderbird_brandenbourger.js"],
 	}
 	file {"/usr/lib/thunderbird/extensions/{3550f703-e582-4d05-9a08-453d09bdfdc6}/provide_for_google_calendar-3.1-sm+tb.xpi":
 		owner   => root,
