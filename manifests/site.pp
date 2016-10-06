@@ -1,17 +1,23 @@
 node default { 
-    include apt
-    include cronpuppet
-    include install
-    include remove
-    include repository
-    include libreoffice
-    include synology
-    #include firefox
-    include config
-    include plymouth
-    include gnome_dependencies
-    include pdfstudio
-    #include thunderbird
+	include apt
+	include cronpuppet
+	include install
+	include remove
+	include repository
+  	include libreoffice
+ 	include synology
+  	#include firefox
+  	include config
+  	include plymouth
+  	include gnome_dependencies
+	include pdfstudio
+	#include thunderbird
+}
+
+node venus {
+	include plymouth
+	include apt
+	include remove
 }
 
 class apt {
