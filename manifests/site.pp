@@ -11,13 +11,14 @@ node default {
   	include plymouth
   	include gnome_dependencies
 	include pdfstudio
-	#include thunderbird
+	#include icedove
 }
 
 node venus {
 	include plymouth
 	include apt
 	include remove
+	include synology
 }
 
 class apt {
@@ -119,33 +120,33 @@ class firefox {
 }
 
 class thunderbird {
-	file {"/etc/thunderbird/thunderbird_brandenbourger.js":
+	file {"/etc/icedove/icedove_brandenbourger.js":
 		owner   => root,
 		group   => root,
 		mode    => '644',
-		source  => "/etc/puppet/manifests/files/etc/thunderbird/thunderbird_brandenbourger.js",
-		require => Package["thunderbird"],
+		source  => "/etc/puppet/manifests/files/etc/icedove/icedove_brandenbourger.js",
+		require => Package["icedove"],
 	}
-	file {"/usr/lib/thunderbird/thunderbird_brandenbourger.cfg":
+	file {"/usr/lib/icedove/icedove_brandenbourger.cfg":
 		owner   => root,
 		group   => root,
 		mode    => '644',
-		source  => "/etc/puppet/manifests/files/usr/lib/thunderbird/thunderbird_brandenbourger.cfg",
-		require => Package["thunderbird"],
+		source  => "/etc/puppet/manifests/files/usr/lib/icedove/icedove_brandenbourger.cfg",
+		require => Package["icedove"],
 	}
-	file {"/usr/lib/thunderbird/defaults/pref/thunderbird_brandenbourger.js":
+	file {"/usr/lib/icedove/defaults/pref/icedove_brandenbourger.js":
 		ensure  => link,
 		owner   => root,
 		group   => root,
-		target  => "/etc/thunderbird/thunderbird_brandenbourger.js",
-		require => File["/etc/thunderbird/thunderbird_brandenbourger.js"],
+		target  => "/etc/icedove/icedove_brandenbourger.js",
+		require => File["/etc/icedove/icedove_brandenbourger.js"],
 	}
-	file {"/usr/lib/thunderbird/extensions/{3550f703-e582-4d05-9a08-453d09bdfdc6}/provide_for_google_calendar-3.1-sm+tb.xpi":
+	file {"/usr/lib/icedove/extensions/{3550f703-e582-4d05-9a08-453d09bdfdc6}/provide_for_google_calendar-3.1-sm+tb.xpi":
 		owner   => root,
 		group   => root,
 		mode    => '644',
 		source  => "https://addons.mozilla.org/thunderbird/downloads/latest/provider-for-google-calendar/addon-4631-latest.xpi",
-		require => Package["thunderbird"],
+		require => Package["icedove"],
 	}
 }
 
