@@ -489,9 +489,6 @@ class remove {
 	package {"icedove":
 		ensure => purged,
 	}
-	package {"hunspell-en-us":
-		ensure => purged,
-	}
 	package {"browser-plugin-freshplayer-pepperflash":
 		ensure => purged,	
 	}
