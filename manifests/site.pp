@@ -178,13 +178,15 @@ class plymouth {
 
 class repository {
 	file {"/etc/apt/trusted.gpg.d/":
-		path    => "/etc/apt/trusted.gpg.d",
-		ensure  => directory,
-		owner   => root,
-		group   => root,
-		mode    => '644',
-		source  => "/etc/puppet/manifests/files/etc/apt/trusted.gpg.d",
-		recurse => true,
+		path         => "/etc/apt/trusted.gpg.d",
+		ensure       => directory,
+		owner        => root,
+		group        => root,
+		mode         => '644',
+		source       => ["https://github.com/cedricbrx/puppet/blob/master/manifests/files/etc/apt/sources.list.d/brandenbourger.list",
+				 "https://github.com/cedricbrx/puppet/blob/master/manifests/files/etc/apt/sources.list.d/dukto.list",
+				 "https://github.com/cedricbrx/puppet/blob/master/manifests/files/etc/apt/sources.list.d/libdvdcss.list"],
+		sourceselect => all,
 	}
 	file {	"/etc/apt/sources.list":
 		owner   => root,
