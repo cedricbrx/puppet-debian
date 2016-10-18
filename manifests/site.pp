@@ -47,12 +47,15 @@ class config {
 		source => "https://fpdownload.macromedia.com/pub/labs/flashruntimes/flashplayer/linux64/libflashplayer.so",
 	}
 	$dconf_dir = ["/etc/dconf/","/etc/dconf/profile","/etc/dconf/db","/etc/dconf/db/site.d","/etc/dconf/db/site.d/lock"]
-	file {"/etc/dconf":
-		owner   => root,
-		group   => root,
-		ensure  => directory,
-		recurse => true,
-		source  => "/etc/puppet/manifests/files/etc/dconf/",
+	file {"$dconf_dir":
+		owner  => root,
+		group  => root,
+		ensure => directory,
+	}
+	file{"/etc/dconf/profile/user":
+		owner  => root,
+		group  => root,
+		source => "https://raw.githubusercontent.com/cedricbrx/puppet/master/manifests/files/etc/dconf/profile/user",
 	}
 }
 
