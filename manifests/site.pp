@@ -46,6 +46,7 @@ class config {
 		group  => root,
 		source => "https://fpdownload.macromedia.com/pub/labs/flashruntimes/flashplayer/linux64/libflashplayer.so",
 	}
+	$dconf_dir = ["/etc/dconf/","/etc/dconf/profile","/etc/dconf/db","/etc/dconf/db/site.d","/etc/dconf/db/site.d/lock"]
 	file {"/etc/dconf":
 		owner   => root,
 		group   => root,
