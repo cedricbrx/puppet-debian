@@ -30,7 +30,7 @@ class apt {
 		owner  => root,
 		group  => root,
 		mode   => '644',
-		source => "/etc/puppet/manifests/files/etc/apt/apt.conf.d/99brandenbourger",
+		source => "https://raw.githubusercontent.com/cedricbrx/puppet/master/manifests/files/etc/apt/apt.conf.d/99brandenbourger",
 	}
 }
 
