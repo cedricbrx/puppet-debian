@@ -1,0 +1,24 @@
+#!/bin/bash
+
+online_md5=$(curl -s https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/site.pp | md5sum | awk '{print $1}')
+local_md5=$(md5sum "/etc/puppetlabs/code/site.pp" | awk '{print $1}')
+
+if [ "$online_md5" != "$local_md5" ]; then
+  cd /etc/puppetlabs/code/
+  wget -N -q https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/site.pp
+  if [ $? -ne 0 ]; then
+  	/usr/bin/logger -i "Puppet has no internet connection, exiting" -t "puppet-apply"
+	exit 1
+  fi
+  /opt/puppetlabs/bin/puppet apply /etc/puppetlabs/code/site.pp
+	if [ $? -eq 0 ]; then
+          /usr/bin/logger -i "Puppet has run successfully" -t "puppet-apply"
+          exit 0
+	else
+          /usr/bin/logger -i "Puppet has run into an error, please run Puppet manually" -t "puppet-apply"
+          exit 1
+        fi
+else
+    /usr/bin/logger -i "Nothing to do" -t "puppet-apply"
+    exit 0
+fi
