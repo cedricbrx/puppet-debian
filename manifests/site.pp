@@ -10,15 +10,7 @@ node default {
   	include config
   	include plymouth
   	include gnome_dependencies
-	include pdfstudio
 	#include icedove
-}
-
-node venus {
-	include plymouth
-	include apt
-	include remove
-	include synology
 }
 
 class apt {
@@ -41,11 +33,6 @@ class config {
 		mode    => '644',
 		content => "a4\n",
 	}
-	file {"/usr/lib/mozilla/plugins":
-		owner  => root,
-		group  => root,
-		source => "https://fpdownload.macromedia.com/pub/labs/flashruntimes/flashplayer/linux64/libflashplayer.so",
-	}
 	$dconf_dir = ["/etc/dconf/","/etc/dconf/profile","/etc/dconf/db","/etc/dconf/db/site.d","/etc/dconf/db/site.d/lock"]
 	file {"$dconf_dir":
 		owner  => root,
@@ -59,47 +46,7 @@ class config {
 	}
 }
 
-class pdfstudio {
-	file {"/usr/share/applications/pdfstudio11.desktop":
-		owner   => root,
-		group   => root,
-		mode    => '644',
-		source  => "/opt/pdfstudio11/pdfstudio11.desktop",
-		require => Package['pdfstudio'],
-	}
-	$languages = ["deu", "fra", "eng", "spa"]
-	$languages.each |String $languages| {
-		exec {"/usr/bin/curl http://download.qoppa.com/ocr/tess302/tesseract-ocr-3.02.$languages.tar.gz | /bin/tar xvz -C /opt/pdfstudio11/lib/tess":
-			require => Package['pdfstudio','curl'],
-			unless  => "/usr/bin/test -e /opt/pdfstudio11/lib/tess/tesseract-ocr/tessdata/$languages.traineddata",
-		}
-	}
-	file {"/opt/pdfstudio11/.pdfstudio":
-		owner   => root,
-		group   => root,
-		mode    => '644',
-		source  => "/etc/puppet/manifests/files/opt/pdfstudio11/pdfstudio.key",
-		require => Package['pdfstudio'],
-	}
-	file { ["/home/$installed_user/.pdfstudio11/", "/home/$installed_user/.pdfstudio11/tess/"]:
-		owner  => $installed_user,
-		group  => $installed_user,
-		mode   => '755',
-		ensure => directory,
-	}
-	file{"/home/$installed_user/.pdfstudio11/tess/tessdata":
-		owner   => $installed_user,
-		group   => $installed_user,
-		mode    => '644',
-		ensure  => link,
-		require => File["/home/$installed_user/.pdfstudio11/", "/home/$installed_user/.pdfstudio11/tess/"],
-		target  => "/opt/pdfstudio11/lib/tess/tesseract-ocr/tessdata/",
-	}
-	file {"/opt/pdfstudio11/lib/tess/tesseract-ocr/tessdata/languages11.xml":
-		source  => "http://download.qoppa.com/pdfstudio/ocr/languages11.xml",
-		require => Package['pdfstudio'],
-	}
-}
+
 
 class firefox {
 	file {"/etc/firefox-esr/firefox_brandenbourger.js":
@@ -188,26 +135,25 @@ class repository {
 				 "https://github.com/cedricbrx/puppet/blob/master/manifests/files/etc/apt/sources.list.d/libdvdcss.list"],
 		sourceselect => all,
 	}
-	file {	"/etc/apt/sources.list":
+	file {"/etc/apt/sources.list":
 		owner   => root,
 		group   => root,
 		mode    => '644',
 		source  => "/etc/puppet/manifests/files/etc/apt/sources.list",
 	}
-	file {"/etc/apt/sources.list.d/":
-		ensure  => directory,
+	file {"/etc/apt/sources.list.d/libdvdcss.list":
 		owner   => root,
 		group   => root,
 		mode    => '644',
-		purge   => true,
-		source  => "/etc/puppet/manifests/files/etc/apt/sources.list.d",
-		recurse => true,
+		content  => "deb http://download.videolan.org/pub/debian/stable/ /",
 	}
-	file {"/var/cache/debconf/mscorefonts.seeds":
-		source => "/etc/puppet/manifests/files/var/cache/debconf/mscorefonts.seeds",
-		owner  => root,
-		group  => root,
-		mode   => '644',
+	exec { 'accept-msttcorefonts-license':
+		command => '/bin/sh -c "echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections"',
+		unless  => 'debconf-get-selections | egrep "msttcorefonts/accepted-mscorefonts-eula.*true"'
+	}
+	package { 'ttf-mscorefonts-installer':
+		ensure => installed,
+		require => Exec['accept-msttcorefonts-license']
 	}
 }
 
