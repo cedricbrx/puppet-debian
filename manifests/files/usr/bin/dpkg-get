@@ -3,10 +3,9 @@ dir="/tmp/dpkg-get"
 url="$1"
 file="${url##*/}"
 
-if [ "$EUID" -ne 0 ]
-then
-echo "Please run as root"
-exit
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root"
+  exit 1
 fi
 
 [ -d $dir ] || mkdir $dir
