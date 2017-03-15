@@ -61,13 +61,6 @@ class apt {
 	package {"aptitude":
         	ensure => installed,
 	}
-	$gd = ["gnome", "gnome-core", "gnome-desktop-environment"]
-	$gd.each |String $gd| {
-		exec {"/usr/bin/aptitude unmarkauto '?reverse-depends($gd) | ?reverse-recommends($gd)'":
-			require => Package['aptitude'],
-			onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep $gd`'
-		}
-	}
 	file {"/usr/bin/dpkg-get":
 		owner  => root,
 		group  => root,
@@ -85,6 +78,13 @@ class config {
 		mode    => '644',
 		content => "a4\n",
 	}
+	$gd = ["gnome", "gnome-core", "gnome-desktop-environment"]
+	$gd.each |String $gd| {
+		exec {"/usr/bin/aptitude unmarkauto '?reverse-depends($gd) | ?reverse-recommends($gd)'":
+			require => Package['aptitude'],
+			onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep $gd`'
+		}
+	}
 	file {["/etc/dconf/", "/etc/dconf/db/", "/etc/dconf/db/site.d", "/etc/dconf/db/site.d/locks", "/etc/dconf/profile"]:
     		ensure => directory,
 		alias  => "create_dconf_tree",
@@ -93,6 +93,11 @@ class config {
     		content => "user-db:user\nsystem-db:site",
 		require => File["create_dconf_tree"],
 	}
+}
+
+
+class utilities {
+
 }
 
 class firefox {
@@ -118,6 +123,9 @@ class firefox {
 }
 
 class thunderbird {
+	package {"thunderbird":
+        	ensure => installed,
+	}
 	file {"/etc/icedove/icedove_brandenbourger.js":
 		owner   => root,
 		group   => root,
@@ -302,9 +310,6 @@ class install {
 	package {'ttf-mscorefonts-installer':
 		ensure => installed,
 		require => Exec['accept-msttcorefonts-license']
-	}
-	package {"thunderbird":
-        	ensure => installed,
 	}
 	package {"pyrenamer":
 		ensure => installed,
