@@ -223,13 +223,13 @@ class synology {
 
     exec {"synology-cloud-station_installation":
         provider => shell,
-        command => "if $synology_cloud_update; then /usr/bin/dnf install --assumeyes http://dedl.synology.com/download/Tools/CloudStationDrive/$synology_cloud_version/Fedora/Installer/x86_64/synology-cloud-station-drive-$synology_cloud_version.x86_64.rpm; fi",
+        command => "if $synology_cloud_update; then /usr/bin/dpkg-get https://dropbox/synology-cloud-station-drive-$synology_cloud_version.x86_64.deb; fi",
         unless => "/usr/bin/dpkg -l synology-cloud-station | grep $synology_cloud_version",
 	timeout => 1800,
     }
     exec {"synology-assistant_installation":
         provider => shell,
-        command => "if $synology_assistant_update; then /usr/bin/dnf install --assumeyes http://dedl.synology.com/download/Tools/Assistant/$synology_assistant_version/Fedora/x86_64/synology-assistant-$synology_assistant_version.x86_64.rpm; fi",
+        command => "if $synology_assistant_update; then /usr/bin/dnf install --assumeyes http://dedl.synology.com/download/Tools/Assistant/$synology_assistant_version/Ubuntu/x86_64/synology-assistant-$synology_assistant_version.x86_64.rpm; fi",
         unless => "/usr/bin/dpkg -l synology-assistant | grep $synology_assistant_version",
 	timeout => 1800,
     }
