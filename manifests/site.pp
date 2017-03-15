@@ -95,9 +95,52 @@ class config {
 	}
 }
 
-
 class utilities {
+	package {"pyrenamer":
+		ensure => installed,
+	}
+	package {"fdupes":
+		ensure => installed,	
+	}
+	package {"fslint":
+		ensure => installed,
+	}
+	package {"unrar":
+		ensure => installed,
+	}
+	package {"lshw":
+		ensure => installed,
+	}
+	package {"mlocate":
+		ensure => installed,
+	}
+	package {"vim":
+		ensure => installed,
+	}
+	package {"hfsprogs":
+		ensure => installed,
+	}
+	package {"curl":
+		ensure => installed,
+	}
+}
 
+class multimedia {
+	package {"handbrake":
+		ensure => installed,
+	}
+	package {"shotwell":
+		ensure => installed,
+	}
+	package {"youtube-dl":
+		ensure => installed,
+	}
+	package {"libdvdcss":
+		ensure => installed,
+	}
+	package {"mpv":
+		ensure => purged,
+	}
 }
 
 class firefox {
@@ -126,26 +169,26 @@ class thunderbird {
 	package {"thunderbird":
         	ensure => installed,
 	}
-	file {"/etc/icedove/icedove_brandenbourger.js":
+	file {"/etc/thunderbird/thunderbird_brandenbourger.js":
 		owner   => root,
 		group   => root,
 		mode    => '644',
-		source  => "/etc/puppet/manifests/files/etc/icedove/icedove_brandenbourger.js",
-		require => Package["icedove"],
+		source  => "/etc/puppet/manifests/files/etc/thunderbird/thunderbird_brandenbourger.js",
+		require => Package["thunderbird"],
 	}
-	file {"/usr/lib/icedove/icedove_brandenbourger.cfg":
+	file {"/usr/lib/thunderbird/thunderbird_brandenbourger.cfg":
 		owner   => root,
 		group   => root,
 		mode    => '644',
-		source  => "/etc/puppet/manifests/files/usr/lib/icedove/icedove_brandenbourger.cfg",
-		require => Package["icedove"],
+		source  => "/etc/puppet/manifests/files/usr/lib/thunderbird/thunderbird_brandenbourger.cfg",
+		require => Package["thunderbird"],
 	}
-	file {"/usr/lib/icedove/defaults/pref/icedove_brandenbourger.js":
+	file {"/usr/lib/thunderbird/defaults/pref/thunderbird_brandenbourger.js":
 		ensure  => link,
 		owner   => root,
 		group   => root,
-		target  => "/etc/icedove/icedove_brandenbourger.js",
-		require => File["/etc/icedove/icedove_brandenbourger.js"],
+		target  => "/etc/thunderbird/thunderbird_brandenbourger.js",
+		require => File["/etc/thunderbird/thunderbird_brandenbourger.js"],
 	}
 	file {"/usr/bin/mozilla-extension-manager":
 		source => "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/mozilla/mozilla-extension-manager",
@@ -182,12 +225,14 @@ class plymouth {
 		unless  => "/bin/grep splash /etc/default/grub",
 		require => Exec["set_default_theme"],
 	}
-	if $graphic_chipset == 'gk106' {
+	if $facts['is_gtx660'] {
 		file {"/etc/initramfs-tools/hooks/nvidia/":
 			owner  => root,
 			group  => root,
 			mode   => '755',
-			source => "/etc/puppet/manifests/files/etc/initramfs-tools/hooks/nvidia/",
+			source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/etc/initramfs-tools/hooks/nvidia",
+			checksum => sha256,
+			checksum_value => '',
 			before => Exec["set_default_theme"],
 		}
 	}
@@ -198,7 +243,7 @@ class libreoffice {
 		owner  => root,
 		group  => root,
 		mode   => '644',
-		source => "/etc/puppet/manifests/files/usr/lib/libreoffice/share/registry/brandenbourger.xcd",
+		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/usr/lib/libreoffice/share/registry/brandenbourger.xcd",
 	}
 	package {"libreoffice-gtk3":
         	ensure => installed,
@@ -229,7 +274,7 @@ class synology {
     }
     exec {"synology-assistant_installation":
         provider => shell,
-        command => "if $synology_assistant_update; then /usr/bin/dnf install --assumeyes http://dedl.synology.com/download/Tools/Assistant/$synology_assistant_version/Ubuntu/x86_64/synology-assistant-$synology_assistant_version.x86_64.rpm; fi",
+        command => "if $synology_assistant_update; then /usr/bin/dpkg-get http://dedl.synology.com/download/Tools/Assistant/6.1-15030/Ubuntu/x86_64/synology-assistant_6.1-15030_amd64.deb; fi",
         unless => "/usr/bin/dpkg -l synology-assistant | grep $synology_assistant_version",
 	timeout => 1800,
     }
@@ -265,6 +310,12 @@ class synology {
 class gnome_shell_extensions {
     package {"gnome-tweak-tool":
         ensure => installed,
+    }
+    package {"gnome-shell-extension-weather":
+		ensure => purged,
+    }
+    package {"dconf-editor":
+		ensure => installed,
     }
     file {"/usr/bin/gnomeshell-extension-manage":
         source => "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/ubuntugnome/gnomeshell-extension-manage",
@@ -311,45 +362,6 @@ class install {
 		ensure => installed,
 		require => Exec['accept-msttcorefonts-license']
 	}
-	package {"pyrenamer":
-		ensure => installed,
-	}
-	package {"handbrake":
-		ensure => installed,
-	}
-	package {"fdupes":
-		ensure => installed,	
-	}
-	package {"fslint":
-		ensure => installed,
-	}
-	package {"unrar":
-		ensure => installed,
-	}
-	package {"lshw":
-		ensure => installed,
-	}
-	package {"dconf-editor":
-		ensure => installed,
-	}
-	package {"mlocate":
-		ensure => installed,
-	}
-	package {"vim":
-		ensure => installed,
-	}
-	package {"shotwell":
-		ensure => installed,	
-	}
-	package {"youtube-dl":
-		ensure => installed,		
-	}
-	package {"hfsprogs":
-		ensure => installed,
-	}
-	package {"curl":
-		ensure => installed,
-	}
 	if $network_vendor == 'realtek' {
 		if $wireless_vendor == 'intel' {
 			$firmware_packages = ['firmware-iwlwifi','firmware-realtek','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']
@@ -385,6 +397,39 @@ class install {
 	}
 }
 
+class games {
+	package {"gnome-games":
+		ensure => purged,
+	}
+	package {"aisleriot":
+		ensure => purged,
+	}
+	package {"gnome-tetravex":
+		ensure => purged,
+	}
+	package {"four-in-a-row":
+		ensure => purged,
+	}
+	package {"gnome-chess":
+		ensure => purged,
+	}
+	package {"gnome-mahjongg":
+		ensure => purged,
+	}
+	package {"gnome-sudoku":
+		ensure => purged,
+	}
+	package {"five-or-more":
+		ensure => purged,
+	}
+	package {"gnome-nibbles":
+		ensure => purged,
+	}
+	package {"gnome-mines":
+		ensure => purged,
+	}
+}
+
 class remove {
 	require gnome_dependencies
 	package {"inkscape":
@@ -393,13 +438,7 @@ class remove {
 	package {"gnome-orca":
 		ensure => purged,
 	}
-	package {"gnome-games":
-		ensure => purged,
-	}
 	package {"transmission-common":
-		ensure => purged,
-	}
-	package {"aisleriot":
 		ensure => purged,
 	}
 	package {"hamster-applet":
@@ -418,21 +457,6 @@ class remove {
 		ensure => purged,
 	}
 	package {"goobox":
-		ensure => purged,
-	}
-	package {"gnome-tetravex":
-		ensure => purged,
-	}
-	package {"four-in-a-row":
-		ensure => purged,
-	}
-	package {"gnome-chess":
-		ensure => purged,
-	}
-	package {"gnome-mahjongg":
-		ensure => purged,
-	}
-	package {"gnome-shell-extension-weather":
 		ensure => purged,
 	}
 	package {"synaptic":
@@ -456,22 +480,10 @@ class remove {
 	package {"gnome-taquin":
 		ensure => purged,
 	}
-	package {"gnome-sudoku":
-		ensure => purged,
-	}
 	package {"gnome-robots":
 		ensure => purged,
 	}
-	package {"gnome-nibbles":
-		ensure => purged,
-	}
-	package {"gnome-mines":
-		ensure => purged,
-	}
 	package {"gnome-klotski":
-		ensure => purged,
-	}
-	package {"five-or-more":
 		ensure => purged,
 	}
 	package {"vinagre":
@@ -489,16 +501,7 @@ class remove {
 	package {"bijiben":
 		ensure => purged,
 	}
-	package {"tracker":
-		ensure => purged,
-	}
 	package {"empathy-common":
-		ensure => purged,
-	}
-	package {"gnome-maps":
-		ensure => purged,
-	}
-	package {"mpv":
 		ensure => purged,
 	}
 	package {"polari":
@@ -516,13 +519,7 @@ class remove {
 	package {"eog":
 		ensure => purged,
 	}
-	package {"gnome-packagekit":
-		ensure => purged,
-	}
 	package {"gnome-sound-recorder":
-		ensure => purged,
-	}
-	package {"icedove":
 		ensure => purged,
 	}
 }
