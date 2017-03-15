@@ -1,8 +1,5 @@
 node default { 
 	include apt
-	include cronpuppet
-	include install
-	include remove
 	include repository
   	include libreoffice
  	include synology
@@ -11,6 +8,37 @@ node default {
   	include plymouth
   	include gnome_dependencies
 	#include icedove
+}
+
+class repository {
+	$mirror="deb http://debian.mirror.root.lu/debian/"
+	$security="deb http://security.debian.org/"
+	$packages="main contrib non-free"
+	file {"/etc/apt/trusted.gpg.d/libdvdcss.gpg":
+		owner    => root,
+		group    => root,
+		mode     => '644',
+		source   => "",
+		checksum => "",
+	}
+	file {"/etc/apt/sources.list":
+		owner   => root,
+		group   => root,
+		mode    => '644',
+		content => "$mirror stretch $packages\n$security stretch/updates $packages\n$mirror stretch-updates $packages",
+	}
+	file {"/etc/apt/sources.list.d/libdvdcss.list":
+		owner   => root,
+		group   => root,
+		mode    => '644',
+		content => "deb http://download.videolan.org/pub/debian/stable/ /",
+	}
+	file {"/etc/apt/sources.list.d/virtualbox.list":
+		owner   => root,
+		group   => root,
+		mode    => '644',
+		content => "deb http://download.virtualbox.org/virtualbox/debian stretch contrib",
+	}
 }
 
 class apt {
@@ -22,7 +50,16 @@ class apt {
 		owner  => root,
 		group  => root,
 		mode   => '644',
-		source => "https://raw.githubusercontent.com/cedricbrx/puppet/master/manifests/files/etc/apt/apt.conf.d/99brandenbourger",
+		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/etc/apt/apt.conf.d/99brandenbourger",
+		checksum => 'sha256',
+		checksum_value => "",
+	}
+	package{"unattended-upgrades":
+		ensure  => installed,
+		require => File["/etc/apt/apt.conf.d/99brandenbourger"],
+	}
+	package {"aptitude":
+        	ensure => installed,
 	}
 }
 
@@ -45,8 +82,6 @@ class config {
 		source => "https://raw.githubusercontent.com/cedricbrx/puppet/master/manifests/files/etc/dconf/profile/user",
 	}
 }
-
-
 
 class firefox {
 	file {"/etc/firefox-esr/firefox_brandenbourger.js":
@@ -92,16 +127,12 @@ class thunderbird {
 		target  => "/etc/icedove/icedove_brandenbourger.js",
 		require => File["/etc/icedove/icedove_brandenbourger.js"],
 	}
-	file {"/usr/lib/icedove/extensions/{3550f703-e582-4d05-9a08-453d09bdfdc6}/provide_for_google_calendar-3.1-sm+tb.xpi":
-		owner   => root,
-		group   => root,
-		mode    => '644',
-		source  => "https://addons.mozilla.org/thunderbird/downloads/latest/provider-for-google-calendar/addon-4631-latest.xpi",
-		require => Package["icedove"],
-	}
 }
 
 class plymouth {
+	package {"plymouth-x11":
+		ensure => installed,
+	}
 	exec {"set_default_theme":
 		command => "/usr/sbin/plymouth-set-default-theme -R joy",
 		onlyif  => "/usr/sbin/plymouth-set-default-theme | /bin/grep -v joy",
@@ -114,46 +145,12 @@ class plymouth {
 	}
 	if $graphic_chipset == 'gk106' {
 		file {"/etc/initramfs-tools/hooks/nvidia/":
-			owner   => root,
-			group   => root,
-			mode    => '755',
-			source  => "/etc/puppet/manifests/files/etc/initramfs-tools/hooks/nvidia/",
-			before  => Exec["set_default_theme"],
+			owner  => root,
+			group  => root,
+			mode   => '755',
+			source => "/etc/puppet/manifests/files/etc/initramfs-tools/hooks/nvidia/",
+			before => Exec["set_default_theme"],
 		}
-	}
-}
-
-class repository {
-	file {"/etc/apt/trusted.gpg.d/":
-		path         => "/etc/apt/trusted.gpg.d",
-		ensure       => directory,
-		owner        => root,
-		group        => root,
-		mode         => '644',
-		source       => ["https://github.com/cedricbrx/puppet/blob/master/manifests/files/etc/apt/sources.list.d/brandenbourger.list",
-				 "https://github.com/cedricbrx/puppet/blob/master/manifests/files/etc/apt/sources.list.d/dukto.list",
-				 "https://github.com/cedricbrx/puppet/blob/master/manifests/files/etc/apt/sources.list.d/libdvdcss.list"],
-		sourceselect => all,
-	}
-	file {"/etc/apt/sources.list":
-		owner   => root,
-		group   => root,
-		mode    => '644',
-		source  => "/etc/puppet/manifests/files/etc/apt/sources.list",
-	}
-	file {"/etc/apt/sources.list.d/libdvdcss.list":
-		owner   => root,
-		group   => root,
-		mode    => '644',
-		content  => "deb http://download.videolan.org/pub/debian/stable/ /",
-	}
-	exec { 'accept-msttcorefonts-license':
-		command => '/bin/sh -c "echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections"',
-		unless  => 'debconf-get-selections | egrep "msttcorefonts/accepted-mscorefonts-eula.*true"'
-	}
-	package { 'ttf-mscorefonts-installer':
-		ensure => installed,
-		require => Exec['accept-msttcorefonts-license']
 	}
 }
 
@@ -163,6 +160,9 @@ class libreoffice {
 		group  => root,
 		mode   => '644',
 		source => "/etc/puppet/manifests/files/usr/lib/libreoffice/share/registry/brandenbourger.xcd",
+	}
+	package {"libreoffice-gtk3":
+        	ensure => installed,
 	}
 }
 
@@ -187,15 +187,16 @@ class synology {
 
 class install {
 	require apt
-	package {"aptitude":
-        	ensure => installed,
+	exec {'accept-msttcorefonts-license':
+		command => '/bin/sh -c "echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | /usr/bin/debconf-set-selections"',
+		unless  => '/usr/bin/debconf-get-selections | /begrep "msttcorefonts/accepted-mscorefonts-eula.*true"'
 	}
-	package {"git":
-        	ensure => installed,
+	package {'ttf-mscorefonts-installer':
+		ensure => installed,
+		require => Exec['accept-msttcorefonts-license']
 	}
 	package {"thunderbird":
         	ensure => installed,
-        	require => Package["hunspell-en-us"]
 	}
 	package {"pyrenamer":
 		ensure => installed,
@@ -221,9 +222,6 @@ class install {
 	package {"dconf-editor":
 		ensure => installed,
 	}
-	package {"pdfstudio":
-		ensure => installed,
-	}
 	package {"mlocate":
 		ensure => installed,
 	}
@@ -236,22 +234,7 @@ class install {
 	package {"youtube-dl":
 		ensure => installed,		
 	}
-	package {"libreoffice-gtk3":
-        	ensure => installed,
-	}
 	package {"hfsprogs":
-		ensure => installed,
-	}
-	package{"unattended-upgrades":
-		ensure  => installed,
-		require => File["/etc/apt/apt.conf.d/99brandenbourger"],
-	}
-	package {"ttf-mscorefonts-installer":
-		responsefile => "/var/cache/debconf/mscorefonts.seeds",
-		ensure       => installed,
-		require      => File["/var/cache/debconf/mscorefonts.seeds"],
-	}
-	package {"plymouth-x11":
 		ensure => installed,
 	}
 	package {"curl":
@@ -442,25 +425,5 @@ class remove {
 	package {"icedove":
 		ensure => purged,
 	}
-	package {"browser-plugin-freshplayer-pepperflash":
-		ensure => purged,	
-	}
 }
 
-class cronpuppet {
-    file { 'post-hook':
-        ensure  => file,
-        path    => '/etc/puppet/.git/hooks/post-merge',
-        source  => '/etc/puppet/manifests/files/post-merge',
-        mode    => '0755',
-        owner   => root,
-        group   => root,
-    }
-    cron { 'puppet-apply':
-        ensure  => present,
-        command => "cd /etc/puppet ; /usr/bin/git pull",
-        user    => root,
-        minute  => '*/30',
-        require => File['post-hook'],
-    }
-}
