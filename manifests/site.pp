@@ -7,7 +7,7 @@ node default {
   	include config
   	include plymouth
   	include gnome_dependencies
-	#include icedove
+	#include thunderbird
 }
 
 class repository {
@@ -61,6 +61,21 @@ class apt {
 	package {"aptitude":
         	ensure => installed,
 	}
+	$gd = ["gnome", "gnome-core", "gnome-desktop-environment"]
+	$gd.each |String $gd| {
+		exec {"/usr/bin/aptitude unmarkauto '?reverse-depends($gd) | ?reverse-recommends($gd)'":
+			require => Package['aptitude'],
+			onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep $gd`'
+		}
+	}
+	file {"/usr/bin/dpkg-get":
+		owner  => root,
+		group  => root,
+		mode   => '755',
+		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/usr/bin/dpkg-get",
+		checksum => 'sha256',
+		checksum_value => "",
+	}
 }
 
 class config {
@@ -70,16 +85,13 @@ class config {
 		mode    => '644',
 		content => "a4\n",
 	}
-	$dconf_dir = ["/etc/dconf/","/etc/dconf/profile","/etc/dconf/db","/etc/dconf/db/site.d","/etc/dconf/db/site.d/lock"]
-	file {"$dconf_dir":
-		owner  => root,
-		group  => root,
-		ensure => directory,
-	}
-	file{"/etc/dconf/profile/user":
-		owner  => root,
-		group  => root,
-		source => "https://raw.githubusercontent.com/cedricbrx/puppet/master/manifests/files/etc/dconf/profile/user",
+	file {["/etc/dconf/", "/etc/dconf/db/", "/etc/dconf/db/site.d", "/etc/dconf/db/site.d/locks", "/etc/dconf/profile"]:
+    		ensure => directory,
+		alias  => "create_dconf_tree",
+  	}
+  	file {"/etc/dconf/profile/user":
+    		content => "user-db:user\nsystem-db:site",
+		require => File["create_dconf_tree"],
 	}
 }
 
@@ -127,6 +139,25 @@ class thunderbird {
 		target  => "/etc/icedove/icedove_brandenbourger.js",
 		require => File["/etc/icedove/icedove_brandenbourger.js"],
 	}
+	file {"/usr/bin/mozilla-extension-manager":
+		source => "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/mozilla/mozilla-extension-manager",
+		ensure => present,
+		mode => "755",
+		checksum => md5,
+		checksum_value => 'c9aa114ca488606242f2176f1c29a1ce',
+  	}
+    	exec {"google-calendar":
+        	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/provider-for-google-calendar/addon-4631-latest.xpi",
+        	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/{a62ef8ec-5fdc-40c2-873c-223b8a6925cc} -o -e /usr/lib64/thunderbird/extensions/{a62ef8ec-5fdc-40c2-873c-223b8a6925cc}",
+    	}
+    	exec {"gContactSync":
+        	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/gcontactsync/addon-8451-latest.xpi",
+        	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/gContactSync@pirules.net.xpi -o -e /usr/lib64/thunderbird/extensions/gContactSync@pirules.net.xpi",
+    	}
+    	exec {"google-task-sync":
+        	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/google-tasks-sync/addon-382085-latest.xpi",
+        	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/google_tasks_sync@tomasz.lewoc.xpi -o -e /usr/lib64/thunderbird/extensions/google_tasks_sync@tomasz.lewoc.xpi",
+    	}
 }
 
 class plymouth {
@@ -167,22 +198,99 @@ class libreoffice {
 }
 
 class synology {
-	file {"/usr/share/icons/hicolor/64x64/apps/":
-		ensure  => directory,
-		source  => "/etc/puppet/manifests/files/usr/share/icons/hicolor/64x64/apps",
-		owner   => root,
-		group   => root,
-		mode    => '644',
-		recurse => 'true',
-	}
-	file {"/usr/share/applications/":
-		ensure  => directory,
-		source  => "/etc/puppet/manifests/files/usr/share/applications",
-		owner   => root,
-		group   => root,
-		mode    => '644',
-		recurse => 'true',
-	}
+	$quickconnect_URL = $pc_owner ? {
+	brand10 => 'https://brandenbourger.quickconnect.to',
+	anne04 => 'https://brandenbourger.quickconnect.to',
+        default => 'https://brandenbourg.quickconnect.to',
+    }   
+    $title_df='[Desktop Entry]'
+    $terminal_df='Terminal=false'
+    $type_df='Type=Application'
+    $icon_df='Icon=/usr/share/icons/hicolor/64x64/apps/synology_'
+    $name_df='Name=Brandenbourger'
+    $exec_df='Exec=xdg-open'
+    $syn_camera="$title_df\n$terminal_df\n$type_df\n${icon_df}cameras.png\n$name_df Cameras\n$exec_df $quickconnect_URL/camera"
+    $syn_video="$title_df\n$terminal_df\n$type_df\n${icon_df}video.png\n$name_df Videos\n$exec_df $quickconnect_URL/video"
+    $syn_photo="$title_df\n$terminal_df\n$type_df\n${icon_df}photos.png\n$name_df Photos\n$exec_df $quickconnect_URL/photo"
+
+    exec {"synology-cloud-station_installation":
+        provider => shell,
+        command => "if $synology_cloud_update; then /usr/bin/dnf install --assumeyes http://dedl.synology.com/download/Tools/CloudStationDrive/$synology_cloud_version/Fedora/Installer/x86_64/synology-cloud-station-drive-$synology_cloud_version.x86_64.rpm; fi",
+        unless => "/usr/bin/dpkg -l synology-cloud-station | grep $synology_cloud_version",
+	timeout => 1800,
+    }
+    exec {"synology-assistant_installation":
+        provider => shell,
+        command => "if $synology_assistant_update; then /usr/bin/dnf install --assumeyes http://dedl.synology.com/download/Tools/Assistant/$synology_assistant_version/Fedora/x86_64/synology-assistant-$synology_assistant_version.x86_64.rpm; fi",
+        unless => "/usr/bin/dpkg -l synology-assistant | grep $synology_assistant_version",
+	timeout => 1800,
+    }
+    file {"/usr/share/applications/brandenbourger-cameras.desktop":
+        content => "$syn_camera",
+    }
+    file {"/usr/share/applications/brandenbourger-photos.desktop":
+        content => "$syn_photo",
+    }
+    file {"/usr/share/applications/brandenbourger-videos.desktop":
+        content => "$syn_video",
+    }
+    file {"/usr/share/icons/hicolor/64x64/apps/synology_cameras.png":
+        source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/share/icons/hicolor/64x64/apps/synology_cameras.png",
+        ensure => present,
+        checksum => md5,
+        checksum_value => 'dcaad9387f02b8e9bb522c418e0580d3',
+    }
+    file {"/usr/share/icons/hicolor/64x64/apps/synology_videos.png":
+        source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/share/icons/hicolor/64x64/apps/synology_videos.png",
+        ensure => present,
+        checksum => md5,
+        checksum_value => '998653e5331a38c68f3164705e6021bd',
+    }
+    file {"/usr/share/icons/hicolor/64x64/apps/synology_photos.png":
+        source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/share/icons/hicolor/64x64/apps/synology_photos.png",
+        ensure => present,
+        checksum => md5,
+        checksum_value => '1acddd4b3da197f666451c60bf5f909c',
+    }
+}     
+
+class gnome_shell_extensions {
+    package {"gnome-tweak-tool":
+        ensure => installed,
+    }
+    file {"/usr/bin/gnomeshell-extension-manage":
+        source => "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/ubuntugnome/gnomeshell-extension-manage",
+        ensure => present,
+        mode => "755",
+        checksum => md5,
+        checksum_value => '7e43f7f6ffb78caa349f41a6abc12d69',
+    }
+    exec {"dash-to-dock":
+        command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 307",
+        require => File["/usr/bin/gnomeshell-extension-manage"],
+        unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/",
+    }
+    exec {"topicons-plus":
+        command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 1031",
+        require => File["/usr/bin/gnomeshell-extension-manage"],
+        unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/TopIcons@phocean.net/",
+    }
+    exec {"suspend-button":
+        command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 826",
+        require => File["/usr/bin/gnomeshell-extension-manage"],
+        unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/suspend-button@laserb/",
+    }
+    exec {"remove-dropdown-arrows":
+        command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 800",
+        require => File["/usr/bin/gnomeshell-extension-manage"],
+        unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/remove-dropdown-arrows@mpdeimos.com/",
+    }
+}
+
+class keepassx {
+    package {"keepassx":
+        ensure => installed,
+    }
 }
 
 class install {
@@ -202,9 +310,6 @@ class install {
 		ensure => installed,
 	}
 	package {"handbrake":
-		ensure => installed,
-	}
-	package {"keepassx":
 		ensure => installed,
 	}
 	package {"fdupes":
@@ -271,16 +376,6 @@ class install {
 			name => "r8168-dkms",
 			source  => "/etc/puppet/manifests/files/r8168-dkms_8.042.00-2_all.deb",
 			require => Package["dkms"],
-		}
-	}
-}
-
-class gnome_dependencies {
-	$gd = ["gnome", "gnome-core", "gnome-desktop-environment"]
-	$gd.each |String $gd| {
-		exec {"/usr/bin/aptitude unmarkauto '?reverse-depends($gd) | ?reverse-recommends($gd)'":
-			require => Package['aptitude'],
-			onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep $gd`'
 		}
 	}
 }
