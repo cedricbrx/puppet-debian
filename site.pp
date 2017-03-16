@@ -87,14 +87,14 @@ class config {
 			onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep $gd`'
 		}
 	}
-	file {["/etc/dconf/", "/etc/dconf/db/", "/etc/dconf/db/site.d", "/etc/dconf/db/site.d/locks", "/etc/dconf/profile"]:
-    		ensure => directory,
-		alias  => "create_dconf_tree",
-  	}
-  	file {"/etc/dconf/profile/user":
-    		content => "user-db:user\nsystem-db:site",
-		require => File["create_dconf_tree"],
-	}
+	#file {["/etc/dconf/", "/etc/dconf/db/", "/etc/dconf/db/site.d", "/etc/dconf/db/site.d/locks", "/etc/dconf/profile"]:
+    	#	ensure => directory,
+	#	alias  => "create_dconf_tree",
+  	#}
+  	#file {"/etc/dconf/profile/user":
+    	#	content => "user-db:user\nsystem-db:site",
+	#	require => File["create_dconf_tree"],
+	#}
 }
 
 class utilities {
