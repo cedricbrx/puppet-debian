@@ -1,11 +1,19 @@
 #!/bin/bash
 
-online_md5=$(curl -s https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/site.pp | md5sum | awk '{print $1}')
-local_md5=$(md5sum "/etc/puppetlabs/code/site.pp" | awk '{print $1}')
+set -e
 
-if [ "$online_md5" != "$local_md5" ]; then
+online_sha512=$(curl -s https://raw.githubusercontent.com/cedricbrx/puppet-fedora/master/site.pp | sha512sum | awk '{print $1}')
+local_sha512=$(sha512sum "/etc/puppetlabs/code/site.pp" | awk '{print $1}')
+online_facter_sha512=$(curl -s https://raw.githubusercontent.com/cedricbrx/puppet-fedora/master/facter_brandenbourger.sh | sha512sum | awk '{print $1}')
+local_facter_sha512=$(sha512sum "/opt/puppetlabs/facter/facts.d/facter_brandenbourger.sh" | awk '{print $1}')
+
+if [[ "$online_sha512" != "$local_sha512" ]] || [[ "$online_facter_sha512" != "$local_facter_sha512" ]] ; then
   cd /etc/puppetlabs/code/
-  wget -N -q https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/site.pp
+  wget -N -q https://raw.githubusercontent.com/cedricbrx/puppet-fedora/master/site.pp
+  cd /opt/puppetlabs/facter/facts.d/
+  wget -N -q https://raw.githubusercontent.com/cedricbrx/puppet-fedora/master/facter_brandenbourger.sh
+  chmod +x /opt/puppetlabs/facter/facts.d/facter_brandenbourger.sh
+  cd 
   if [ $? -ne 0 ]; then
   	/usr/bin/logger -i "Puppet has no internet connection, exiting" -t "puppet-apply"
 	exit 1
@@ -19,6 +27,17 @@ if [ "$online_md5" != "$local_md5" ]; then
           exit 1
         fi
 else
-    /usr/bin/logger -i "Nothing to do" -t "puppet-apply"
-    exit 0
+    if [ `date '+%A'` != "Sunday" ]; then
+       	/usr/bin/logger -i "Nothing to do" -t "puppet-apply"
+    	exit 0
+    else
+        /opt/puppetlabs/bin/puppet apply /etc/puppetlabs/code/site.pp
+	if [ $? -eq 0 ]; then
+          /usr/bin/logger -i "Puppet has run successfully on Sunday" -t "puppet-apply"
+          exit 0
+	else
+          /usr/bin/logger -i "Puppet has run into an error on Sunday, please run Puppet manually" -t "puppet-apply"
+          exit 1
+        fi
+    fi
 fi
