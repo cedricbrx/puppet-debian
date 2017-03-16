@@ -322,28 +322,28 @@ class synology {
     }
 }     
 
-#class gnome_shell_extensions {
-#    package {"gnome-tweak-tool":
-#        ensure => installed,
-#    }
-#    package {"gnome-shell-extension-weather":
-#	ensure => purged,
-#    }
-#    package {"dconf-editor":
-#	ensure => installed,
-#    }
-#    file {"/usr/bin/gnomeshell-extension-manage":
-#        source => "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/ubuntugnome/gnomeshell-extension-manage",
-#        ensure => present,
-#        mode => "755",
-#        checksum => md5,
-#        checksum_value => '7e43f7f6ffb78caa349f41a6abc12d69',
-#    }
-#    exec {"dash-to-dock":
-#        command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 307",
-#        require => File["/usr/bin/gnomeshell-extension-manage"],
-#        unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/",
-#    }
+class gnome_shell_extensions {
+    package {"gnome-tweak-tool":
+        ensure => installed,
+    }
+    package {"gnome-shell-extension-weather":
+	ensure => purged,
+    }
+    package {"dconf-editor":
+	ensure => installed,
+    }
+    file {"/usr/bin/gnomeshell-extension-manage":
+        source => "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/ubuntugnome/gnomeshell-extension-manage",
+        ensure => present,
+        mode => "755",
+        checksum => md5,
+        checksum_value => '7e43f7f6ffb78caa349f41a6abc12d69',
+    }
+    exec {"dash-to-dock":
+        command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 307",
+        require => File["/usr/bin/gnomeshell-extension-manage"],
+        unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/",
+    }
 #    exec {"topicons-plus":
 #        command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 1031",
 #        require => File["/usr/bin/gnomeshell-extension-manage"],
@@ -359,7 +359,7 @@ class synology {
 #        require => File["/usr/bin/gnomeshell-extension-manage"],
 #        unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/remove-dropdown-arrows@mpdeimos.com/",
 #    }
-#}
+}
 
 class keepassx {
     package {"keepassx":
