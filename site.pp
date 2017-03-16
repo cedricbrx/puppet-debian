@@ -6,20 +6,11 @@ node default {
  	include synology
 	include keepassx
   	include firefox
+	include thunderbird
   	include config
   	include plymouth
   	include gnome_shell_extensions
-	#include thunderbird
 	include games
-}
-
-stage { 'first':
-	before => Stage['main'],
-}
-stage { 'last': }
-Stage['main'] -> Stage['last']
-class { 'repository':
-  stage => first,
 }
 
 class repository {
@@ -98,6 +89,14 @@ class config {
 			require => Package['aptitude'],
 			onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep $gd`'
 		}
+	}
+	exec {'accept-msttcorefonts-license':
+		command => '/bin/sh -c "echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | /usr/bin/debconf-set-selections"',
+		unless  => '/usr/bin/debconf-get-selections | /begrep "msttcorefonts/accepted-mscorefonts-eula.*true"'
+	}
+	package {'ttf-mscorefonts-installer':
+		ensure => installed,
+		require => Exec['accept-msttcorefonts-license']
 	}
 	#file {["/etc/dconf/", "/etc/dconf/db/", "/etc/dconf/db/site.d", "/etc/dconf/db/site.d/locks", "/etc/dconf/profile"]:
     	#	ensure => directory,
@@ -217,15 +216,15 @@ class thunderbird {
         	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/provider-for-google-calendar/addon-4631-latest.xpi",
         	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/{a62ef8ec-5fdc-40c2-873c-223b8a6925cc}",
     	}
-#    	exec {"gContactSync":
-#        	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/gcontactsync/addon-8451-latest.xpi",
-#       	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/gContactSync@pirules.net.xpi -o -e /usr/lib64/thunderbird/extensions/gContactSync@pirules.net.xpi",
-#    	}
-#    	exec {"google-task-sync":
-#        	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/google-tasks-sync/addon-382085-latest.xpi",
-#        	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/google_tasks_sync@tomasz.lewoc.xpi -o -e /usr/lib64/thunderbird/extensions/google_tasks_sync@tomasz.lewoc.xpi",
-#    	}
-#}
+    	exec {"gContactSync":
+        	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/gcontactsync/addon-8451-latest.xpi",
+       		unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/gContactSync@pirules.net.xpi",
+    	}
+    	exec {"google-task-sync":
+        	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/google-tasks-sync/addon-382085-latest.xpi",
+        	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/google_tasks_sync@tomasz.lewoc.xpi",
+    	}
+}
 
 class plymouth {
 	require apt
@@ -248,7 +247,7 @@ class plymouth {
 	#		group  => root,
 	#		mode   => '755',
 	#		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/etc/initramfs-tools/hooks/nvidia",
-	#		checksum => sha256,
+	#		checksum => 'sha256',
 	#		checksum_value => '',
 	#		before => Exec["set_default_theme"],
 	#	}
@@ -350,21 +349,21 @@ class gnome_shell_extensions {
         require => File["/usr/bin/gnomeshell-extension-manage"],
         unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/",
     }
-#    exec {"topicons-plus":
-#        command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 1031",
-#        require => File["/usr/bin/gnomeshell-extension-manage"],
-#        unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/TopIcons@phocean.net/",
-#    }
-#    exec {"suspend-button":
-#        command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 826",
-#        require => File["/usr/bin/gnomeshell-extension-manage"],
-#        unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/suspend-button@laserb/",
-#    }
-#    exec {"remove-dropdown-arrows":
-#        command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 800",
-#        require => File["/usr/bin/gnomeshell-extension-manage"],
-#        unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/remove-dropdown-arrows@mpdeimos.com/",
-#    }
+    exec {"topicons-plus":
+        command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 1031",
+        require => File["/usr/bin/gnomeshell-extension-manage"],
+        unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/TopIcons@phocean.net/",
+    }
+    exec {"suspend-button":
+        command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 826",
+        require => File["/usr/bin/gnomeshell-extension-manage"],
+        unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/suspend-button@laserb/",
+    }
+    exec {"remove-dropdown-arrows":
+        command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 800",
+        require => File["/usr/bin/gnomeshell-extension-manage"],
+        unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/remove-dropdown-arrows@mpdeimos.com/",
+    }
 }
 
 class keepassx {
@@ -374,16 +373,9 @@ class keepassx {
     }
 }
 
-#class install {
+#class mstcorefonts {
 #	require apt
-#	exec {'accept-msttcorefonts-license':
-#		command => '/bin/sh -c "echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | /usr/bin/debconf-set-selections"',
-#		unless  => '/usr/bin/debconf-get-selections | /begrep "msttcorefonts/accepted-mscorefonts-eula.*true"'
-#	}
-#	package {'ttf-mscorefonts-installer':
-#		ensure => installed,
-#		require => Exec['accept-msttcorefonts-license']
-#	}
+
 #	if $network_vendor == 'realtek' {
 #		if $wireless_vendor == 'intel' {
 #			$firmware_packages = ['firmware-iwlwifi','firmware-realtek','firmware-linux-free','firmware-misc-nonfree','firmware-linux-nonfree']
