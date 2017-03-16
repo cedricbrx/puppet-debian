@@ -22,7 +22,6 @@ class { 'repository':
 }
 
 class repository {
-	stage => first,
 	$mirror="deb http://debian.mirror.root.lu/debian/"
 	$security="deb http://security.debian.org/"
 	$packages="main contrib non-free"
