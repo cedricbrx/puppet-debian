@@ -3,7 +3,8 @@ node default {
 	include repository
   	include libreoffice
 	include utilities
- 	#include synology
+ 	include synology
+	include keepassx
   	#include firefox
   	include config
   	include plymouth
@@ -109,6 +110,7 @@ class config {
 }
 
 class utilities {
+	require apt
 	package {"pyrenamer":
 		ensure => installed,
 	}
@@ -139,6 +141,7 @@ class utilities {
 }
 
 class multimedia {
+	require apt
 	package {"handbrake":
 		ensure => installed,
 	}
@@ -237,6 +240,7 @@ class multimedia {
 #}
 
 class plymouth {
+	require apt
 	package {"plymouth-x11":
 		ensure => installed,
 	}
@@ -264,6 +268,7 @@ class plymouth {
 }
 
 class libreoffice {
+	require apt
 	file {"/usr/lib/libreoffice/share/registry/brandenbourger.xcd":
 		owner  => root,
 		group  => root,
@@ -278,10 +283,11 @@ class libreoffice {
 }
 
 class synology {
-	$quickconnect_URL = $pc_owner ? {
+    require apt
+    $quickconnect_URL = $pc_owner ? {
 	brand10 => 'https://brandenbourger.quickconnect.to',
 	anne04 => 'https://brandenbourger.quickconnect.to',
-        default => 'https://brandenbourg.quickconnect.to',
+	default => 'https://brandenbourg.quickconnect.to',
     }   
     $title_df='[Desktop Entry]'
     $terminal_df='Terminal=false'
@@ -289,7 +295,7 @@ class synology {
     $icon_df='Icon=/usr/share/icons/hicolor/64x64/apps/synology_'
     $name_df='Name=Brandenbourger'
     $exec_df='Exec=xdg-open'
-#    $syn_camera="$title_df\n$terminal_df\n$type_df\n${icon_df}cameras.png\n$name_df Cameras\n$exec_df $quickconnect_URL/camera"
+#   $syn_camera="$title_df\n$terminal_df\n$type_df\n${icon_df}cameras.png\n$name_df Cameras\n$exec_df $quickconnect_URL/camera"
     $syn_video="$title_df\n$terminal_df\n$type_df\n${icon_df}video.png\n$name_df Videos\n$exec_df $quickconnect_URL/video"
     $syn_photo="$title_df\n$terminal_df\n$type_df\n${icon_df}photos.png\n$name_df Photos\n$exec_df $quickconnect_URL/photo"
 
@@ -374,6 +380,7 @@ class gnome_shell_extensions {
 }
 
 class keepassx {
+    require apt
     package {"keepassx":
         ensure => installed,
     }
