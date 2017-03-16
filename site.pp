@@ -7,12 +7,19 @@ node default {
   	#include firefox
   	include config
   	include plymouth
-  	#include gnome_shell_extensions
+  	include gnome_shell_extensions
 	#include thunderbird
 	include games
 }
 
+stage { 'first':
+	before => Stage['main'],
+}
+stage { 'last': }
+Stage['main'] -> Stage['last']
+
 class repository {
+	stage => first,
 	$mirror="deb http://debian.mirror.root.lu/debian/"
 	$security="deb http://security.debian.org/"
 	$packages="main contrib non-free"
@@ -36,6 +43,14 @@ class repository {
 		mode    => '644',
 		content => 'deb http://download.videolan.org/pub/debian/stable/ /',
 	}
+	file {"/etc/apt/apt.conf.d/99brandenbourger":
+		owner  => root,
+		group  => root,
+		mode   => '644',
+		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/etc/apt/apt.conf.d/99brandenbourger",
+		checksum => 'sha256',
+		checksum_value => "acb63f0a4810573f88db892c6529ec3843a3f3273c47cd55187a07cb8b226a34",
+	}
 	#file {'/etc/apt/sources.list.d/virtualbox.list':
 	#	owner   => root,
 	#	group   => root,
@@ -46,23 +61,16 @@ class repository {
 
 class apt {
 	require repository
-	exec { "apt-update":
+	exec {"apt-update":
 		command => "/usr/bin/apt-get update",
-	}
-	file {"/etc/apt/apt.conf.d/99brandenbourger":
-		owner  => root,
-		group  => root,
-		mode   => '644',
-		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/etc/apt/apt.conf.d/99brandenbourger",
-		checksum => 'sha256',
-		checksum_value => "acb63f0a4810573f88db892c6529ec3843a3f3273c47cd55187a07cb8b226a34",
 	}
 	package{"unattended-upgrades":
 		ensure  => installed,
-		require => File["/etc/apt/apt.conf.d/99brandenbourger"],
+		require => File["apt-update"],
 	}
 	package {"aptitude":
         	ensure => installed,
+		require => Exec["apt-update"],
 	}
 	#file {"/usr/bin/dpkg-get":
 	#	owner  => root,
