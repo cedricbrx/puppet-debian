@@ -17,6 +17,9 @@ stage { 'first':
 }
 stage { 'last': }
 Stage['main'] -> Stage['last']
+class { 'repository':
+  stage => first,
+}
 
 class repository {
 	stage => first,
