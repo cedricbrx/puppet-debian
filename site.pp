@@ -6,8 +6,9 @@ node default {
   	#include firefox
   	include config
   	include plymouth
-  	include gnome_shell_extensions
+  	#include gnome_shell_extensions
 	#include thunderbird
+	include games
 }
 
 class repository {
