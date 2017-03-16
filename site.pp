@@ -265,21 +265,21 @@ class libreoffice {
 	}
 }
 
-#class synology {
-#	$quickconnect_URL = $pc_owner ? {
-#	brand10 => 'https://brandenbourger.quickconnect.to',
-#	anne04 => 'https://brandenbourger.quickconnect.to',
-#        default => 'https://brandenbourg.quickconnect.to',
-#    }   
-#    $title_df='[Desktop Entry]'
-#    $terminal_df='Terminal=false'
-#    $type_df='Type=Application'
-#    $icon_df='Icon=/usr/share/icons/hicolor/64x64/apps/synology_'
-#    $name_df='Name=Brandenbourger'
-#    $exec_df='Exec=xdg-open'
+class synology {
+	$quickconnect_URL = $pc_owner ? {
+	brand10 => 'https://brandenbourger.quickconnect.to',
+	anne04 => 'https://brandenbourger.quickconnect.to',
+        default => 'https://brandenbourg.quickconnect.to',
+    }   
+    $title_df='[Desktop Entry]'
+    $terminal_df='Terminal=false'
+    $type_df='Type=Application'
+    $icon_df='Icon=/usr/share/icons/hicolor/64x64/apps/synology_'
+    $name_df='Name=Brandenbourger'
+    $exec_df='Exec=xdg-open'
 #    $syn_camera="$title_df\n$terminal_df\n$type_df\n${icon_df}cameras.png\n$name_df Cameras\n$exec_df $quickconnect_URL/camera"
-#    $syn_video="$title_df\n$terminal_df\n$type_df\n${icon_df}video.png\n$name_df Videos\n$exec_df $quickconnect_URL/video"
-#    $syn_photo="$title_df\n$terminal_df\n$type_df\n${icon_df}photos.png\n$name_df Photos\n$exec_df $quickconnect_URL/photo"
+    $syn_video="$title_df\n$terminal_df\n$type_df\n${icon_df}video.png\n$name_df Videos\n$exec_df $quickconnect_URL/video"
+    $syn_photo="$title_df\n$terminal_df\n$type_df\n${icon_df}photos.png\n$name_df Photos\n$exec_df $quickconnect_URL/photo"
 
 #   exec {"synology-cloud-station_installation":
 #       provider => shell,
@@ -296,31 +296,31 @@ class libreoffice {
 #    file {"/usr/share/applications/brandenbourger-cameras.desktop":
 #       content => "$syn_camera",
 #    }
-#    file {"/usr/share/applications/brandenbourger-photos.desktop":
-#        content => "$syn_photo",
-#    }
-#    file {"/usr/share/applications/brandenbourger-videos.desktop":
-#        content => "$syn_video",
-#    }
+    file {"/usr/share/applications/brandenbourger-photos.desktop":
+        content => "$syn_photo",
+    }
+    file {"/usr/share/applications/brandenbourger-videos.desktop":
+        content => "$syn_video",
+    }
 #    file {"/usr/share/icons/hicolor/64x64/apps/synology_cameras.png":
 #        source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/share/icons/hicolor/64x64/apps/synology_cameras.png",
 #        ensure => present,
 #        checksum => md5,
 #        checksum_value => 'dcaad9387f02b8e9bb522c418e0580d3',
 #    }
-#    file {"/usr/share/icons/hicolor/64x64/apps/synology_videos.png":
-#        source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/share/icons/hicolor/64x64/apps/synology_videos.png",
-#        ensure => present,
-#        checksum => md5,
-#        checksum_value => '998653e5331a38c68f3164705e6021bd',
-#    }
-#    file {"/usr/share/icons/hicolor/64x64/apps/synology_photos.png":
-#        source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/share/icons/hicolor/64x64/apps/synology_photos.png",
-#        ensure => present,
-#        checksum => md5,
-#        checksum_value => '1acddd4b3da197f666451c60bf5f909c',
-#    }
-#}     
+    file {"/usr/share/icons/hicolor/64x64/apps/synology_videos.png":
+        source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/share/icons/hicolor/64x64/apps/synology_videos.png",
+        ensure => present,
+        checksum => md5,
+        checksum_value => '998653e5331a38c68f3164705e6021bd',
+    }
+    file {"/usr/share/icons/hicolor/64x64/apps/synology_photos.png":
+        source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/share/icons/hicolor/64x64/apps/synology_photos.png",
+        ensure => present,
+        checksum => md5,
+        checksum_value => '1acddd4b3da197f666451c60bf5f909c',
+    }
+}     
 
 #class gnome_shell_extensions {
 #    package {"gnome-tweak-tool":
