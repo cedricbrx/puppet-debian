@@ -141,6 +141,18 @@ class multimedia {
 	package {"mpv":
 		ensure => purged,
 	}
+	package {"goobox":
+		ensure => purged,
+	}
+	package {"gnome-dictionary":
+		ensure => purged,
+	}
+	package {"eog":
+		ensure => purged,
+	}
+	package {"gnome-sound-recorder":
+		ensure => purged,
+	}
 }
 
 class firefox {
@@ -312,10 +324,10 @@ class gnome_shell_extensions {
         ensure => installed,
     }
     package {"gnome-shell-extension-weather":
-		ensure => purged,
+	ensure => purged,
     }
     package {"dconf-editor":
-		ensure => installed,
+	ensure => installed,
     }
     file {"/usr/bin/gnomeshell-extension-manage":
         source => "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/ubuntugnome/gnomeshell-extension-manage",
@@ -428,6 +440,27 @@ class games {
 	package {"gnome-mines":
 		ensure => purged,
 	}
+	package {"quadrapassel":
+		ensure => purged,
+	}
+	package {"hitori":
+		ensure => purged,
+	}
+	package {"iagno":
+		ensure => purged,
+	}
+	package {"gnome-taquin":
+		ensure => purged,
+	}
+	package {"gnome-robots":
+		ensure => purged,
+	}
+	package {"gnome-klotski":
+		ensure => purged,
+	}
+	package {"swell-foop":
+		ensure => purged,
+	}
 }
 
 class remove {
@@ -456,34 +489,10 @@ class remove {
 	package {["exim4-base","exim4-config"]:
 		ensure => purged,
 	}
-	package {"goobox":
-		ensure => purged,
-	}
 	package {"synaptic":
 		ensure => purged,
 	}
-	package {"swell-foop":
-		ensure => purged,
-	}
-	package {"quadrapassel":
-		ensure => purged,
-	}
 	package {"lightsoff":
-		ensure => purged,
-	}
-	package {"iagno":
-		ensure => purged,
-	}
-	package {"hitori":
-		ensure => purged,
-	}
-	package {"gnome-taquin":
-		ensure => purged,
-	}
-	package {"gnome-robots":
-		ensure => purged,
-	}
-	package {"gnome-klotski":
 		ensure => purged,
 	}
 	package {"vinagre":
@@ -513,14 +522,7 @@ class remove {
 	package {"rhythmbox-data":
 		ensure => purged,
 	}
-	package {"gnome-dictionary":
-		ensure => purged,
-	}
-	package {"eog":
-		ensure => purged,
-	}
-	package {"gnome-sound-recorder":
-		ensure => purged,
-	}
+
+
 }
 
