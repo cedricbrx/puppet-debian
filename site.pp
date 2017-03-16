@@ -5,7 +5,7 @@ node default {
 	include utilities
  	include synology
 	include keepassx
-  	#include firefox
+  	include firefox
   	include config
   	include plymouth
   	include gnome_shell_extensions
@@ -171,27 +171,22 @@ class multimedia {
 	}
 }
 
-#class firefox {
-#	file {"/etc/firefox-esr/firefox_brandenbourger.js":
-#		owner  => root,
-#		group  => root,
-#		mode   => '644',
-#		source => "/etc/puppet/manifests/files/etc/firefox-esr/firefox_brandenbourger.js",
-#	}
-#	file {"/usr/lib/firefox-esr/firefox_brandenbourger.cfg":
-#		owner  => root,
-#		group  => root,
-#		mode   => '644',
-#		source => "/etc/puppet/manifests/files/usr/lib/firefox-esr/firefox_brandenbourger.cfg",
-#	}
-#	file {"/usr/lib/firefox-esr/defaults/pref/firefox_brandenbourger.js":
-#		ensure  => link,
-#		owner   => root,
-#		group   => root,
-#		target  => "/etc/firefox-esr/firefox_brandenbourger.js",
-#		require => File["/etc/firefox-esr/firefox_brandenbourger.js"],
-#	}
-#}
+class firefox {
+#change to debian!!!!!!
+	file {"/usr/lib/firefox-esr/firefox_brandenbourger.cfg":
+ 		ensure => present,
+      	 	checksum => md5,
+       		checksum_value => '8fc1f930e5b71bab8bafa931294556f8',
+		source => "https://raw.githubusercontent.com/cedricbrx/puppet-fedora/master/files/usr/lib64/firefox/firefox_brandenbourger.cfg",
+	}
+	file {"/usr/lib/firefox-esr/defaults/pref/firefox_brandenbourger.js":
+		source => "https://raw.githubusercontent.com/cedricbrx/puppet-fedora/master/files/usr/lib64/firefox/defaults/pref/firefox_brandenbourger.js",
+        	ensure => present,
+       		require => File["/usr/lib/firefox/firefox_brandenbourger.cfg"],
+       		checksum => md5,
+        	checksum_value => 'ba2ad1fb1f70195b555339423b5a3cf3',
+	}
+}
 
 #class thunderbird {
 #	package {"thunderbird":
