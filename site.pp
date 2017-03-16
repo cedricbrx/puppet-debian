@@ -20,7 +20,8 @@ class repository {
 		group    => root,
 		mode     => '644',
 		source   => 'https://github.com/cedricbrx/puppet-debian/raw/master/files/etc/apt/trusted.gpg.d/libdvdcss.gpg',
-		checksum => 'fdcea01d04c835da00132bc255d80fc14106172d489b05a7e68f1fd5e564cf88',
+		checksum => 'sha256',
+		checksum_value => 'fdcea01d04c835da00132bc255d80fc14106172d489b05a7e68f1fd5e564cf88',
 	}
 	file {'/etc/apt/sources.list':
 		owner   => root,
