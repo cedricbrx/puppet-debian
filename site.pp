@@ -188,42 +188,35 @@ class firefox {
 	}
 }
 
-#class thunderbird {
-#	package {"thunderbird":
-#        	ensure => installed,
-#	}
-#	file {"/etc/thunderbird/thunderbird_brandenbourger.js":
-#		owner   => root,
-#		group   => root,
-#		mode    => '644',
-#		source  => "/etc/puppet/manifests/files/etc/thunderbird/thunderbird_brandenbourger.js",
-#		require => Package["thunderbird"],
-#	}
-#	file {"/usr/lib/thunderbird/thunderbird_brandenbourger.cfg":
-#		owner   => root,
-#		group   => root,
-#		mode    => '644',
-#		source  => "/etc/puppet/manifests/files/usr/lib/thunderbird/thunderbird_brandenbourger.cfg",
-#		require => Package["thunderbird"],
-#	}
-#	file {"/usr/lib/thunderbird/defaults/pref/thunderbird_brandenbourger.js":
-#		ensure  => link,
-#		owner   => root,
-#		group   => root,
-#		target  => "/etc/thunderbird/thunderbird_brandenbourger.js",
-#		require => File["/etc/thunderbird/thunderbird_brandenbourger.js"],
-#	}
-#	file {"/usr/bin/mozilla-extension-manager":
-#		source => "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/mozilla/mozilla-extension-manager",
-#		ensure => present,
-#		mode => "755",
-#		checksum => md5,
-#		checksum_value => 'c9aa114ca488606242f2176f1c29a1ce',
-# 	}
-#    	exec {"google-calendar":
-#        	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/provider-for-google-calendar/addon-4631-latest.xpi",
-#        	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/{a62ef8ec-5fdc-40c2-873c-223b8a6925cc} -o -e /usr/lib64/thunderbird/extensions/{a62ef8ec-5fdc-40c2-873c-223b8a6925cc}",
-#    	}
+class thunderbird {
+	package {"thunderbird":
+        	ensure => installed,
+	}
+	file {"/usr/lib/thunderbird/thunderbird_brandenbourger.cfg":
+        	source => "https://raw.githubusercontent.com/cedricbrx/puppet-fedora/master/files/usr/lib64/thunderbird/thunderbird_brandenbourger.cfg",
+		ensure => present,
+		require => Package["thunderbird"],
+		checksum => md5,
+		checksum_value => '14ab62b9fc68f2bbb3e0b659d8dee07a',
+ 	}
+  	file {"/usr/lib/thunderbird/defaults/pref/thunderbird_brandenbourger.js":
+		source => "https://raw.githubusercontent.com/cedricbrx/puppet-fedora/master/files/usr/lib64/thunderbird/defaults/pref/thunderbird_brandenbourger.js",
+		ensure => present,
+		require => File["/usr/lib/thunderbird/thunderbird_brandenbourger.cfg"],
+		checksum => md5,
+		checksum_value => '8c164db2cedf2d4eaaa7707eb075ac1a',
+    	}
+    	file {"/usr/bin/mozilla-extension-manager":
+		source => "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/mozilla/mozilla-extension-manager",
+		ensure => present,
+		mode => "755",
+		checksum => md5,
+		checksum_value => 'c9aa114ca488606242f2176f1c29a1ce',
+	}
+    	exec {"google-calendar":
+        	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/provider-for-google-calendar/addon-4631-latest.xpi",
+        	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/{a62ef8ec-5fdc-40c2-873c-223b8a6925cc}",
+    	}
 #    	exec {"gContactSync":
 #        	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/gcontactsync/addon-8451-latest.xpi",
 #       	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/gContactSync@pirules.net.xpi -o -e /usr/lib64/thunderbird/extensions/gContactSync@pirules.net.xpi",
