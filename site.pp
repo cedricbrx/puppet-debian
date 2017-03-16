@@ -15,31 +15,31 @@ class repository {
 	$mirror="deb http://debian.mirror.root.lu/debian/"
 	$security="deb http://security.debian.org/"
 	$packages="main contrib non-free"
-	file {"/etc/apt/trusted.gpg.d/libdvdcss.gpg":
+	file {'/etc/apt/trusted.gpg.d/libdvdcss.gpg':
 		owner    => root,
 		group    => root,
 		mode     => '644',
-		source   => "",
-		checksum => "",
+		source   => 'https://github.com/cedricbrx/puppet-debian/raw/master/files/etc/apt/trusted.gpg.d/libdvdcss.gpg',
+		checksum => 'fdcea01d04c835da00132bc255d80fc14106172d489b05a7e68f1fd5e564cf88',
 	}
-	file {"/etc/apt/sources.list":
+	file {'/etc/apt/sources.list':
 		owner   => root,
 		group   => root,
 		mode    => '644',
 		content => "$mirror stretch $packages\n$security stretch/updates $packages\n$mirror stretch-updates $packages",
 	}
-	file {"/etc/apt/sources.list.d/libdvdcss.list":
+	file {'/etc/apt/sources.list.d/libdvdcss.list':
 		owner   => root,
 		group   => root,
 		mode    => '644',
-		content => "deb http://download.videolan.org/pub/debian/stable/ /",
+		content => 'deb http://download.videolan.org/pub/debian/stable/ /',
 	}
-	file {"/etc/apt/sources.list.d/virtualbox.list":
-		owner   => root,
-		group   => root,
-		mode    => '644',
-		content => "deb http://download.virtualbox.org/virtualbox/debian stretch contrib",
-	}
+	#file {'/etc/apt/sources.list.d/virtualbox.list':
+	#	owner   => root,
+	#	group   => root,
+	#	mode    => '644',
+	#	content => 'deb http://download.virtualbox.org/virtualbox/debian stretch contrib',
+	#}
 }
 
 class apt {
