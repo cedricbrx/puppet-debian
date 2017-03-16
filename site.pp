@@ -2,6 +2,7 @@ node default {
 	include apt
 	include repository
   	include libreoffice
+	include utilities
  	#include synology
   	#include firefox
   	include config
@@ -463,6 +464,9 @@ class games {
 	package {"swell-foop":
 		ensure => purged,
 	}
+	package {"lightsoff":
+		ensure => purged,
+	}
 }
 
 #class remove {
@@ -492,9 +496,6 @@ class games {
 #		ensure => purged,
 #	}
 #	package {"synaptic":
-#		ensure => purged,
-#	}
-#	package {"lightsoff":
 #		ensure => purged,
 #	}
 #	package {"vinagre":
