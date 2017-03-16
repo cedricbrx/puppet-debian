@@ -3,10 +3,10 @@ node default {
 	include repository
   	include libreoffice
  	include synology
-  	#include firefox
+  	include firefox
   	include config
   	include plymouth
-  	include gnome_dependencies
+  	include gnome_shell_extensions
 	#include thunderbird
 }
 
