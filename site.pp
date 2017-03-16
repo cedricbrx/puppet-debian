@@ -68,7 +68,7 @@ class apt {
 	}
 	package{"unattended-upgrades":
 		ensure  => installed,
-		require => File["apt-update"],
+		require => Exec["apt-update"],
 	}
 	package {"aptitude":
         	ensure => installed,
