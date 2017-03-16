@@ -1,7 +1,0 @@
-[Desktop Entry]
-Comment=
-Terminal=false
-Name=Photos Brandenbourger
-Exec=xdg-open 'https://brandenbourger.quickconnect.to/photo'
-Type=Application
-Icon=/usr/share/icons/hicolor/64x64/apps/synology_photos.png
