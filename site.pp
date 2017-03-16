@@ -182,7 +182,7 @@ class firefox {
 	file {"/usr/lib/firefox-esr/defaults/pref/firefox_brandenbourger.js":
 		source => "https://raw.githubusercontent.com/cedricbrx/puppet-fedora/master/files/usr/lib64/firefox/defaults/pref/firefox_brandenbourger.js",
         	ensure => present,
-       		require => File["/usr/lib/firefox/firefox_brandenbourger.cfg"],
+       		require => File["/usr/lib/firefox-esr/firefox_brandenbourger.cfg"],
        		checksum => md5,
         	checksum_value => 'ba2ad1fb1f70195b555339423b5a3cf3',
 	}
