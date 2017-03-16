@@ -240,17 +240,17 @@ class plymouth {
 		unless  => "/bin/grep splash /etc/default/grub",
 		require => Exec["set_default_theme"],
 	}
-	if $facts['is_gtx660'] {
-		file {"/etc/initramfs-tools/hooks/nvidia/":
-			owner  => root,
-			group  => root,
-			mode   => '755',
-			source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/etc/initramfs-tools/hooks/nvidia",
-			checksum => sha256,
-			checksum_value => '',
-			before => Exec["set_default_theme"],
-		}
-	}
+	#if $facts['is_gtx660'] {
+	#	file {"/etc/initramfs-tools/hooks/nvidia/":
+	#		owner  => root,
+	#		group  => root,
+	#		mode   => '755',
+	#		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/etc/initramfs-tools/hooks/nvidia",
+	#		checksum => sha256,
+	#		checksum_value => '',
+	#		before => Exec["set_default_theme"],
+	#	}
+	#}
 }
 
 class libreoffice {
