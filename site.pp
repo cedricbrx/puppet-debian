@@ -54,7 +54,7 @@ class apt {
 		mode   => '644',
 		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/etc/apt/apt.conf.d/99brandenbourger",
 		checksum => 'sha256',
-		checksum_value => "",
+		checksum_value => "acb63f0a4810573f88db892c6529ec3843a3f3273c47cd55187a07cb8b226a34",
 	}
 	package{"unattended-upgrades":
 		ensure  => installed,
@@ -63,14 +63,14 @@ class apt {
 	package {"aptitude":
         	ensure => installed,
 	}
-	file {"/usr/bin/dpkg-get":
-		owner  => root,
-		group  => root,
-		mode   => '755',
-		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/usr/bin/dpkg-get",
-		checksum => 'sha256',
-		checksum_value => "",
-	}
+	#file {"/usr/bin/dpkg-get":
+	#	owner  => root,
+	#	group  => root,
+	#	mode   => '755',
+	#	source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/usr/bin/dpkg-get",
+	#	checksum => 'sha256',
+	#	checksum_value => "",
+	#}
 }
 
 class config {
