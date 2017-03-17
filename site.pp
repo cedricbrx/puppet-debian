@@ -511,7 +511,7 @@ class masterpdfeditor {
 }
 
 class chat {
-	require gnome_dependencies
+	require config
 	package {"empathy-common":
 		ensure => purged,
 	}
@@ -521,6 +521,7 @@ class chat {
  }
 
 class remove {
+	require config
 	package {"gnome-orca":
 		ensure => purged,
 	}
