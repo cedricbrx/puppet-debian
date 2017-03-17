@@ -171,15 +171,14 @@ class multimedia {
 }
 
 class firefox {
-#change to debian!!!!!!
 	file {"/usr/lib/firefox-esr/firefox_brandenbourger.cfg":
  		ensure => present,
       	 	checksum => md5,
        		checksum_value => '8fc1f930e5b71bab8bafa931294556f8',
-		source => "https://raw.githubusercontent.com/cedricbrx/puppet-fedora/master/files/usr/lib64/firefox/firefox_brandenbourger.cfg",
+		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/lib/firefox/firefox_brandenbourger.cfg",
 	}
 	file {"/usr/lib/firefox-esr/defaults/pref/firefox_brandenbourger.js":
-		source => "https://raw.githubusercontent.com/cedricbrx/puppet-fedora/master/files/usr/lib64/firefox/defaults/pref/firefox_brandenbourger.js",
+		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/lib/firefox/defaults/pref/firefox_brandenbourger.js",
         	ensure => present,
        		require => File["/usr/lib/firefox-esr/firefox_brandenbourger.cfg"],
        		checksum => md5,
@@ -188,6 +187,7 @@ class firefox {
 }
 
 class thunderbird {
+#change to debian!!!!!!
 	package {"thunderbird":
         	ensure => installed,
 	}
