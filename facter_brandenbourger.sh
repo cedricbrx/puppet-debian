@@ -32,6 +32,9 @@ elif [[ $MAC_ADDRESS == '30:f9:ed:d4:d3:37' ]] || [[ $MAC_ADDRESS == 'b8:76:3f:e
 elif [[ $MAC_ADDRESS == '123' ]] || [[ $MAC_ADDRESS == '1234' ]]; then
     echo set_hostname=venus01
     echo pc_owner=anne04
+else 
+    echo set_hostname=brand10
+    echo pc_owner=brand10
 fi
 
 if [ $GATEWAY_MAC_ADDRESS == 'c8:0e:14:0e:97:27' ]; then
