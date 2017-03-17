@@ -56,8 +56,8 @@ class repository {
 		group  => root,
 		mode   => '755',
 		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/bin/dpkg-get",
-		#checksum => 'sha256',
-		#checksum_value => "",
+		checksum => 'sha256',
+		checksum_value => "a8f0588637387d8662f628ced5a4c71c0dfaec0cb4ca5f91e64ed0c924cafd3e",
 	}
 	exec {'install_readline6':
 		provider => shell,
