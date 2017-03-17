@@ -41,7 +41,7 @@ class repository {
 		owner  => root,
 		group  => root,
 		mode   => '644',
-		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/etc/apt/apt.conf.d/99brandenbourger",
+		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/etc/apt/apt.conf.d/99brandenbourger",
 		checksum => 'sha256',
 		checksum_value => "acb63f0a4810573f88db892c6529ec3843a3f3273c47cd55187a07cb8b226a34",
 	}
@@ -55,7 +55,7 @@ class repository {
 		owner  => root,
 		group  => root,
 		mode   => '755',
-		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/usr/bin/dpkg-get",
+		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/bin/dpkg-get",
 		#checksum => 'sha256',
 		#checksum_value => "",
 	}
