@@ -108,7 +108,7 @@ class config {
 	}
 	exec {'accept-msttcorefonts-license':
 		command => '/bin/sh -c "echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | /usr/bin/debconf-set-selections"',
-		unless  => '/usr/bin/debconf-get-selections | /begrep "msttcorefonts/accepted-mscorefonts-eula.*true"',
+		unless  => '/usr/bin/debconf-get-selections | /bin/grep "msttcorefonts/accepted-mscorefonts-eula.*true"',
 	}
 	package {'ttf-mscorefonts-installer':
 		ensure => installed,
