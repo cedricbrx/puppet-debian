@@ -74,4 +74,8 @@ else
     echo is_gtx660=false
 fi
 
-
+if [ "$REALTEK_NETWORK_R8168" == "r816"  ]; then
+    echo is_R8168=true
+else
+    echo is_R8168=false
+fi
