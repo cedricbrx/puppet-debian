@@ -508,36 +508,36 @@ class masterpdfeditor {
     }
 }
 
-#class remove {
-#	require gnome_dependencies
-#	package {"gnome-orca":
-#		ensure => purged,
-#	}
-#	package {"transmission-common":
-#		ensure => purged,
-#	}
-#	package {"hamster-applet":
-#		ensure => purged,
-#	}
-#	package {"synaptic":
-#		ensure => purged,
-#	}
-#	package {"vinagre":
-#		ensure => purged,
-#	}
-#	package {"vino":
-#		ensure => purged,
-#	}
-#	package {"bijiben":
-#		ensure => purged,
-#	}
-#	package {"empathy-common":
-#		ensure => purged,
-#	}
-#	package {"polari":
-#		ensure => purged,
-#	}
-#	package {"gnome-nettool":
-#		ensure => purged,
-#	}
-#}
+class chat {
+	require gnome_dependencies
+	package {"empathy-common":
+		ensure => purged,
+	}
+	package {"polari":
+		ensure => purged,
+	}
+ }
+
+class remove {
+	package {"gnome-orca":
+		ensure => purged,
+	}
+	package {"transmission-common":
+		ensure => purged,
+	}
+	package {"hamster-applet":
+		ensure => purged,
+	}
+	package {"synaptic":
+		ensure => purged,
+	}
+	package {"vinagre":
+		ensure => purged,
+	}
+	package {"vino":
+		ensure => purged,
+	}
+	package {"bijiben":
+		ensure => purged,
+	}
+}
