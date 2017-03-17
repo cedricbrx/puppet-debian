@@ -314,12 +314,12 @@ class synology {
 #       unless => "/usr/bin/dpkg -l synology-cloud-station | grep $synology_cloud_version",
 #	timeout => 1800,
 #   }
-#   exec {"synology-assistant_installation":
-#       provider => shell,
-#       command => "if $synology_assistant_update; then /usr/bin/dpkg-get http://dedl.synology.com/download/Tools/Assistant/6.1-15030/Ubuntu/x86_64/synology-assistant_6.1-15030_amd64.deb; fi",
-#       unless => "/usr/bin/dpkg -l synology-assistant | grep $synology_assistant_version",
-#	timeout => 1800,
-#   }
+    exec {"synology-assistant_installation":
+        provider => shell,
+        command => "if $synology_assistant_update; then /usr/bin/dpkg-get http://dedl.synology.com/download/Tools/Assistant/6.1-15030/Ubuntu/x86_64/synology-assistant_6.1-15030_amd64.deb; fi",
+        unless => "/usr/bin/dpkg -l synology-assistant | grep $synology_assistant_version",
+	timeout => 1800,
+    }
     file {"/usr/share/applications/brandenbourger-cameras.desktop":
         content => "$syn_camera",
     }
@@ -329,12 +329,12 @@ class synology {
     file {"/usr/share/applications/brandenbourger-videos.desktop":
         content => "$syn_video",
     }
-#    file {"/usr/share/icons/hicolor/64x64/apps/synology_cameras.png":
-#        source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/share/icons/hicolor/64x64/apps/synology_cameras.png",
-#        ensure => present,
-#        checksum => md5,
-#        checksum_value => 'dcaad9387f02b8e9bb522c418e0580d3',
-#    }
+    file {"/usr/share/icons/hicolor/64x64/apps/synology_cameras.png":
+        source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/share/icons/hicolor/64x64/apps/synology_cameras.png",
+        ensure => present,
+        checksum => sha256,
+        checksum_value => '29da1525a33cc4f4702d29bcdee9ab89b52bd86b31fa0c2635687e366dbe3825',
+    }
     file {"/usr/share/icons/hicolor/64x64/apps/synology_videos.png":
         source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/share/icons/hicolor/64x64/apps/synology_videos.png",
         ensure => present,
@@ -483,6 +483,29 @@ class mailclients {
 	package {["exim4-base","exim4-config"]:
 		ensure => purged,
 	}
+}
+
+class nautilus {
+    package {"nautilus-open-terminal":
+        ensure => installed,
+    }
+}
+
+class brasero {
+    package { ["brasero", "brasero-nautilus"]:
+        ensure => $cdrom_present ? {
+            'true' => installed,
+            default => purged,
+        }
+    }
+}
+
+class masterpdfeditor {
+    exec {"install_masterpdfeditor":
+    	provider => shell,
+        command => "if $codeindustry_pdfmaster_update; then /usr/bin/dpkg-get http://get.code-industry.net/public/master-pdf-editor-{$codeindustry_pdfmaster_version}_qt5.amd64.deb; fi",
+	unless => "/usr/bin/dnf list installed master-pdf-editor.x86_64 | grep $codeindustry_pdfmaster_version",
+    }
 }
 
 #class remove {
