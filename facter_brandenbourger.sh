@@ -9,6 +9,18 @@ SYNOLOGY_ASSISTANT_VERSION=`dnf list installed "*synology-assistant*" | awk '{pr
 PDFMASTER_VERSION=`dnf list installed "*synology-assistant*" | awk '{print $2}' | tail -n 1`
 PDFMASTER_ONLINE_VERSION=`curl -s https://code-industry.net/what-is-new-in-master-pdf-editor-4/ | perl -wlne 'print "$1" if /(\d\.\d.\d\d)/' | head -n1`
 VIDEOCARD_NVIDIA_MODEL=`lspci | grep -i 'VGA compatible controller' | grep -v  -i ASPEED | grep -i NVIDIA | grep 660`
+NETWORK_VENDOR=`lspci | grep -i "Ethernet Controller" | tr -s " " | tr "[:upper:]" "[:lower:]" | cut -f4 -d " " | uniq`
+WIRELESS_NETWORK_VENDOR=`lspci | grep -i "Network Controller" | tr -s " " | tr "[:upper:]" "[:lower:]" | cut -f4 -d " " | uniq`
+REALTEK_NETWORK_R8168=grep -i "Ethernet Controller" | tr -s " " | cut -f4 -d " " | uniq | grep 8168`
+
+nonfree_firmware_packages="firmware-linux-free firmware-misc-nonfree firmware-linux-nonfree"
+if [ $WIRELESS_NETWORK_VENDOR == 'intel' ]; then
+     nonfree_firmware_packages+="firmware-iwlwifi"
+fi
+if [[ $NETWORK_VENDOR == 'realtek' ]] || [[ $WIRELESS_NETWORK_VENDOR == 'realtek' ]] ; then
+    nonfree_firmware_packages+="firmware-realtek"
+fi
+echo firmware_install=$nonfree_firmware_package
 
 if [ $MAC_ADDRESS == '30:85:a9:90:c5:f1' ]; then
     echo set_hostname=mars01
@@ -61,3 +73,5 @@ if [ "$VIDEOCARD_NVIDIA_MODEL" == "660"  ]; then
 else
     echo is_gtx660=false
 fi
+
+
