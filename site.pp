@@ -51,6 +51,26 @@ class repository {
 	#	mode    => '644',
 	#	content => 'deb http://download.virtualbox.org/virtualbox/debian stretch contrib',
 	#}
+	file {"/usr/bin/dpkg-get":
+		owner  => root,
+		group  => root,
+		mode   => '755',
+		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/usr/bin/dpkg-get",
+		#checksum => 'sha256',
+		#checksum_value => "",
+	}
+	exec {'install_readline6':
+		provider => shell,
+		command => '/usr/bin/dpkg-get http://ftp.de.debian.org/debian/pool/main/r/readline6/libreadline6_6.3-9_amd64.deb',
+		unless => "/usr/bin/dpkg -l libreadline6",
+		require => File['/usr/bin/dpkg-get'],
+	}
+	exec {'install_puppetlabs-release-pc1':
+		provider => shell,
+		command => '/usr/bin/dpkg-get http://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb',
+		unless => "/usr/bin/dpkg -l puppetlabs-release-pc1 | grep jessie",
+		require => File['/usr/bin/dpkg-get'],
+	}	
 }
 
 class apt {
@@ -66,14 +86,10 @@ class apt {
         	ensure => installed,
 		require => Exec["apt-update"],
 	}
-	#file {"/usr/bin/dpkg-get":
-	#	owner  => root,
-	#	group  => root,
-	#	mode   => '755',
-	#	source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/usr/bin/dpkg-get",
-	#	checksum => 'sha256',
-	#	checksum_value => "",
-	#}
+	package {'puppet-agent':
+		ensure => installed,
+		require => Exec["apt-update"],
+	}
 }
 
 class config {
