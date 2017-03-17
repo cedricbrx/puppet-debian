@@ -11,7 +11,7 @@ PDFMASTER_ONLINE_VERSION=`curl -s https://code-industry.net/what-is-new-in-maste
 VIDEOCARD_NVIDIA_MODEL=`lspci | grep -i 'VGA compatible controller' | grep -v  -i ASPEED | grep -i NVIDIA | grep 660`
 NETWORK_VENDOR=`lspci | grep -i "Ethernet Controller" | tr -s " " | tr "[:upper:]" "[:lower:]" | cut -f4 -d " " | uniq`
 WIRELESS_NETWORK_VENDOR=`lspci | grep -i "Network Controller" | tr -s " " | tr "[:upper:]" "[:lower:]" | cut -f4 -d " " | uniq`
-REALTEK_NETWORK_R8168=grep -i "Ethernet Controller" | tr -s " " | cut -f4 -d " " | uniq | grep 8168`
+REALTEK_NETWORK_R8168=`grep -i "Ethernet Controller" | tr -s " " | cut -f4 -d " " | uniq | grep 8168`
 
 nonfree_firmware_packages="firmware-linux-free firmware-misc-nonfree firmware-linux-nonfree"
 if [ $WIRELESS_NETWORK_VENDOR == 'intel' ]; then
