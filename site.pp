@@ -103,16 +103,16 @@ class config {
 	$gd.each |String $gd| {
 		exec {"/usr/bin/aptitude unmarkauto '?reverse-depends($gd) | ?reverse-recommends($gd)'":
 			require => Package['aptitude'],
-			onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep $gd`'
+			onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep $gd`',
 		}
 	}
 	exec {'accept-msttcorefonts-license':
 		command => '/bin/sh -c "echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | /usr/bin/debconf-set-selections"',
-		unless  => '/usr/bin/debconf-get-selections | /begrep "msttcorefonts/accepted-mscorefonts-eula.*true"'
+		unless  => '/usr/bin/debconf-get-selections | /begrep "msttcorefonts/accepted-mscorefonts-eula.*true"',
 	}
 	package {'ttf-mscorefonts-installer':
 		ensure => installed,
-		require => Exec['accept-msttcorefonts-license']
+		require => Exec['accept-msttcorefonts-license'],
 	}
 	#file {["/etc/dconf/", "/etc/dconf/db/", "/etc/dconf/db/site.d", "/etc/dconf/db/site.d/locks", "/etc/dconf/profile"]:
     	#	ensure => directory,
@@ -389,23 +389,17 @@ class keepassx {
     }
 }
 
-#class mstcorefonts {
-#	require apt
-#	package {$firmware_packages:
-#		ensure => installed,
-#	}
-#	if $network_r8168 {
-#		package {"dkms":
-#			ensure => installed,
-#		}
-#		package {"r8168":
-#			ensure  => installed,
-#			name => "r8168-dkms",
-#			source  => "/etc/puppet/manifests/files/r8168-dkms_8.042.00-2_all.deb",
-#			require => Package["dkms"],
-#		}
-#	}
-#}
+class firmware {
+	require apt
+	package { $facts[$firmware_install]:
+		ensure => installed,
+	}
+	if $facts[$is_R8168] {
+		package {"r8168-dkms":
+			ensure  => installed,
+		}
+	}
+}
 
 class games {
 	package {"gnome-games":
