@@ -184,6 +184,12 @@ class multimedia {
 	package {"gnome-sound-recorder":
 		ensure => purged,
 	}
+	package {"rhythmbox-data":
+		ensure => purged,
+	}
+	package {"inkscape":
+		ensure => purged,
+	}
 }
 
 class firefox {
@@ -460,9 +466,7 @@ class games {
 
 #class remove {
 #	require gnome_dependencies
-#	package {"inkscape":
-#		ensure => purged,
-#	}
+
 #	package {"gnome-orca":
 #		ensure => purged,
 #	}
@@ -509,9 +513,6 @@ class games {
 #		ensure => purged,
 #	}
 #	package {"gnome-nettool":
-#		ensure => purged,
-#	}
-#	package {"rhythmbox-data":
 #		ensure => purged,
 #	}
 #}
