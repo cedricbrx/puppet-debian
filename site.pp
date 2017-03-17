@@ -298,7 +298,7 @@ class synology {
     $icon_df='Icon=/usr/share/icons/hicolor/64x64/apps/synology_'
     $name_df='Name=Brandenbourger'
     $exec_df='Exec=xdg-open'
-#   $syn_camera="$title_df\n$terminal_df\n$type_df\n${icon_df}cameras.png\n$name_df Cameras\n$exec_df $quickconnect_URL/camera"
+    $syn_camera="$title_df\n$terminal_df\n$type_df\n${icon_df}cameras.png\n$name_df Cameras\n$exec_df $quickconnect_URL/camera"
     $syn_video="$title_df\n$terminal_df\n$type_df\n${icon_df}video.png\n$name_df Videos\n$exec_df $quickconnect_URL/video"
     $syn_photo="$title_df\n$terminal_df\n$type_df\n${icon_df}photos.png\n$name_df Photos\n$exec_df $quickconnect_URL/photo"
 
@@ -314,9 +314,9 @@ class synology {
 #        unless => "/usr/bin/dpkg -l synology-assistant | grep $synology_assistant_version",
 #	timeout => 1800,
 #    }
-#    file {"/usr/share/applications/brandenbourger-cameras.desktop":
-#       content => "$syn_camera",
-#    }
+    file {"/usr/share/applications/brandenbourger-cameras.desktop":
+        content => "$syn_camera",
+    }
     file {"/usr/share/applications/brandenbourger-photos.desktop":
         content => "$syn_photo",
     }
