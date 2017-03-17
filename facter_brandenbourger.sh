@@ -1,6 +1,7 @@
 #!/bin/bash
 
 MAC_ADDRESS=`cat /sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address`
+#NET-TOOLS needed, please change to a different command from arp
 GATEWAY_MAC_ADDRESS=`arp -n $(ip route show default | awk '/default/ {print $3}') | tail -n 1 | awk '{print $3}'`
 SYNOLOGY_CLOUD_STATION_ONLINE_VERSION=`curl -s http://dedl.synology.com/download/Tools/CloudStationDrive/ | perl -wlne 'print "$1" if /(\d\.\d.\d-\d\d\d\d)/' | tail -n1`
 SYNOLOGY_ASSISTANT_ONLINE_VERSION=`curl -s http://dedl.synology.com/download/Tools/Assistant/ | perl -wlne 'print "$1" if /(\d.\d-\d\d\d\d+)/' | tail -n1`
