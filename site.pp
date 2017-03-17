@@ -114,14 +114,14 @@ class config {
 		ensure => installed,
 		require => Exec['accept-msttcorefonts-license'],
 	}
-	#file {["/etc/dconf/", "/etc/dconf/db/", "/etc/dconf/db/site.d", "/etc/dconf/db/site.d/locks", "/etc/dconf/profile"]:
-    	#	ensure => directory,
-	#	alias  => "create_dconf_tree",
-  	#}
-  	#file {"/etc/dconf/profile/user":
-    	#	content => "user-db:user\nsystem-db:site",
-	#	require => File["create_dconf_tree"],
-	#}
+	file {["/etc/dconf/", "/etc/dconf/db/", "/etc/dconf/db/site.d", "/etc/dconf/db/site.d/locks", "/etc/dconf/profile"]:
+    		ensure => directory,
+		alias  => "create_dconf_tree",
+  	}
+  	file {"/etc/dconf/profile/user":
+    		content => "user-db:user\nsystem-db:site",
+		require => File["create_dconf_tree"],
+	}
 }
 
 class utilities {
@@ -263,17 +263,17 @@ class plymouth {
 		unless  => "/bin/grep splash /etc/default/grub",
 		require => Exec["set_default_theme"],
 	}
-	#if $facts['is_gtx660'] {
-	#	file {"/etc/initramfs-tools/hooks/nvidia/":
-	#		owner  => root,
-	#		group  => root,
-	#		mode   => '755',
-	#		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/etc/initramfs-tools/hooks/nvidia",
-	#		checksum => 'sha256',
-	#		checksum_value => '',
-	#		before => Exec["set_default_theme"],
-	#	}
-	#}
+	if $facts['is_gtx660'] {
+		file {"/etc/initramfs-tools/hooks/nvidia/":
+			owner  => root,
+			group  => root,
+			mode   => '755',
+			source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/etc/initramfs-tools/hooks/nvidia",
+			#checksum => 'sha256',
+			#checksum_value => '',
+			before => Exec["set_default_theme"],
+		}
+	}
 }
 
 class libreoffice {
@@ -317,9 +317,9 @@ class synology {
 #   exec {"synology-assistant_installation":
 #       provider => shell,
 #       command => "if $synology_assistant_update; then /usr/bin/dpkg-get http://dedl.synology.com/download/Tools/Assistant/6.1-15030/Ubuntu/x86_64/synology-assistant_6.1-15030_amd64.deb; fi",
-#        unless => "/usr/bin/dpkg -l synology-assistant | grep $synology_assistant_version",
+#       unless => "/usr/bin/dpkg -l synology-assistant | grep $synology_assistant_version",
 #	timeout => 1800,
-#    }
+#   }
     file {"/usr/share/applications/brandenbourger-cameras.desktop":
         content => "$syn_camera",
     }
@@ -462,11 +462,31 @@ class games {
 	package {"lightsoff":
 		ensure => purged,
 	}
+	package {"tali":
+		ensure => purged,
+	}
+	package {["xboard","fairymax","hoichess"]:
+		ensure => purged,
+	}
+}
+
+class mailclients {
+	package {"evolution-common":
+		ensure => purged,
+	}
+	package {"bsd-mailx":
+		ensure => purged,
+	}
+	package {"mutt":
+		ensure => purged,
+	}
+	package {["exim4-base","exim4-config"]:
+		ensure => purged,
+	}
 }
 
 #class remove {
 #	require gnome_dependencies
-
 #	package {"gnome-orca":
 #		ensure => purged,
 #	}
@@ -476,18 +496,6 @@ class games {
 #	package {"hamster-applet":
 #		ensure => purged,
 #	}
-#	package {"evolution-common":
-#		ensure => purged,
-#	}
-#	package {"bsd-mailx":
-#		ensure => purged,
-#	}
-#	package {"mutt":
-#		ensure => purged,
-#	}
-#	package {["exim4-base","exim4-config"]:
-#		ensure => purged,
-#	}
 #	package {"synaptic":
 #		ensure => purged,
 #	}
@@ -495,12 +503,6 @@ class games {
 #		ensure => purged,
 #	}
 #	package {"vino":
-#		ensure => purged,
-#	}
-#	package {"tali":
-#		ensure => purged,
-#	}
-#	package {["xboard","fairymax","hoichess"]:
 #		ensure => purged,
 #	}
 #	package {"bijiben":
