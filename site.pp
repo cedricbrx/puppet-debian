@@ -305,7 +305,7 @@ class synology {
     $name_df='Name=Brandenbourger'
     $exec_df='Exec=xdg-open'
     $syn_camera="$title_df\n$terminal_df\n$type_df\n${icon_df}cameras.png\n$name_df Cameras\n$exec_df $quickconnect_URL/camera"
-    $syn_video="$title_df\n$terminal_df\n$type_df\n${icon_df}video.png\n$name_df Videos\n$exec_df $quickconnect_URL/video"
+    $syn_video="$title_df\n$terminal_df\n$type_df\n${icon_df}videos.png\n$name_df Videos\n$exec_df $quickconnect_URL/video"
     $syn_photo="$title_df\n$terminal_df\n$type_df\n${icon_df}photos.png\n$name_df Photos\n$exec_df $quickconnect_URL/photo"
 
 #   exec {"synology-cloud-station_installation":
@@ -360,7 +360,7 @@ class gnome_shell_extensions {
 	ensure => installed,
     }
     file {"/usr/bin/gnomeshell-extension-manage":
-        source => "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/ubuntugnome/gnomeshell-extension-manage",
+        source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/bin/gnome-shell-extension-manage",
         ensure => present,
         mode => "755",
         checksum => md5,
