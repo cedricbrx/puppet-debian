@@ -309,13 +309,12 @@ class synology {
     $syn_camera="$title_df\n$terminal_df\n$type_df\n${icon_df}cameras.png\n$name_df Cameras\n$exec_df $quickconnect_URL/camera"
     $syn_video="$title_df\n$terminal_df\n$type_df\n${icon_df}videos.png\n$name_df Videos\n$exec_df $quickconnect_URL/video"
     $syn_photo="$title_df\n$terminal_df\n$type_df\n${icon_df}photos.png\n$name_df Photos\n$exec_df $quickconnect_URL/photo"
-
-#   exec {"synology-cloud-station_installation":
-#       provider => shell,
-#       command => "if $synology_cloud_update; then /usr/bin/dpkg-get https://dropbox/synology-cloud-station-drive-$synology_cloud_version.x86_64.deb; fi",
-#       unless => "/usr/bin/dpkg -l synology-cloud-station | grep $synology_cloud_version",
-#	timeout => 1800,
-#   }
+    exec {"synology-cloud-station_installation":
+        provider => shell,
+        command => "if $synology_cloud_update; then /usr/bin/dpkg-get https://drive.google.com/open?id=0B4oiFwdB0YKGWFV0ZGcycGRuSTQ; fi",
+        unless => "/usr/bin/dpkg -l synology-cloud-station | grep $synology_cloud_version",
+	timeout => 1800,
+    }
     exec {"synology-assistant_installation":
         provider => shell,
         command => "if $synology_assistant_update; then /usr/bin/dpkg-get http://dedl.synology.com/download/Tools/Assistant/6.1-15030/Ubuntu/x86_64/synology-assistant_6.1-15030_amd64.deb; fi",
