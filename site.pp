@@ -212,19 +212,18 @@ class firefox {
 }
 
 class thunderbird {
-#change to debian!!!!!!
 	package {"thunderbird":
         	ensure => installed,
 	}
 	file {"/usr/lib/thunderbird/thunderbird_brandenbourger.cfg":
-        	source => "https://raw.githubusercontent.com/cedricbrx/puppet-fedora/master/files/usr/lib64/thunderbird/thunderbird_brandenbourger.cfg",
+        	source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/lib/thunderbird/thunderbird_brandenbourger.cfg",
 		ensure => present,
 		require => Package["thunderbird"],
 		checksum => md5,
 		checksum_value => '14ab62b9fc68f2bbb3e0b659d8dee07a',
  	}
   	file {"/usr/lib/thunderbird/defaults/pref/thunderbird_brandenbourger.js":
-		source => "https://raw.githubusercontent.com/cedricbrx/puppet-fedora/master/files/usr/lib64/thunderbird/defaults/pref/thunderbird_brandenbourger.js",
+		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/lib/thunderbird/defaults/pref/thunderbird_brandenbourger.js",
 		ensure => present,
 		require => File["/usr/lib/thunderbird/thunderbird_brandenbourger.cfg"],
 		checksum => md5,
