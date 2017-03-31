@@ -63,15 +63,15 @@ class repository {
 	}
 	exec {'install_readline6':
 		provider => shell,
-		command => '/usr/bin/dpkg-get http://ftp.de.debian.org/debian/pool/main/r/readline6/libreadline6_6.3-9_amd64.deb',
-		unless => "/usr/bin/dpkg -l libreadline6",
 		require => File['/usr/bin/dpkg-get'],
+		command => '/usr/bin/dpkg-get http://ftp.de.debian.org/debian/pool/main/r/readline6/libreadline6_6.3-9_amd64.deb',
+		unless => "/usr/bin/dpkg -l libreadline6",	
 	}
 	exec {'install_puppetlabs-release-pc1':
 		provider => shell,
+		require => File['/usr/bin/dpkg-get'],
 		command => '/usr/bin/dpkg-get http://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb',
 		unless => "/usr/bin/dpkg -l puppetlabs-release-pc1 | grep jessie",
-		require => File['/usr/bin/dpkg-get'],
 	}	
 }
 
