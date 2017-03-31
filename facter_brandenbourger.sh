@@ -19,7 +19,7 @@ nonfree_firmware_packages="firmware-linux-free firmware-misc-nonfree firmware-li
 if [ $WIRELESS_NETWORK_VENDOR == 'intel' ]; then
      nonfree_firmware_packages+="firmware-iwlwifi"
 fi
-if [[ $NETWORK_VENDOR == 'realtek' ]] || [[ $WIRELESS_NETWORK_VENDOR == 'realtek' ]] ; then
+if [[ $NETWORK_VENDOR == 'realtek' ]] || [[ $WIRELESS_NETWORK_VENDOR == 'realtek' ]]; then
     nonfree_firmware_packages+="firmware-realtek"
 fi
 echo firmware_install=$nonfree_firmware_package
