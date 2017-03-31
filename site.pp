@@ -116,8 +116,8 @@ class config {
 		ensure => installed,
 		require => Exec['accept-msttcorefonts-license'],
 	}
-	$libreoffice_dir = ["/etc/dconf/", "/etc/dconf/db/", "/etc/dconf/db/site.d", "/etc/dconf/db/site.d/locks", "/etc/dconf/profile"]
-	file {$libreoffice_dir:
+	$dconf_dir = ["/etc/dconf/", "/etc/dconf/db/", "/etc/dconf/db/site.d", "/etc/dconf/db/site.d/locks", "/etc/dconf/profile"]
+	file {$dconf_dir:
     		ensure => directory,
 		alias  => "create_dconf_tree",
   	}
