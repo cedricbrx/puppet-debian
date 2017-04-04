@@ -11,8 +11,10 @@ node default {
   	include plymouth
   	include gnome_shell_extensions
 	include games
+	include mailclients
 	include chat
 	include remove
+	include masterpdfeditor
 }
 
 class repository {
