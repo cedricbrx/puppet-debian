@@ -164,6 +164,9 @@ class utilities {
 	package {"curl":
 		ensure => installed,
 	}
+	package {"meld":
+		ensure => installed,
+	}
 }
 
 class multimedia {
