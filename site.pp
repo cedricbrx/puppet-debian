@@ -515,6 +515,7 @@ class masterpdfeditor {
     }
     exec {"install_masterpdfeditor":
     	provider => shell,
+	require => Package["libqt5network5"],
         command => "if $codeindustry_pdfmaster_update; then /usr/bin/dpkg-get http://get.code-industry.net/public/master-pdf-editor-${codeindustry_pdfmaster_version}_qt5.amd64.deb; fi",
 	unless => "/usr/bin/dpkg -l master-pdf-editor.x86_64 | grep $codeindustry_pdfmaster_version",
     }
