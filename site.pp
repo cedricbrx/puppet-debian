@@ -39,6 +39,7 @@ class repository {
 		owner   => root,
 		group   => root,
 		mode    => '644',
+		require => File['/etc/apt/trusted.gpg.d/libdvdcss.gpg'],
 		content => 'deb http://download.videolan.org/pub/debian/stable/ /',
 	}
 	file {"/etc/apt/apt.conf.d/99brandenbourger":
