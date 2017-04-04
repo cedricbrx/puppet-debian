@@ -2,6 +2,10 @@
 
 set -e
 
+if [ $(dpkg-query -W -f='${Status}' curl 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+  apt-get install curl;
+fi
+
 online_sha512=$(curl -s https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/site.pp | sha512sum | awk '{print $1}')
 local_sha512=$(sha512sum "/etc/puppetlabs/code/site.pp" | awk '{print $1}')
 online_facter_sha512=$(curl -s https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/facter_brandenbourger.sh | sha512sum | awk '{print $1}')
