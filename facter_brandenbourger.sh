@@ -16,7 +16,7 @@ WIRELESS_NETWORK_VENDOR=`lspci | grep -i "Network Controller" | tr -s " " | tr "
 REALTEK_NETWORK_R8168=`lspci | grep -i "Ethernet Controller" | tr -s " " | cut -f4 -d " " | uniq | grep 8168`
 
 nonfree_firmware_packages="firmware-linux-free firmware-misc-nonfree firmware-linux-nonfree"
-if [ $WIRELESS_NETWORK_VENDOR == 'intel' ]; then
+if [ ! -z $WIRELESS_NETWORK_VENDOR -a  $WIRELESS_NETWORK_VENDOR == 'intel' ]; then
      nonfree_firmware_packages+="firmware-iwlwifi"
 fi
 if [[ $NETWORK_VENDOR == 'realtek' ]] || [[ $WIRELESS_NETWORK_VENDOR == 'realtek' ]]; then
