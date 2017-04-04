@@ -515,7 +515,7 @@ class brasero {
 
 class masterpdfeditor {
     package {"libqt5network5":
-    	require => installed,
+    	ensure => installed,
     }
     exec {"install_masterpdfeditor":
     	provider => shell,
