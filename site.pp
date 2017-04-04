@@ -206,8 +206,8 @@ class multimedia {
 class firefox {
 	file {"/usr/lib/firefox-esr/firefox_brandenbourger.cfg":
  		ensure => present,
-      	 	checksum => md5,
-       		checksum_value => '8fc1f930e5b71bab8bafa931294556f8',
+      	 	checksum => sha256,
+       		checksum_value => '24e020a362d89f94f443a5c6f8eb5f2390593e5405fa13f1e98b25f9121435fa',
 		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/lib/firefox-esr/firefox_brandenbourger.cfg",
 	}
 	file {"/usr/lib/firefox-esr/defaults/pref/firefox_brandenbourger.js":
@@ -234,8 +234,8 @@ class thunderbird {
 		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/lib/thunderbird/defaults/pref/thunderbird_brandenbourger.js",
 		ensure => present,
 		require => File["/usr/lib/thunderbird/thunderbird_brandenbourger.cfg"],
-		checksum => md5,
-		checksum_value => '8c164db2cedf2d4eaaa7707eb075ac1a',
+		checksum => sha256,
+		checksum_value => '2bd233475a28ff7061ccafa7b1269962443f635c461482de4f1e6f3792542423',
     	}
     	file {"/usr/bin/mozilla-extension-manager":
 		source => "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/mozilla/mozilla-extension-manager",
