@@ -131,7 +131,7 @@ class config {
   	}
   	file {"/etc/dconf/profile/user":
     		content => "user-db:user\nsystem-db:site",
-		require => File["$dconf_dir"],
+		require => File"dconf_dir",
 	}
 }
 
