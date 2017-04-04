@@ -372,8 +372,8 @@ class gnome_shell_extensions {
         source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/bin/gnome-shell-extension-manage",
         ensure => present,
         mode => "755",
-        checksum => md5,
-        checksum_value => '7e43f7f6ffb78caa349f41a6abc12d69',
+        checksum => sha256,
+        checksum_value => '8997b2e8772526fb5e254bcca1ebe3fa8ffdcd286e5adb4e5ec5312f9dc74d50',
     }
     exec {"dash-to-dock":
         command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 307",
