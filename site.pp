@@ -84,6 +84,10 @@ class apt {
 		ensure  => installed,
 		require => Exec["apt-update"],
 	}
+	package {"debconf-utils":
+        	ensure => installed,
+		require => Exec["apt-update"],
+	}
 	package {"aptitude":
         	ensure => installed,
 		require => Exec["apt-update"],
@@ -95,6 +99,7 @@ class apt {
 }
 
 class config {
+	require apt
 	file {"/etc/papersize":
 		owner   => root,
 		group   => root,
@@ -104,8 +109,8 @@ class config {
 	$gd = ["gnome", "gnome-core", "gnome-desktop-environment"]
 	$gd.each |String $gd| {
 		exec {"/usr/bin/aptitude unmarkauto '?reverse-depends($gd) | ?reverse-recommends($gd)'":
-			require => Package['aptitude'],
-			onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep $gd`',
+			#onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep $gd`',
+			onlyif => 'dpkg-query -W -f="${Status}" curl 2>/dev/null | grep -c "ok installed"'
 		}
 	}
 	exec {'accept-msttcorefonts-license':
