@@ -238,7 +238,8 @@ class thunderbird {
 		checksum_value => '2bd233475a28ff7061ccafa7b1269962443f635c461482de4f1e6f3792542423',
     	}
     	file {"/usr/bin/mozilla-extension-manager":
-		source => "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/mozilla/mozilla-extension-manager",
+		source => "https://raw.githubusercontent.com/cedricbrx/ubuntu-scripts/master/mozilla/mozilla-extension-manager"
+		#source => "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/mozilla/mozilla-extension-manager",
 		ensure => present,
 		mode => "755",
 		checksum => md5,
