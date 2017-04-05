@@ -42,6 +42,13 @@ class repository {
 		require => File['/etc/apt/trusted.gpg.d/libdvdcss.gpg'],
 		content => 'deb http://download.videolan.org/pub/debian/stable/ /',
 	}
+	file {'/etc/apt/sources.list.d/brandenbourger_packages.list':
+		owner   => root,
+		group   => root,
+		mode    => '644',
+		#require => File['/etc/apt/trusted.gpg.d/libdvdcss.gpg'],
+		content => 'deb https://packagecloud.io/brandenbourger/packages/debian/ stretch main',
+	}
 	file {"/etc/apt/apt.conf.d/99brandenbourger":
 		owner  => root,
 		group  => root,
