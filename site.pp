@@ -124,15 +124,21 @@ class config {
 		ensure => installed,
 		require => Exec['accept-msttcorefonts-license'],
 	}
-	#$dconf_dir = ["/etc/dconf/", "/etc/dconf/db/", "/etc/dconf/db/site.d", "/etc/dconf/db/site.d/locks", "/etc/dconf/profile"]
-	#file {$dconf_dir:
-    	#	ensure => directory,
-	#	#alias  => "create_dconf_tree",
-  	#}
-  	#file {"/etc/dconf/profile/user":
-    	#	content => "user-db:user\nsystem-db:site",
-	#	require => File "dconf_dir",
-	#}
+	file {"/etc/dconf/":
+    		ensure => directory,
+  	}
+	file {"/etc/dconf/profile":
+    		ensure  => directory,
+		require => File["/etc/dconf"],
+  	}
+	file {"/etc/dconf/db/", "/etc/dconf/db/site.d", "/etc/dconf/db/site.d/locks":
+		ensure  => directory,
+		require => File["/etc/dconf"],
+	}
+  	file {"/etc/dconf/profile/user":
+    		content => "user-db:user\nsystem-db:site",
+		require => File["/etc/dconf/profile"],
+	}
 }
 
 class utilities {
