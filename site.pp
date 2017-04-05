@@ -120,7 +120,7 @@ class config {
 	$gd.each |String $gd| {
 		exec {"/usr/bin/aptitude unmarkauto '?reverse-depends($gd) | ?reverse-recommends($gd)'":
 			#onlyif  => '/usr/bin/test `/usr/bin/dpkg -l | /bin/grep $gd`',
-			onlyif => '/usr/bin/dpkg-query -W -f="${Status}" curl 2>/dev/null | /bin/grep -c "ok installed"'
+			onlyif => '/usr/bin/dpkg-query -W -f="${Status}" curl 2>/dev/null | /bin/grep -c "ok installed"',
 		}
 	}
 	exec {'accept-msttcorefonts-license':
