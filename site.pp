@@ -138,7 +138,7 @@ class config {
     		ensure  => directory,
 		require => File["/etc/dconf"],
   	}
-	file {"/etc/dconf/db/", "/etc/dconf/db/site.d", "/etc/dconf/db/site.d/locks":
+	file {["/etc/dconf/db/", "/etc/dconf/db/site.d", "/etc/dconf/db/site.d/locks"]:
 		ensure  => directory,
 		require => File["/etc/dconf"],
 	}
