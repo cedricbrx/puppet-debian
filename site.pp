@@ -82,7 +82,10 @@ class repository {
 		require => File['/usr/bin/dpkg-get'],
 		command => '/usr/bin/dpkg-get http://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb',
 		unless => "/usr/bin/dpkg -l puppetlabs-release-pc1 | grep jessie",
-	}	
+	}
+	package {"apt-transport-https":
+		ensure => installed,
+	}
 }
 
 class apt {
