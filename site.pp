@@ -568,4 +568,7 @@ class remove {
 	package {"bijiben":
 		ensure => purged,
 	}
+	package {"yelp":
+		ensure => purged,
+	}
 }
