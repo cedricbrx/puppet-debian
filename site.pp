@@ -44,15 +44,15 @@ class repository {
 		require => File['/etc/apt/trusted.gpg.d/libdvdcss.gpg'],
 		content => 'deb http://download.videolan.org/pub/debian/stable/ /',
 	}
-	file {'/etc/apt/sources.list.d/brandenbourger_packages.list':
+	file {'/etc/apt/sources.list.d/brandenbourger.list':
 		owner   => root,
 		group   => root,
 		mode    => '644',
-		#require => File['/etc/apt/trusted.gpg.d/libdvdcss.gpg'],
+		require => File['/etc/apt/trusted.gpg.d/brandenbourger.gpg.gpg'],
 		content => 'deb https://raw.githubusercontent.com/cedricbrx/packages/master/ stretch main',
 	}
 	file {'/etc/apt/apt.conf.d/99brandenbourger':
-		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/etc/apt/apt.conf.d/99brandenbourger",
+		source => 'https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/etc/apt/apt.conf.d/99brandenbourger',
 		checksum => 'sha256',
 		checksum_value => "acb63f0a4810573f88db892c6529ec3843a3f3273c47cd55187a07cb8b226a34",
 	}
@@ -60,7 +60,7 @@ class repository {
 		owner  => root,
 		group  => root,
 		mode   => '755',
-		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/bin/dpkg-get",
+		source => 'https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/bin/dpkg-get',
 		checksum => 'sha256',
 		checksum_value => "a8f0588637387d8662f628ced5a4c71c0dfaec0cb4ca5f91e64ed0c924cafd3e",
 	}
