@@ -14,7 +14,7 @@ node default {
 	include mailclients
 	include chat
 	include remove
-	include masterpdfeditor
+	#include masterpdfeditor
 }
 
 class repository {
@@ -23,22 +23,25 @@ class repository {
 	$packages="main contrib non-free"
 	file {'/etc/apt/trusted.gpg.d/libdvdcss.gpg':
 		source   => 'https://github.com/cedricbrx/puppet-debian/raw/master/files/etc/apt/trusted.gpg.d/libdvdcss.gpg',
+		ensure => present,
 		checksum => sha256,
 		checksum_value => 'fdcea01d04c835da00132bc255d80fc14106172d489b05a7e68f1fd5e564cf88',
 	}
 	file {'/etc/apt/trusted.gpg.d/brandenbourger.gpg':
 		source   => 'https://github.com/cedricbrx/puppet-debian/raw/master/files/etc/apt/trusted.gpg.d/brandenbourger.gpg',
+		ensure => present,
 		checksum => sha256,
 		checksum_value => '5853bef332ae615901e62c330f9cd30ca6f2b4eeae19a11a77e90ad28ed3e892',
 	}
-	
 	file {'/etc/apt/sources.list':
+		ensure => present,
 		owner   => root,
 		group   => root,
 		mode    => '644',
 		content => "$mirror stretch $packages\n$security stretch/updates $packages\n$mirror stretch-updates $packages",
 	}
 	file {'/etc/apt/sources.list.d/libdvdcss.list':
+		ensure => present,
 		owner   => root,
 		group   => root,
 		mode    => '644',
@@ -46,6 +49,7 @@ class repository {
 		content => 'deb http://download.videolan.org/pub/debian/stable/ /',
 	}
 	file {'/etc/apt/sources.list.d/brandenbourger.list':
+		ensure => present,
 		owner   => root,
 		group   => root,
 		mode    => '644',
@@ -53,32 +57,13 @@ class repository {
 		content => 'deb https://raw.githubusercontent.com/cedricbrx/packages/master/ stretch main',
 	}
 	file {'/etc/apt/apt.conf.d/99brandenbourger':
+		ensure => present,
 		owner   => root,
 		group   => root,
 		mode    => '644',
 		source => 'https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/etc/apt/apt.conf.d/99brandenbourger',
 		checksum => sha256,
 		checksum_value => 'acb63f0a4810573f88db892c6529ec3843a3f3273c47cd55187a07cb8b226a34',
-	}
-	file {'/usr/bin/dpkg-get':
-		owner  => root,
-		group  => root,
-		mode   => '755',
-		source => 'https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/bin/dpkg-get',
-		checksum => sha256,
-		checksum_value => 'a8f0588637387d8662f628ced5a4c71c0dfaec0cb4ca5f91e64ed0c924cafd3e',
-	}
-	exec {'install_readline6':
-		provider => shell,
-		require => File['/usr/bin/dpkg-get'],
-		command => '/usr/bin/dpkg-get http://ftp.de.debian.org/debian/pool/main/r/readline6/libreadline6_6.3-9_amd64.deb',
-		unless => "/usr/bin/dpkg -l libreadline6",	
-	}
-	exec {'install_puppetlabs-release-pc1':
-		provider => shell,
-		require => File['/usr/bin/dpkg-get'],
-		command => '/usr/bin/dpkg-get http://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb',
-		unless => "/usr/bin/dpkg -l puppetlabs-release-pc1 | grep jessie",
 	}
 	package {'apt-transport-https':
 		ensure => installed,
