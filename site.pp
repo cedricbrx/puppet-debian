@@ -44,7 +44,7 @@ class repository {
 		group   => root,
 		mode    => '644',
 		#require => File['/etc/apt/trusted.gpg.d/libdvdcss.gpg'],
-		content => 'deb https://packagecloud.io/brandenbourger/packages/debian/ stretch main',
+		content => 'deb https://raw.githubusercontent.com/cedricbrx/packages/master/ stretch main',
 	}
 	file {"/etc/apt/apt.conf.d/99brandenbourger":
 		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/etc/apt/apt.conf.d/99brandenbourger",
