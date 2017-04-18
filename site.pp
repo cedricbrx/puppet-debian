@@ -87,10 +87,6 @@ class apt {
         	ensure => installed,
 		require => Exec["apt-update"],
 	}
-	package {'puppet-agent':
-		ensure => installed,
-		require => Exec["apt-update"],
-	}
 }
 
 class config {
