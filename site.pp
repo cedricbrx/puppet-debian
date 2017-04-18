@@ -31,7 +31,7 @@ class repository {
 		source   => 'https://github.com/cedricbrx/puppet-debian/raw/master/files/etc/apt/trusted.gpg.d/brandenbourger.gpg',
 		ensure => present,
 		checksum => sha256,
-		checksum_value => '5853bef332ae615901e62c330f9cd30ca6f2b4eeae19a11a77e90ad28ed3e892',
+		checksum_value => '1f36daf59e021d10d53d9aedb5d784db59ce2d73c01594352eb9c6b809a70161',
 	}
 	file {'/etc/apt/sources.list':
 		ensure => present,
