@@ -248,26 +248,38 @@ class thunderbird {
 		checksum => sha256,
 		checksum_value => '2bd233475a28ff7061ccafa7b1269962443f635c461482de4f1e6f3792542423',
     	}
-    	file {"/usr/bin/mozilla-extension-manager":
-		source => "https://raw.githubusercontent.com/cedricbrx/ubuntu-scripts/master/mozilla/mozilla-extension-manager",
-		#source => "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/mozilla/mozilla-extension-manager",
-		ensure => present,
-		mode => "755",
-		checksum => md5,
-		checksum_value => 'c9aa114ca488606242f2176f1c29a1ce',
+	package {"xul-ext-google-tasks-sync":
+        	ensure => installed,
+		require => Package["thunderbird"],
 	}
-    	exec {"google-calendar":
-        	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/provider-for-google-calendar/addon-4631-latest.xpi",
-        	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/{a62ef8ec-5fdc-40c2-873c-223b8a6925cc}",
-    	}
-    	exec {"gContactSync":
-        	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/gcontactsync/addon-8451-latest.xpi",
-       		unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/gContactSync@pirules.net.xpi",
-    	}
-    	exec {"google-task-sync":
-        	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/google-tasks-sync/addon-382085-latest.xpi",
-        	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/google_tasks_sync@tomasz.lewoc.xpi",
-    	}
+	package {"xul-ext-gcontactsync":
+        	ensure => installed,
+		require => Package["thunderbird"],
+	}
+	package {"calendar-google-provider":
+        	ensure => installed,
+		require => Package["thunderbird"],
+	}
+    	#file {"/usr/bin/mozilla-extension-manager":
+	#	source => "https://raw.githubusercontent.com/cedricbrx/ubuntu-scripts/master/mozilla/mozilla-extension-manager",
+	#	#source => "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/mozilla/mozilla-extension-manager",
+	#	ensure => present,
+	#	mode => "755",
+	#	checksum => md5,
+	#	checksum_value => 'c9aa114ca488606242f2176f1c29a1ce',
+	#}
+    	#exec {"google-calendar":
+        #	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/provider-for-google-calendar/addon-4631-latest.xpi",
+        #	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/{a62ef8ec-5fdc-40c2-873c-223b8a6925cc}",
+    	#}
+    	#exec {"gContactSync":
+        #	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/gcontactsync/addon-8451-latest.xpi",
+       	#	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/gContactSync@pirules.net.xpi",
+    	#}
+    	#exec {"google-task-sync":
+        #	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/google-tasks-sync/addon-382085-latest.xpi",
+        #	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/google_tasks_sync@tomasz.lewoc.xpi",
+    	#}
 }
 
 class plymouth {
