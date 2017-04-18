@@ -48,7 +48,7 @@ class repository {
 		owner   => root,
 		group   => root,
 		mode    => '644',
-		require => File['/etc/apt/trusted.gpg.d/brandenbourger.gpg.gpg'],
+		require => File['/etc/apt/trusted.gpg.d/brandenbourger.gpg'],
 		content => 'deb https://raw.githubusercontent.com/cedricbrx/packages/master/ stretch main',
 	}
 	file {'/etc/apt/apt.conf.d/99brandenbourger':
