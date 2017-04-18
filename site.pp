@@ -31,6 +31,7 @@ class repository {
 		checksum => sha256,
 		checksum_value => '5853bef332ae615901e62c330f9cd30ca6f2b4eeae19a11a77e90ad28ed3e892',
 	}
+	
 	file {'/etc/apt/sources.list':
 		owner   => root,
 		group   => root,
@@ -221,7 +222,7 @@ class firefox {
 	file {"/usr/lib/firefox-esr/firefox_brandenbourger.cfg":
  		ensure => present,
       	 	checksum => sha256,
-       		checksum_value => '24e020a362d89f94f443a5c6f8eb5f2390593e5405fa13f1e98b25f9121435fa',
+       		checksum_value => '345259392f685fb0d41e0994e376799021cd4fe1e69656137e34c49e2e344fec',
 		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/lib/firefox-esr/firefox_brandenbourger.cfg",
 	}
 	file {"/usr/lib/firefox-esr/defaults/pref/firefox_brandenbourger.js":
