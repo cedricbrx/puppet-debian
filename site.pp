@@ -56,15 +56,6 @@ class repository {
 		require => File['/etc/apt/trusted.gpg.d/brandenbourger.gpg'],
 		content => 'deb https://raw.githubusercontent.com/cedricbrx/packages/master/ stretch main',
 	}
-	file {'/etc/apt/apt.conf.d/99brandenbourger':
-		ensure => present,
-		owner   => root,
-		group   => root,
-		mode    => '644',
-		source => 'https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/etc/apt/apt.conf.d/99brandenbourger',
-		checksum => sha256,
-		checksum_value => 'acb63f0a4810573f88db892c6529ec3843a3f3273c47cd55187a07cb8b226a34',
-	}
 	package {'apt-transport-https':
 		ensure => installed,
 	}
@@ -78,6 +69,16 @@ class apt {
 	package{"unattended-upgrades":
 		ensure  => installed,
 		require => Exec["apt-update"],
+	}
+	file {'/etc/apt/apt.conf.d/99brandenbourger':
+		ensure => present,
+		owner   => root,
+		group   => root,
+		mode    => '644',
+		require => Package["unattended-upgrades"],
+		source => 'https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/etc/apt/apt.conf.d/99brandenbourger',
+		checksum => sha256,
+		checksum_value => 'acb63f0a4810573f88db892c6529ec3843a3f3273c47cd55187a07cb8b226a34',
 	}
 	package {"debconf-utils":
         	ensure => installed,
