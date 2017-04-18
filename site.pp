@@ -53,8 +53,8 @@ class repository {
 	}
 	file {'/etc/apt/apt.conf.d/99brandenbourger':
 		source => 'https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/etc/apt/apt.conf.d/99brandenbourger',
-		#checksum => sha256,
-		#checksum_value => "acb63f0a4810573f88db892c6529ec3843a3f3273c47cd55187a07cb8b226a34",
+		checksum => sha256,
+		checksum_value => 'acb63f0a4810573f88db892c6529ec3843a3f3273c47cd55187a07cb8b226a34',
 	}
 	file {'/usr/bin/dpkg-get':
 		owner  => root,
