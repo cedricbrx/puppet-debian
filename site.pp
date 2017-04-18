@@ -237,34 +237,14 @@ class thunderbird {
         	ensure => installed,
 		require => Package["thunderbird"],
 	}
-	package {"xul-ext-gcontactsync":
-        	ensure => installed,
-		require => Package["thunderbird"],
-	}
+	#package {"xul-ext-gcontactsync":
+        #	ensure => installed,
+	#	require => Package["thunderbird"],
+	#}
 	package {"calendar-google-provider":
         	ensure => installed,
 		require => Package["thunderbird"],
 	}
-    	#file {"/usr/bin/mozilla-extension-manager":
-	#	source => "https://raw.githubusercontent.com/cedricbrx/ubuntu-scripts/master/mozilla/mozilla-extension-manager",
-	#	#source => "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/mozilla/mozilla-extension-manager",
-	#	ensure => present,
-	#	mode => "755",
-	#	checksum => md5,
-	#	checksum_value => 'c9aa114ca488606242f2176f1c29a1ce',
-	#}
-    	#exec {"google-calendar":
-        #	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/provider-for-google-calendar/addon-4631-latest.xpi",
-        #	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/{a62ef8ec-5fdc-40c2-873c-223b8a6925cc}",
-    	#}
-    	#exec {"gContactSync":
-        #	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/gcontactsync/addon-8451-latest.xpi",
-       	#	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/gContactSync@pirules.net.xpi",
-    	#}
-    	#exec {"google-task-sync":
-        #	command => "/usr/bin/mozilla-extension-manager --global --install https://addons.mozilla.org/thunderbird/downloads/latest/google-tasks-sync/addon-382085-latest.xpi",
-        #	unless => "/usr/bin/test -e /usr/lib/thunderbird/extensions/google_tasks_sync@tomasz.lewoc.xpi",
-    	#}
 }
 
 class plymouth {
@@ -392,33 +372,6 @@ class gnome_shell_extensions {
     package {"gnome-shell-extension-top-icons-plus":
 	ensure => installed,
     }
-    #file {"/usr/bin/gnomeshell-extension-manage":
-    #    source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/bin/gnome-shell-extension-manage",
-    #    ensure => present,
-    #    mode => "755",
-    #    checksum => sha256,
-    #    checksum_value => '8997b2e8772526fb5e254bcca1ebe3fa8ffdcd286e5adb4e5ec5312f9dc74d50',
-    #}
-    #exec {"dash-to-dock":
-    #    command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 307",
-    #    require => File["/usr/bin/gnomeshell-extension-manage"],
-    #    unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/",
-    #}
-    #exec {"topicons-plus":
-    #    command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 1031",
-    #    require => File["/usr/bin/gnomeshell-extension-manage"],
-    #    unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/TopIcons@phocean.net/",
-    #}
-    #exec {"suspend-button":
-    #    command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 826",
-    #    require => File["/usr/bin/gnomeshell-extension-manage"],
-    #    unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/suspend-button@laserb/",
-    #}
-    #exec {"remove-dropdown-arrows":
-    #    command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 800",
-    #    require => File["/usr/bin/gnomeshell-extension-manage"],
-    #    unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/remove-dropdown-arrows@mpdeimos.com/",
-    #}
 }
 
 class keepassx {
