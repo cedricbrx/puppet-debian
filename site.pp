@@ -53,15 +53,9 @@ class repository {
 	}
 	file {"/etc/apt/apt.conf.d/99brandenbourger":
 		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/etc/apt/apt.conf.d/99brandenbourger",
-		#checksum => 'sha256',
-		#checksum_value => "acb63f0a4810573f88db892c6529ec3843a3f3273c47cd55187a07cb8b226a34",
+		checksum => 'sha256',
+		checksum_value => "acb63f0a4810573f88db892c6529ec3843a3f3273c47cd55187a07cb8b226a34",
 	}
-	#file {'/etc/apt/sources.list.d/virtualbox.list':
-	#	owner   => root,
-	#	group   => root,
-	#	mode    => '644',
-	#	content => 'deb http://download.virtualbox.org/virtualbox/debian stretch contrib',
-	#}
 	file {"/usr/bin/dpkg-get":
 		owner  => root,
 		group  => root,
@@ -121,7 +115,7 @@ class config {
 	$gd = ["gnome", "gnome-core", "gnome-desktop-environment"]
 	$gd.each |String $gd| {
 		exec {"/usr/bin/aptitude unmarkauto '?reverse-depends($gd) | ?reverse-recommends($gd)'":
-			onlyif => '/usr/bin/dpkg-query -W -f="${Status}" curl 2>/dev/null | /bin/grep -c "ok installed"',
+			onlyif => '/usr/bin/dpkg-query -W -f="${Status}" "$gd" 2>/dev/null | /bin/grep -c "ok installed"',
 		}
 	}
 	exec {'accept-msttcorefonts-license':
