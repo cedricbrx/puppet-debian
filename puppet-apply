@@ -22,7 +22,7 @@ if [[ "$online_sha512" != "$local_sha512" ]] || [[ "$online_facter_sha512" != "$
   	/usr/bin/logger -i "Puppet has no internet connection, exiting" -t "puppet-apply"
 	exit 1
   fi
-  /opt/puppetlabs/bin/puppet apply /etc/puppetlabs/code/site.pp
+ puppet apply /etc/puppetlabs/code/site.pp
 	if [ $? -eq 0 ]; then
           /usr/bin/logger -i "Puppet has run successfully" -t "puppet-apply"
           exit 0
@@ -35,7 +35,7 @@ else
        	/usr/bin/logger -i "Nothing to do" -t "puppet-apply"
     	exit 0
     else
-        /opt/puppetlabs/bin/puppet apply /etc/puppetlabs/code/site.pp
+        puppet apply /etc/puppetlabs/code/site.pp
 	if [ $? -eq 0 ]; then
           /usr/bin/logger -i "Puppet has run successfully on Sunday" -t "puppet-apply"
           exit 0
