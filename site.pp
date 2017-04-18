@@ -23,12 +23,12 @@ class repository {
 	$packages="main contrib non-free"
 	file {'/etc/apt/trusted.gpg.d/libdvdcss.gpg':
 		source   => 'https://github.com/cedricbrx/puppet-debian/raw/master/files/etc/apt/trusted.gpg.d/libdvdcss.gpg',
-		checksum => 'sha256',
+		checksum => sha256,
 		checksum_value => 'fdcea01d04c835da00132bc255d80fc14106172d489b05a7e68f1fd5e564cf88',
 	}
 	file {'/etc/apt/trusted.gpg.d/brandenbourger.gpg':
 		source   => 'https://github.com/cedricbrx/puppet-debian/raw/master/files/etc/apt/trusted.gpg.d/brandenbourger.gpg',
-		checksum => 'sha256',
+		checksum => sha256,
 		checksum_value => '5853bef332ae615901e62c330f9cd30ca6f2b4eeae19a11a77e90ad28ed3e892',
 	}
 	file {'/etc/apt/sources.list':
@@ -53,16 +53,16 @@ class repository {
 	}
 	file {'/etc/apt/apt.conf.d/99brandenbourger':
 		source => 'https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/etc/apt/apt.conf.d/99brandenbourger',
-		checksum => 'sha256',
-		checksum_value => "acb63f0a4810573f88db892c6529ec3843a3f3273c47cd55187a07cb8b226a34",
+		#checksum => sha256,
+		#checksum_value => "acb63f0a4810573f88db892c6529ec3843a3f3273c47cd55187a07cb8b226a34",
 	}
 	file {'/usr/bin/dpkg-get':
 		owner  => root,
 		group  => root,
 		mode   => '755',
 		source => 'https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/bin/dpkg-get',
-		checksum => 'sha256',
-		checksum_value => "a8f0588637387d8662f628ced5a4c71c0dfaec0cb4ca5f91e64ed0c924cafd3e",
+		checksum => sha256,
+		checksum_value => 'a8f0588637387d8662f628ced5a4c71c0dfaec0cb4ca5f91e64ed0c924cafd3e',
 	}
 	exec {'install_readline6':
 		provider => shell,
@@ -317,7 +317,7 @@ class libreoffice {
 		group  => root,
 		mode   => '644',
 		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/manifests/files/usr/lib/libreoffice/share/registry/brandenbourger.xcd",
-		checksum => 'sha256',
+		checksum => sha256,
 		checksum_value => 'd34fdaad1cef9322b2d3d32384b900ed4a4940a68eff23818a293e1abec0458c',
 	}
 	package {"libreoffice-gtk3":
