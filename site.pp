@@ -14,7 +14,7 @@ node default {
 	include mailclients
 	include chat
 	include remove
-	#include masterpdfeditor
+	include masterpdfeditor
 }
 
 class repository {
@@ -306,17 +306,11 @@ class synology {
     $syn_camera="$title_df\n$terminal_df\n$type_df\n${icon_df}cameras.png\n$name_df Cameras\n$exec_df $quickconnect_URL/camera"
     $syn_video="$title_df\n$terminal_df\n$type_df\n${icon_df}videos.png\n$name_df Videos\n$exec_df $quickconnect_URL/video"
     $syn_photo="$title_df\n$terminal_df\n$type_df\n${icon_df}photos.png\n$name_df Photos\n$exec_df $quickconnect_URL/photo"
-    exec {"synology-cloud-station_installation":
-        provider => shell,
-        command => "if $synology_cloud_update; then /usr/bin/dpkg-get https://drive.google.com/open?id=0B4oiFwdB0YKGWFV0ZGcycGRuSTQ; fi",
-        unless => "/usr/bin/dpkg -l synology-cloud-station | grep $synology_cloud_version",
-	timeout => 1800,
+    package {"synology-cloud-station":
+        ensure => installed,
     }
-    exec {"synology-assistant_installation":
-        provider => shell,
-        command => "if $synology_assistant_update; then /usr/bin/dpkg-get http://dedl.synology.com/download/Tools/Assistant/6.1-15030/Ubuntu/x86_64/synology-assistant_6.1-15030_amd64.deb; fi",
-        unless => "/usr/bin/dpkg -l synology-assistant | grep $synology_assistant_version",
-	timeout => 1800,
+    exec {"synology-assistant":
+        ensure => installed,
     }
     file {"/usr/share/applications/brandenbourger-cameras.desktop":
         content => "$syn_camera",
@@ -487,14 +481,9 @@ class brasero {
 }
 
 class masterpdfeditor {
-    package {"libqt5network5":
+    require apt
+    package {"master-pdf-editor":
     	ensure => installed,
-    }
-    exec {"install_masterpdfeditor":
-    	provider => shell,
-	require => Package["libqt5network5"],
-        command => "if $codeindustry_pdfmaster_update; then /usr/bin/dpkg-get http://get.code-industry.net/public/master-pdf-editor-${codeindustry_pdfmaster_version}_qt5.amd64.deb; fi",
-	unless => "/usr/bin/dpkg -l master-pdf-editor.x86_64 | grep $codeindustry_pdfmaster_version",
     }
 }
 
