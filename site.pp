@@ -51,12 +51,12 @@ class repository {
 		#require => File['/etc/apt/trusted.gpg.d/libdvdcss.gpg'],
 		content => 'deb https://raw.githubusercontent.com/cedricbrx/packages/master/ stretch main',
 	}
-	file {"/etc/apt/apt.conf.d/99brandenbourger":
+	file {'/etc/apt/apt.conf.d/99brandenbourger':
 		source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/etc/apt/apt.conf.d/99brandenbourger",
 		checksum => 'sha256',
 		checksum_value => "acb63f0a4810573f88db892c6529ec3843a3f3273c47cd55187a07cb8b226a34",
 	}
-	file {"/usr/bin/dpkg-get":
+	file {'/usr/bin/dpkg-get':
 		owner  => root,
 		group  => root,
 		mode   => '755',
@@ -76,7 +76,7 @@ class repository {
 		command => '/usr/bin/dpkg-get http://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb',
 		unless => "/usr/bin/dpkg -l puppetlabs-release-pc1 | grep jessie",
 	}
-	package {"apt-transport-https":
+	package {'apt-transport-https':
 		ensure => installed,
 	}
 }
