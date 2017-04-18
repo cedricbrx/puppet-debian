@@ -380,33 +380,48 @@ class gnome_shell_extensions {
     package {"dconf-editor":
 	ensure => installed,
     }
-    file {"/usr/bin/gnomeshell-extension-manage":
-        source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/bin/gnome-shell-extension-manage",
-        ensure => present,
-        mode => "755",
-        checksum => sha256,
-        checksum_value => '8997b2e8772526fb5e254bcca1ebe3fa8ffdcd286e5adb4e5ec5312f9dc74d50',
+    package {"gnome-shell-extension-dashtodock":
+	ensure => installed,
     }
-    exec {"dash-to-dock":
-        command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 307",
-        require => File["/usr/bin/gnomeshell-extension-manage"],
-        unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/",
+    package {"gnome-shell-extension-log-out-button":
+	ensure => installed,
     }
-    exec {"topicons-plus":
-        command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 1031",
-        require => File["/usr/bin/gnomeshell-extension-manage"],
-        unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/TopIcons@phocean.net/",
+    package {"gnome-shell-extension-remove-dropdown-arrows":
+	ensure => installed,
     }
-    exec {"suspend-button":
-        command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 826",
-        require => File["/usr/bin/gnomeshell-extension-manage"],
-        unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/suspend-button@laserb/",
+    package {"gnome-shell-extension-suspend-button":
+	ensure => installed,
     }
-    exec {"remove-dropdown-arrows":
-        command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 800",
-        require => File["/usr/bin/gnomeshell-extension-manage"],
-        unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/remove-dropdown-arrows@mpdeimos.com/",
+    package {"gnome-shell-extension-top-icons-plus":
+	ensure => installed,
     }
+    #file {"/usr/bin/gnomeshell-extension-manage":
+    #    source => "https://raw.githubusercontent.com/cedricbrx/puppet-debian/master/files/usr/bin/gnome-shell-extension-manage",
+    #    ensure => present,
+    #    mode => "755",
+    #    checksum => sha256,
+    #    checksum_value => '8997b2e8772526fb5e254bcca1ebe3fa8ffdcd286e5adb4e5ec5312f9dc74d50',
+    #}
+    #exec {"dash-to-dock":
+    #    command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 307",
+    #    require => File["/usr/bin/gnomeshell-extension-manage"],
+    #    unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/",
+    #}
+    #exec {"topicons-plus":
+    #    command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 1031",
+    #    require => File["/usr/bin/gnomeshell-extension-manage"],
+    #    unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/TopIcons@phocean.net/",
+    #}
+    #exec {"suspend-button":
+    #    command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 826",
+    #    require => File["/usr/bin/gnomeshell-extension-manage"],
+    #    unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/suspend-button@laserb/",
+    #}
+    #exec {"remove-dropdown-arrows":
+    #    command => "/usr/bin/gnomeshell-extension-manage --install --system --extension-id 800",
+    #    require => File["/usr/bin/gnomeshell-extension-manage"],
+    #    unless => "/usr/bin/test -e /usr/share/gnome-shell/extensions/remove-dropdown-arrows@mpdeimos.com/",
+    #}
 }
 
 class keepassx {
