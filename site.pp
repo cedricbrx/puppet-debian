@@ -467,9 +467,10 @@ class mailclients {
 }
 
 class nautilus {
-    package {"nautilus-open-terminal":
-        ensure => installed,
-    }
+	require apt
+	package {"nautilus-open-terminal":
+        	ensure => installed,
+    	}
 }
 
 class brasero {
@@ -482,14 +483,14 @@ class brasero {
 }
 
 class masterpdfeditor {
-    require apt
-    package {"master-pdf-editor":
-    	ensure => installed,
-    }
+    	require apt
+    	package {"master-pdf-editor":
+    		ensure => installed,
+    	}
 }
 
 class chat {
-	require config
+	require apt
 	package {"empathy-common":
 		ensure => purged,
 	}
@@ -499,7 +500,7 @@ class chat {
  }
 
 class remove {
-	require config
+	require apt
 	package {"gnome-orca":
 		ensure => purged,
 	}
