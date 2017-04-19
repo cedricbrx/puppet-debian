@@ -46,27 +46,6 @@ else
     echo location=unknown
 fi
 
-if [ -z "$SYNOLOGY_CLOUD_STATION_VERSION" ] || [ "$SYNOLOGY_CLOUD_STATION_ONLINE_VERSION" != "$SYNOLOGY_CLOUD_STATION_VERSION" ]; then
-    echo synology_cloud_update=true
-else
-    echo synology_cloud_update=false
-fi
-echo synology_cloud_version=$SYNOLOGY_CLOUD_STATION_ONLINE_VERSION
-
-if [ -z "$SYNOLOGY_ASSISTANT_VERSION" ] || [ "$SYNOLOGY_ASSISTANT_ONLINE_VERSION" != "$SYNOLOGY_ASSISTANT_VERSION" ]; then
-    echo synology_assistant_update=true
-else
-    echo synology_assistant_update=false
-fi
-echo synology_assistant_version=$SYNOLOGY_ASSISTANT_ONLINE_VERSION
-
-if [ -z "$PDFMASTER_VERSION" ] || [ "$PDFMASTER_ONLINE_VERSION" != "$PDFMASTER_VERSION" ]; then
-    echo codeindustry_pdfmaster_update=true
-else
-    echo codeindustry_pdfmaster_update=false
-fi
-echo codeindustry_pdfmaster_version=$PDFMASTER_ONLINE_VERSION
-
 if [ -e /dev/sr0 ]; then 
     echo cdrom_present=true
 else 
