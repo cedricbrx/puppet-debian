@@ -310,7 +310,7 @@ class synology {
     package {"synology-cloud-station":
         ensure => installed,
     }
-    exec {"synology-assistant":
+    package {"synology-assistant":
         ensure => installed,
     }
     file {"/usr/share/applications/brandenbourger-cameras.desktop":
